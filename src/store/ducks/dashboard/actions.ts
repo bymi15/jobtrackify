@@ -3,11 +3,11 @@ import { ThunkVoidAction } from '../../types';
 import * as types from './types';
 import { IBoard } from '../../models';
 
-export const setBoard = (board: IBoard): ThunkVoidAction => (
+export const selectBoard = (board: IBoard): ThunkVoidAction => (
   dispatch: Dispatch
 ) => {
   dispatch({
-    type: types.SET_BOARD,
+    type: types.SELECT_BOARD,
     payload: board,
   });
 };

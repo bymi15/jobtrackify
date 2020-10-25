@@ -11,7 +11,7 @@ const reducer = (
   action: PayloadAction
 ): IDashboardState => {
   switch (action.type) {
-    case types.SET_BOARD:
+    case types.SELECT_BOARD:
       return {
         ...state,
         board: action.payload,
