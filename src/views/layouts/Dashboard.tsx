@@ -32,7 +32,7 @@ const Dashboard: React.FC<Props & RouteComponentProps> = ({
     return (
       <React.Fragment>
         <CssBaseline />
-        <Navbar />
+        <Navbar solid />
         {location.pathname !== '/dashboard' && <Topbar />}
         {children}
       </React.Fragment>

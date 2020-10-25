@@ -19,9 +19,7 @@ const Auth: React.FC<Props> = ({
 }) => {
   React.useEffect(() => {
     if (error) {
-      showToast('Error', error, 'danger', () => {
-        dispatchClearErrors();
-      });
+      showToast('Error', error, 'danger', dispatchClearErrors);
     }
   }, [dispatchClearErrors, error]);
   if (auth.isAuthenticated) {
