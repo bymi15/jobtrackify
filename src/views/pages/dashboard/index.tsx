@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import Loader from '../../../components/Loader';
 import { RootState } from '../../../store/ducks';
+import { actions as dashboardActions } from '../../../store/ducks/dashboard';
 import { actions, types } from '../../../store/ducks/api/board';
 import {
   createErrorSelector,
@@ -23,6 +24,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { useConfirmDialog } from '../../../utils/ConfirmDialogProvider';
+import { IBoard } from '../../../store/models';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -98,6 +102,8 @@ const Dashboard: React.FC<PropsFromRedux> = ({
   dispatchCreateBoard,
   dispatchDeleteBoard,
   dispatchClearErrors,
+  dispatchSelectBoard,
+  selectedBoard,
   boards,
   isLoading,
   error,
@@ -107,6 +113,7 @@ const Dashboard: React.FC<PropsFromRedux> = ({
     dialogOpen: false,
     showTrashIcon: {},
   });
+  const confirm = useConfirmDialog();
   const classes = useStyles();
 
   React.useEffect(() => {
@@ -131,16 +138,24 @@ const Dashboard: React.FC<PropsFromRedux> = ({
     });
   };
 
-  const handleClick = (id: string) => {
-    console.log(id);
+  const handleClick = (board: IBoard) => {
+    dispatchSelectBoard(board);
   };
 
-  const handleDeleteBoard = (
+  const handleDeleteBoard = async (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>,
     id: string
   ) => {
     e.stopPropagation();
-    dispatchDeleteBoard(id);
+    const shouldDelete = await confirm({
+      variant: 'danger',
+      title: 'Are you sure?',
+      description: 'Do you wish to delete the board?',
+    });
+    console.log(shouldDelete);
+    if (shouldDelete) {
+      dispatchDeleteBoard(id);
+    }
   };
 
   const handleOpenDialog = () => {
@@ -205,6 +220,10 @@ const Dashboard: React.FC<PropsFromRedux> = ({
     return <Loader />;
   }
 
+  if (selectedBoard) {
+    return <Redirect to="/dashboard/board" />;
+  }
+
   return (
     <Container className={classes.root}>
       <Typography variant="h5">My Boards</Typography>
@@ -222,7 +241,7 @@ const Dashboard: React.FC<PropsFromRedux> = ({
                 }}
                 onMouseLeave={handleMouseLeave}
                 onClick={() => {
-                  handleClick(board.id);
+                  handleClick(board);
                 }}
               >
                 <DeleteOutlineIcon
@@ -272,6 +291,7 @@ const errorSelector = createErrorSelector([
 ]);
 
 const mapStateToProps = (state: RootState) => ({
+  selectedBoard: state.dashboard.board,
   boards: state.board.boards,
   isLoading: loadingSelector(state),
   error: errorSelector(state),
@@ -285,6 +305,8 @@ const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
   dispatchDeleteBoard: (id: string): ThunkVoidAction =>
     dispatch(actions.deleteBoard(id)),
   dispatchClearErrors: (): ThunkVoidAction => dispatch(actions.clearErrors()),
+  dispatchSelectBoard: (board: IBoard): ThunkVoidAction =>
+    dispatch(dashboardActions.selectBoard(board)),
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

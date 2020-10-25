@@ -9,6 +9,7 @@ import rootReducer from './store/ducks';
 import Routes from './views/routes';
 import ReduxToastr from 'react-redux-toastr';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
+import { ConfirmDialogProvider } from './utils/ConfirmDialogProvider';
 
 const composeEnhancers: any =
   config.ENV === 'production' ? compose : composeWithDevTools;
@@ -17,16 +18,18 @@ const store = createStore(rootReducer, composeEnhancers(...enhancers));
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <Routes />
-      <ReduxToastr
-        timeOut={5000}
-        newestOnTop={true}
-        position="top-center"
-        transitionIn="fadeIn"
-        transitionOut="fadeOut"
-        progressBar
-        closeOnToastrClick
-      />
+      <ConfirmDialogProvider>
+        <Routes />
+        <ReduxToastr
+          timeOut={5000}
+          newestOnTop={true}
+          position="top-center"
+          transitionIn="fadeIn"
+          transitionOut="fadeOut"
+          progressBar
+          closeOnToastrClick
+        />
+      </ConfirmDialogProvider>
     </Provider>
   );
 };

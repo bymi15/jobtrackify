@@ -4,9 +4,7 @@ import Login from '../pages/auth/Login';
 import { RouteComponent } from '../../store/types';
 import Register from '../pages/auth/Register';
 const Dashboard = async(() => import('../pages/dashboard'));
-// const DashboardBoard = async(() =>
-//   import('../containers/dashboard/board/Board')
-// );
+const DashboardBoard = async(() => import('../pages/dashboard/board'));
 
 const landingRoute: RouteComponent = {
   path: '/',
@@ -18,10 +16,10 @@ const dashboardRoute: RouteComponent = {
   component: Dashboard,
 };
 
-// const dashboardBoardRoute = {
-//   path: '/dashboard/board',
-//   component: DashboardBoard,
-// };
+const dashboardBoardRoute = {
+  path: '/dashboard/board',
+  component: DashboardBoard,
+};
 
 // const dashboardMapRoute = {
 //   path: '/dashboard/map',
@@ -49,7 +47,7 @@ export const authRoutes: RouteComponent[] = [loginRoute, registerRoute];
 
 export const dashboardRoutes: RouteComponent[] = [
   dashboardRoute,
+  dashboardBoardRoute,
   //   dashboardMapRoute,
   //   dashboardStatsRoute,
-  //   dashboardBoardRoute,
 ];
