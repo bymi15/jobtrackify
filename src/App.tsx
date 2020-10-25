@@ -7,16 +7,26 @@ import apiMiddleware from './store/middlewares/apiMiddleware';
 import config from './config';
 import rootReducer from './store/ducks';
 import Routes from './views/routes';
+import ReduxToastr from 'react-redux-toastr';
+import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 
 const composeEnhancers: any =
-  config.env === 'production' ? compose : composeWithDevTools;
+  config.ENV === 'production' ? compose : composeWithDevTools;
 const enhancers = [applyMiddleware(thunk, apiMiddleware)];
 const store = createStore(rootReducer, composeEnhancers(...enhancers));
-
 const App: React.FC = () => {
   return (
     <Provider store={store}>
       <Routes />
+      <ReduxToastr
+        timeOut={5000}
+        newestOnTop={true}
+        position="top-center"
+        transitionIn="fadeIn"
+        transitionOut="fadeOut"
+        progressBar
+        closeOnToastrClick
+      />
     </Provider>
   );
 };
