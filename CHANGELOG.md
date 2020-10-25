@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/bymi15/JobTrackify/compare/v0.1.1...v0.1.2) (2020-10-25)
+
+
+### Features
+
+* **authPages:** add preloader for login and register ([4e323c2](https://github.com/bymi15/JobTrackify/commit/4e323c2d3fe72c457ff4ea26d84342a7a7e162b1))
+* **Dashboard:** add dashboard page ([26072e2](https://github.com/bymi15/JobTrackify/commit/26072e249b49e19eba0f28d9ac734be5835c8526))
+
+
+### Bug Fixes
+
+* **apiMiddleware:** check undefined err response ([7b2d8ae](https://github.com/bymi15/JobTrackify/commit/7b2d8aefcd8474a796153da0a124b3592e55d938))
+* **boardDucks:** update board redux ([16e5ead](https://github.com/bymi15/JobTrackify/commit/16e5eade6c0e1113d9d3cb7a8ebccbe44c6e7977))
+
 ### 0.1.1 (2020-10-25)
 
 
