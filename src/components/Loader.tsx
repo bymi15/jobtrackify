@@ -6,9 +6,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     loader: {
       display: 'flex',
+      flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      height: '100%',
+      height: 'calc(100vh - 64px)',
     },
   })
 );

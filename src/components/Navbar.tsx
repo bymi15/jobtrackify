@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     background: 'none',
     color: '#fff',
   },
+  navSolid: {
+    flexGrow: 1,
+  },
   whiteText: {
     '& * ': {
       color: '#fff',
@@ -41,7 +44,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Navbar: React.FC<PropsFromRedux> = ({ auth, dispatchLogout }) => {
+interface Props extends PropsFromRedux {
+  solid?: boolean;
+}
+
+const Navbar: React.FC<Props> = ({ solid, auth, dispatchLogout }) => {
   const classes = useStyles();
   const theme = useTheme();
   const useSmallView = useMediaQuery(theme.breakpoints.down('sm'));
@@ -108,7 +115,11 @@ const Navbar: React.FC<PropsFromRedux> = ({ auth, dispatchLogout }) => {
   );
 
   return (
-    <AppBar className={classes.nav} elevation={0}>
+    <AppBar
+      position={solid ? 'static' : 'fixed'}
+      className={solid ? classes.navSolid : classes.nav}
+      elevation={0}
+    >
       <Toolbar className={classes.navWrapper}>
         {useSmallView && (
           <IconButton
