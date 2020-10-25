@@ -9,6 +9,7 @@ type ThunkVoidDispatch = ThunkDispatch<RootState, undefined, ThunkVoidAction>;
 interface ApiAction extends Action<string> {
   response?: any;
   error?: string | Array | null | undefined;
+  extraData?: any;
 }
 
 interface PayloadAction extends Action<string> {
