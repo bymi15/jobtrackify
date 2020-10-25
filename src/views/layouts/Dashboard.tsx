@@ -5,6 +5,8 @@ import Topbar from '../../components/Topbar';
 import Navbar from '../../components/Navbar';
 import { IAuthState } from '../../store/ducks/api/auth';
 import { RootState } from '../../store/ducks';
+import { CssBaseline } from '@material-ui/core';
+import { showToast } from '../../utils/showToast';
 
 interface Props {
   children: React.ReactNode;
@@ -17,16 +19,26 @@ const Dashboard: React.FC<Props & RouteComponentProps> = ({
   auth,
   location,
 }) => {
+  React.useEffect(() => {
+    if (!auth.isAuthenticated) {
+      showToast(
+        '',
+        'Please login or register to access the dashboard',
+        'warning'
+      );
+    }
+  }, [auth.isAuthenticated]);
   if (auth.isAuthenticated) {
     return (
       <React.Fragment>
+        <CssBaseline />
         <Navbar />
-        {location.pathname === '/dashboard' ? '' : <Topbar />}
-        <div>{children}</div>
+        {location.pathname !== '/dashboard' && <Topbar />}
+        {children}
       </React.Fragment>
     );
   } else {
-    return <Redirect to="/" />;
+    return <Redirect to="/auth/login" />;
   }
 };
 

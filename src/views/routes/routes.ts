@@ -2,7 +2,7 @@ import async from '../../utils/AsyncImport';
 import Landing from '../pages/landing';
 import Login from '../pages/auth/Login';
 import { RouteComponent } from '../../store/types';
-// import Register from '../pages/auth/Register';
+import Register from '../pages/auth/Register';
 const Dashboard = async(() => import('../pages/dashboard'));
 // const DashboardBoard = async(() =>
 //   import('../containers/dashboard/board/Board')
@@ -38,14 +38,14 @@ const loginRoute = {
   component: Login,
 };
 
-// const registerRoute = {
-//   path: '/auth/register',
-//   component: Register,
-// };
+const registerRoute = {
+  path: '/auth/register',
+  component: Register,
+};
 
 export const landingRoutes: RouteComponent[] = [landingRoute];
 
-export const authRoutes: RouteComponent[] = [loginRoute];
+export const authRoutes: RouteComponent[] = [loginRoute, registerRoute];
 
 export const dashboardRoutes: RouteComponent[] = [
   dashboardRoute,

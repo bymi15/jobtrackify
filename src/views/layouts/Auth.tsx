@@ -1,33 +1,49 @@
 import * as React from 'react';
-
-import Container from '@material-ui/core/Container';
-
 import { Redirect } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../../store/ducks';
+import { createErrorSelector } from '../../store/selectors';
+import { showToast } from '../../utils/showToast';
+import { ThunkVoidAction, ThunkVoidDispatch } from '../../store/types';
+import { actions, types } from '../../store/ducks/api/auth';
 
-const mapStateToProps = (state: RootState) => ({
-  auth: state.auth,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-interface Props {
+interface Props extends PropsFromRedux {
   children: React.ReactNode;
 }
 
-const Auth: React.FC<PropsFromRedux & Props> = ({ auth, children }) => {
+const Auth: React.FC<Props> = ({
+  auth,
+  error,
+  dispatchClearErrors,
+  children,
+}) => {
+  React.useEffect(() => {
+    if (error) {
+      showToast('Error', error, 'danger', () => {
+        dispatchClearErrors();
+      });
+    }
+  }, [dispatchClearErrors, error]);
   if (auth.isAuthenticated) {
     return <Redirect to="/dashboard" />;
   } else {
-    return (
-      <Container className="auth" maxWidth="md">
-        <React.Fragment>{children}</React.Fragment>
-      </Container>
-    );
+    return <React.Fragment>{children}</React.Fragment>;
   }
 };
+
+const errorSelector = createErrorSelector([types.LOGIN, types.REGISTER]);
+
+const mapStateToProps = (state: RootState) => ({
+  auth: state.auth,
+  error: errorSelector(state),
+});
+
+const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
+  dispatchClearErrors: (): ThunkVoidAction => dispatch(actions.clearErrors()),
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
 export default connector(Auth);
