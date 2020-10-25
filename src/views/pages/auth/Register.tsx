@@ -86,7 +86,7 @@ const Register: React.FC<PropsFromRedux> = ({
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Container component="main" maxWidth="sm">
+      <Container maxWidth="sm">
         <Card className={classes.card}>
           <CardContent className={classes.cardContent}>
             <Avatar className={classes.avatar}>
