@@ -7,7 +7,8 @@ const dev = {
 };
 
 const shared = {
-  env: process.env.NODE_ENV,
+  ENV: process.env.NODE_ENV,
+  HOME_URL: 'https://jobtrackify.herokuapp.com',
 };
 
 const config =
