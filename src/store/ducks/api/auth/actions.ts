@@ -6,18 +6,19 @@ import * as types from './types';
 
 const baseUrl = '/api/auth';
 
-export const getUser = (): ThunkVoidAction => (
+export const getAuthUser = (): ThunkVoidAction => (
   dispatch: Dispatch,
   getState: () => RootState
 ) => {
   dispatch({
     type: 'API',
-    name: types.GET_USER,
+    name: types.GET_AUTH_USER,
     url: `${baseUrl}/user/`,
     requestData: {
       method: 'GET',
       headers: authHeader(getState()),
     },
+    ignoreErrors: true,
   });
 };
 
@@ -45,6 +46,7 @@ export const logout = (): ThunkVoidAction => (
       method: 'GET',
       headers: authHeader(getState()),
     },
+    ignoreErrors: true,
   });
 };
 
@@ -68,8 +70,5 @@ export const clearErrors = (): ThunkVoidAction => (dispatch: Dispatch) => {
   });
   dispatch({
     type: `${types.REGISTER}_CLEARERR`,
-  });
-  dispatch({
-    type: `${types.GET_USER}_CLEARERR`,
   });
 };

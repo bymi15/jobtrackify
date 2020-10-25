@@ -1,5 +1,6 @@
 import reducer from './reducer';
 import * as actions from './actions';
+import * as types from './types';
 import { IBoard } from '../../../models';
 
 export interface IBoardState {
@@ -8,5 +9,7 @@ export interface IBoardState {
 }
 
 export { actions };
+
+export { types };
 
 export default reducer;

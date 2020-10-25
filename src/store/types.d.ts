@@ -1,12 +1,14 @@
 import RootState from './reducers';
-import { ThunkAction } from 'redux-thunk';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { Action } from 'redux';
 
 type ThunkVoidAction = ThunkAction<void, RootState, unknown, Action<string>>;
 
+type ThunkVoidDispatch = ThunkDispatch<RootState, undefined, ThunkVoidAction>;
+
 interface ApiAction extends Action<string> {
   response?: any;
-  error?: any;
+  error?: string | Array | null | undefined;
 }
 
 interface PayloadAction extends Action<string> {

@@ -13,7 +13,7 @@ const reducer = (
   action: ApiAction
 ): IAuthState => {
   switch (action.type) {
-    case `${types.GET_USER}_SUCCESS`:
+    case `${types.GET_AUTH_USER}_SUCCESS`:
       return {
         ...state,
         isAuthenticated: true,
@@ -25,11 +25,21 @@ const reducer = (
       localStorage.setItem('token', action.response.token);
       return {
         ...state,
-        ...action.response,
+        user: action.response.user,
+        token: action.response.token,
         isAuthenticated: true,
       };
 
-    case 'LOGOUT_SUCCESS':
+    case `${types.LOGOUT}_SUCCESS`:
+      localStorage.removeItem('token');
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        user: null,
+      };
+
+    case `${types.GET_AUTH_USER}_FAILURE`:
       localStorage.removeItem('token');
       return {
         ...state,
