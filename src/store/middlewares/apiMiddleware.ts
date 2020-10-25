@@ -40,7 +40,10 @@ const apiMiddleware: Middleware<{}, RootState> = ({ dispatch }) => (next) => (
     })
     .catch((err) => {
       if (!ignoreErrors) {
-        dispatch({ type: `${name}_FAILURE`, error: err.response.data.error });
+        const errorMessage = err.response
+          ? err.response.data.error
+          : 'An unknown error has occurred';
+        dispatch({ type: `${name}_FAILURE`, error: errorMessage });
       }
     });
 };
