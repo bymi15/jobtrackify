@@ -17,7 +17,7 @@ const apiMiddleware: Middleware<{}, RootState> = ({ dispatch }) => (next) => (
 
   if (action.type !== 'API') return;
 
-  const { name, url, requestData, ignoreErrors } = action;
+  const { name, url, requestData, ignoreErrors, extraData } = action;
   axios.defaults.baseURL = config.API_URL;
   axios.defaults.headers.common['Content-Type'] = 'application/json';
 
@@ -28,15 +28,15 @@ const apiMiddleware: Middleware<{}, RootState> = ({ dispatch }) => (next) => (
   if (requestData.headers) {
     req.headers = requestData.headers;
   }
-  if (requestData.body) {
-    req.data = requestData.body;
+  if (requestData.data) {
+    req.data = requestData.data;
   }
 
   dispatch({ type: `${name}_REQUEST` });
   axios
     .request(req)
     .then(({ data }) => {
-      dispatch({ type: `${name}_SUCCESS`, response: data });
+      dispatch({ type: `${name}_SUCCESS`, response: data, extraData });
     })
     .catch((err) => {
       if (!ignoreErrors) {

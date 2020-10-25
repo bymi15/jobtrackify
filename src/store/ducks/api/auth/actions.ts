@@ -29,7 +29,7 @@ export const login = (data: any): ThunkVoidAction => (dispatch: Dispatch) => {
     url: `${baseUrl}/login/`,
     requestData: {
       method: 'POST',
-      body: data,
+      data,
     },
   });
 };
@@ -59,7 +59,7 @@ export const register = (data: any): ThunkVoidAction => (
     url: `${baseUrl}/register/`,
     requestData: {
       method: 'POST',
-      body: data,
+      data,
     },
   });
 };
