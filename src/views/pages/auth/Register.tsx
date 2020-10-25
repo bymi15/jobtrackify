@@ -22,6 +22,7 @@ import { createLoadingSelector } from '../../../store/selectors';
 import { RootState } from '../../../store/ducks';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const Copyright = () => (
   <Typography variant="body2" color="textPrimary" align="center">
@@ -92,7 +93,7 @@ const Register: React.FC<PropsFromRedux> = ({
               <Security />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign up
+              Create an account
             </Typography>
             <form className={classes.form} onSubmit={handleFormSubmit}>
               <Grid container spacing={2}>
@@ -166,13 +167,14 @@ const Register: React.FC<PropsFromRedux> = ({
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                disabled={isLoading}
               >
-                Sign Up
+                {isLoading ? <CircularProgress size={25} /> : 'Register'}
               </Button>
               <Grid container justify="flex-end">
                 <Grid item>
                   <Link component={RouterLink} to="/auth/login" variant="body2">
-                    Already have an account? Sign in
+                    Already have an account? Login
                   </Link>
                 </Grid>
               </Grid>

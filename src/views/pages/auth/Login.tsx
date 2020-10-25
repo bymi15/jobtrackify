@@ -22,6 +22,7 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const Copyright = () => (
   <Typography variant="body2" color="textSecondary" align="center">
@@ -86,7 +87,7 @@ const Login: React.FC<PropsFromRedux> = ({ dispatchLogin, isLoading }) => {
               <VpnKey />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Account Login
             </Typography>
             <form className={classes.form} onSubmit={handleFormSubmit}>
               <TextField
@@ -129,8 +130,9 @@ const Login: React.FC<PropsFromRedux> = ({ dispatchLogin, isLoading }) => {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                disabled={isLoading}
               >
-                Sign In
+                {isLoading ? <CircularProgress size={25} /> : 'Login'}
               </Button>
               <Grid container>
                 <Grid item xs>
