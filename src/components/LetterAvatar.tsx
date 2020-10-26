@@ -1,4 +1,5 @@
 import Avatar from '@material-ui/core/Avatar';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import * as React from 'react';
 
 const stringToHexColor = (str: string | null): string => {
@@ -14,12 +15,28 @@ const stringToHexColor = (str: string | null): string => {
   return '#' + '00000'.substring(0, 6 - c.length) + c;
 };
 
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    sm: {
+      width: theme.spacing(3),
+      height: theme.spacing(3),
+    },
+    lg: {
+      width: theme.spacing(7),
+      height: theme.spacing(7),
+    },
+  })
+);
+
 interface Props {
   name: string;
   color?: string;
+  size?: 'sm' | 'lg';
 }
 
-const LetterAvatar: React.FC<Props> = ({ name, color }) => {
+const LetterAvatar: React.FC<Props> = ({ name, color, size }) => {
+  const classes = useStyles();
+  const sizeClass = size && classes[size];
   if (name.length <= 0) return null;
 
   let avatarText: string = name.charAt(0);
@@ -28,7 +45,11 @@ const LetterAvatar: React.FC<Props> = ({ name, color }) => {
     avatarText = names[0].charAt(0) + names[1].charAt(0);
   }
   const hex = color || stringToHexColor(name);
-  return <Avatar style={{ backgroundColor: hex }}>{avatarText}</Avatar>;
+  return (
+    <Avatar className={sizeClass} style={{ backgroundColor: hex }}>
+      {avatarText}
+    </Avatar>
+  );
 };
 
 export default LetterAvatar;
