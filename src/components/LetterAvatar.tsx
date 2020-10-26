@@ -15,14 +15,19 @@ const stringToHexColor = (str: string | null): string => {
 };
 
 interface Props {
-  firstName: string | null;
-  lastName: string | null;
+  name: string;
+  color?: string;
 }
 
-const LetterAvatar: React.FC<Props> = ({ firstName, lastName }) => {
-  const avatarText: string =
-    !!firstName && !!lastName ? firstName.charAt(0) + lastName.charAt(0) : '';
-  const hex = stringToHexColor(`${firstName}${lastName}`);
+const LetterAvatar: React.FC<Props> = ({ name, color }) => {
+  if (name.length <= 0) return null;
+
+  let avatarText: string = name.charAt(0);
+  const names = name.split(' ');
+  if (names.length > 1) {
+    avatarText = names[0].charAt(0) + names[1].charAt(0);
+  }
+  const hex = color || stringToHexColor(name);
   return <Avatar style={{ backgroundColor: hex }}>{avatarText}</Avatar>;
 };
 
