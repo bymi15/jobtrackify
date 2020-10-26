@@ -15,7 +15,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { actions, types } from '../../../store/ducks/api/auth';
 import { useCustomState, handleInputChange } from '../../../utils/customHooks';
 import { ThunkVoidAction, ThunkVoidDispatch } from '../../../store/types';
-import { createLoadingSelector } from '../../../store/selectors';
+import { createLoadingSelector } from '../../../store/ducks/loading';
 import { RootState } from '../../../store/ducks';
 import { Link as RouterLink } from 'react-router-dom';
 import Container from '@material-ui/core/Container';

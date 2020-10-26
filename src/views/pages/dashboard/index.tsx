@@ -4,10 +4,8 @@ import Loader from '../../../components/Loader';
 import { RootState } from '../../../store/ducks';
 import { actions as dashboardActions } from '../../../store/ducks/dashboard';
 import { actions, types } from '../../../store/ducks/api/board';
-import {
-  createErrorSelector,
-  createLoadingSelector,
-} from '../../../store/selectors';
+import { createLoadingSelector } from '../../../store/ducks/loading';
+import { createErrorSelector } from '../../../store/ducks/error';
 import { ThunkVoidAction, ThunkVoidDispatch } from '../../../store/types';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -26,7 +24,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { useConfirmDialog } from '../../../utils/ConfirmDialogProvider';
 import { IBoard } from '../../../store/models';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -114,6 +112,7 @@ const Dashboard: React.FC<PropsFromRedux> = ({
     showTrashIcon: {},
   });
   const confirm = useConfirmDialog();
+  const history = useHistory();
   const classes = useStyles();
 
   React.useEffect(() => {
@@ -140,6 +139,7 @@ const Dashboard: React.FC<PropsFromRedux> = ({
 
   const handleClick = (board: IBoard) => {
     dispatchSelectBoard(board);
+    history.push('/dashboard/board');
   };
 
   const handleDeleteBoard = async (
@@ -220,10 +220,6 @@ const Dashboard: React.FC<PropsFromRedux> = ({
     return <Loader />;
   }
 
-  if (selectedBoard) {
-    return <Redirect to="/dashboard/board" />;
-  }
-
   return (
     <Container className={classes.root}>
       <Typography variant="h5">My Boards</Typography>
@@ -261,11 +257,6 @@ const Dashboard: React.FC<PropsFromRedux> = ({
               </Paper>
             </Grid>
           ))}
-        <Grid item sm={6} md={3}>
-          <Paper elevation={2} className={classes.board}>
-            Board Test
-          </Paper>
-        </Grid>
         <Grid item sm={6} md={3}>
           <Paper
             onClick={handleOpenDialog}

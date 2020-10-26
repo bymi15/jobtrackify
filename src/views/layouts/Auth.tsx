@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../../store/ducks';
-import { createErrorSelector } from '../../store/selectors';
+import { createErrorSelector } from '../../store/ducks/error';
 import { showToast } from '../../utils/showToast';
 import { ThunkVoidAction, ThunkVoidDispatch } from '../../store/types';
 import { actions, types } from '../../store/ducks/api/auth';
