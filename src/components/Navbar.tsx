@@ -88,8 +88,7 @@ const Navbar: React.FC<Props> = ({ solid, auth, dispatchLogout }) => {
         onClick={handleMenu}
       >
         <LetterAvatar
-          firstName={auth.user && auth.user.firstName}
-          lastName={auth.user && auth.user.lastName}
+          name={auth.user ? auth.user.firstName + ' ' + auth.user.lastName : ''}
         />
       </IconButton>
       <Menu
