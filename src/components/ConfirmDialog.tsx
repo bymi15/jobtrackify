@@ -43,11 +43,11 @@ const ConfirmDialog: React.FC<Props> = ({
       <DialogActions>
         {variant === 'danger' ? (
           <React.Fragment>
-            <Button onClick={onSubmit} color="primary" autoFocus>
-              Yes
-            </Button>
             <Button onClick={onClose} color="primary">
               No
+            </Button>
+            <Button onClick={onSubmit} color="primary" autoFocus>
+              Yes
             </Button>
           </React.Fragment>
         ) : (
