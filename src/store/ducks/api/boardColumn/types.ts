@@ -1,1 +1,1 @@
-export const GET_BOARD_COLUMNS = 'board/GET_BOARD_COLUMNS';
+export const GET_BOARD_COLUMNS = 'boardColumn/GET_BOARD_COLUMNS';

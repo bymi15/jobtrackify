@@ -1,6 +1,6 @@
-export const GET_BOARD = 'boards/GET_BOARD';
-export const GET_BOARDS = 'boards/GET_BOARD';
-export const GET_BOARDS_USER = 'boards/GET_BOARDS_USER';
-export const CREATE_BOARD = 'boards/CREATE_BOARD';
-export const DELETE_BOARD = 'boards/DELETE_BOARD';
-export const UPDATE_BOARD = 'boards/UPDATE_BOARD';
+export const GET_BOARD = 'board/GET_BOARD';
+export const GET_BOARDS = 'board/GET_BOARD';
+export const GET_BOARDS_USER = 'board/GET_BOARDS_USER';
+export const CREATE_BOARD = 'board/CREATE_BOARD';
+export const DELETE_BOARD = 'board/DELETE_BOARD';
+export const UPDATE_BOARD = 'board/UPDATE_BOARD';

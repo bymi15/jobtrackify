@@ -4,7 +4,7 @@ import authHeader from '../../../utils/authHeader';
 import { ThunkVoidAction } from '../../../types';
 import * as types from './types';
 
-const baseUrl = '/api/boards';
+const baseUrl = '/api/boardColumns';
 
 export const getBoardColumns = (): ThunkVoidAction => (
   dispatch: Dispatch,
