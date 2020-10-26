@@ -10,7 +10,6 @@ import Avatar from '@material-ui/core/Avatar';
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
 import Moment from 'react-moment';
-import { GET_COMPANY } from '../../../../store/ducks/api/company/types';
 import LetterAvatar from '../../../../components/LetterAvatar';
 
 const useStyles = makeStyles({
