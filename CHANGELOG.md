@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/bymi15/JobTrackify/compare/v0.1.2...v0.2.0) (2020-10-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* **Dashboard:** add kanban board UI and retrieve jobs from API
+
+### Features
+
+* **boardColumnDucks:** add BoardColumn redux ducks ([cb89c02](https://github.com/bymi15/JobTrackify/commit/cb89c02d023411ededb7dd68681880373abe8b77))
+* **companyDucks:** add company ducks ([2977ec6](https://github.com/bymi15/JobTrackify/commit/2977ec609ded69dc4e90af1a072e9214a8223d3b))
+* **ConfirmDialog:** add ConfirmDialog async controller ([ef78386](https://github.com/bymi15/JobTrackify/commit/ef78386640a7a5fe946223f86903bffe210948e5))
+* **dashboard:** add dashboard page ([c41fbe2](https://github.com/bymi15/JobTrackify/commit/c41fbe239ca7ff3b490c7ab821cda26bd2dc439e))
+* **Dashboard:** add job kanban board ([a6d5ec1](https://github.com/bymi15/JobTrackify/commit/a6d5ec11d80cb6fcf692ff557db64772fa89b326))
+* **dashboardDucks:** add dashboard redux ducks ([7a97f41](https://github.com/bymi15/JobTrackify/commit/7a97f41b123e66e80691a8a275045126c002bb60))
+* **jobDucks:** add job ducks store ([77f8888](https://github.com/bymi15/JobTrackify/commit/77f8888b7e08da7fd7931b0a97750f919be2b3c6))
+* **models:** add models for added ducks ([cccc6c1](https://github.com/bymi15/JobTrackify/commit/cccc6c107a7bc393c4c1d135dc7bea8d7371d1fe))
+
 ### [0.1.2](https://github.com/bymi15/JobTrackify/compare/v0.1.1...v0.1.2) (2020-10-25)
 
 
