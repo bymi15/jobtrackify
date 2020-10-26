@@ -13,19 +13,17 @@ const reducer = (
   state: IJobState = initialState,
   action: ApiAction
 ): IJobState => {
+  let jobs;
   switch (action.type) {
     case `${types.CREATE_JOB}_SUCCESS`:
-      return state.jobs
-        ? {
-            ...state,
-            jobs: [action.response, ...state.jobs],
-            groupedJobs: groupJobsByColumn([action.response, ...state.jobs]),
-          }
-        : {
-            ...state,
-            jobs: [action.response],
-            groupedJobs: groupJobsByColumn(action.response),
-          };
+      jobs = !!state.jobs
+        ? [...state.jobs, action.response]
+        : [action.response];
+      return {
+        ...state,
+        jobs,
+        groupedJobs: groupJobsByColumn(jobs),
+      };
     case `${types.GET_JOB}_SUCCESS`:
       return {
         ...state,
@@ -46,8 +44,7 @@ const reducer = (
       };
     case `${types.DELETE_JOB}_SUCCESS`:
       const deletedId = action.extraData.id;
-      const jobs =
-        state.jobs && state.jobs.filter((job) => job.id !== deletedId);
+      jobs = state.jobs && state.jobs.filter((job) => job.id !== deletedId);
       let job = state.job;
       if (job && job.id === deletedId) {
         job = null;
