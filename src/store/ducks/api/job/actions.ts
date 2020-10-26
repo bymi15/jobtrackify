@@ -3,11 +3,11 @@ import { RootState } from '../..';
 import authHeader from '../../../utils/authHeader';
 import { ThunkVoidAction } from '../../../types';
 import * as types from './types';
-import { IJob } from '../../../models';
+import { IJobInput } from '../../../models';
 
 const baseUrl = '/api/jobs';
 
-export const createJob = (data: IJob): ThunkVoidAction => (
+export const createJob = (data: IJobInput): ThunkVoidAction => (
   dispatch: Dispatch,
   getState: () => RootState
 ) => {

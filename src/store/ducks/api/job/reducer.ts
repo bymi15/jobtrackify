@@ -19,10 +19,12 @@ const reducer = (
         ? {
             ...state,
             jobs: [action.response, ...state.jobs],
+            groupedJobs: groupJobsByColumn([action.response, ...state.jobs]),
           }
         : {
             ...state,
             jobs: [action.response],
+            groupedJobs: groupJobsByColumn(action.response),
           };
     case `${types.GET_JOB}_SUCCESS`:
       return {
@@ -50,10 +52,12 @@ const reducer = (
       if (job && job.id === deletedId) {
         job = null;
       }
+      const groupedJobs = jobs && groupJobsByColumn(jobs);
       return {
         ...state,
         job,
         jobs,
+        groupedJobs,
       };
     default:
       return state;
