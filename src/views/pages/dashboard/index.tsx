@@ -16,12 +16,7 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { useCustomState } from '../../../utils/customHooks';
 import { showToast } from '../../../utils/showToast';
 import Moment from 'react-moment';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import { useInputDialog } from '../../../utils/InputDialogProvider';
 import { useConfirmDialog } from '../../../utils/ConfirmDialogProvider';
 import { IBoard } from '../../../store/models';
 import { useHistory } from 'react-router-dom';
@@ -101,17 +96,15 @@ const Dashboard: React.FC<PropsFromRedux> = ({
   dispatchDeleteBoard,
   dispatchClearErrors,
   dispatchSelectBoard,
-  selectedBoard,
   boards,
   isLoading,
   error,
 }) => {
   const [state, setState] = useCustomState({
-    title: '',
-    dialogOpen: false,
     showTrashIcon: {},
   });
-  const confirm = useConfirmDialog();
+  const confirmDialog = useConfirmDialog();
+  const inputDialog = useInputDialog();
   const history = useHistory();
   const classes = useStyles();
 
@@ -147,74 +140,25 @@ const Dashboard: React.FC<PropsFromRedux> = ({
     id: string
   ) => {
     e.stopPropagation();
-    const shouldDelete = await confirm({
+    const shouldDelete = await confirmDialog({
       variant: 'danger',
       title: 'Are you sure?',
       description: 'Do you wish to delete the board?',
     });
-    console.log(shouldDelete);
     if (shouldDelete) {
       dispatchDeleteBoard(id);
     }
   };
 
-  const handleOpenDialog = () => {
-    setState({
-      dialogOpen: true,
+  const handleAddNewBoard = async () => {
+    const { value, result } = await inputDialog({
+      title: 'Add a board',
+      inputName: 'Board Title',
     });
+    if (result) {
+      dispatchCreateBoard(value);
+    }
   };
-
-  const handleCloseDialog = () => {
-    setState({
-      title: '',
-      dialogOpen: false,
-    });
-  };
-
-  const handleDialogTextChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    setState({
-      title: e.target.value,
-    });
-  };
-
-  const handleCreateBoard = () => {
-    dispatchCreateBoard(state.title);
-    handleCloseDialog();
-  };
-
-  const CreateBoardDialog = (
-    <Dialog
-      fullWidth
-      maxWidth="sm"
-      open={state.dialogOpen}
-      onClose={handleCloseDialog}
-      aria-labelledby="form-dialog-title"
-    >
-      <DialogTitle id="form-dialog-title">Add a board</DialogTitle>
-      <DialogContent>
-        <TextField
-          autoFocus
-          margin="dense"
-          id="title"
-          label="Board Title"
-          type="text"
-          value={state.title}
-          onChange={handleDialogTextChange}
-          fullWidth
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleCloseDialog} color="default">
-          Cancel
-        </Button>
-        <Button onClick={handleCreateBoard} color="primary">
-          Create
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
 
   if (isLoading) {
     return <Loader />;
@@ -223,7 +167,6 @@ const Dashboard: React.FC<PropsFromRedux> = ({
   return (
     <Container className={classes.root}>
       <Typography variant="h5">My Boards</Typography>
-      {CreateBoardDialog}
       <Grid className={classes.grid} container spacing={3}>
         {boards &&
           boards.length > 0 &&
@@ -259,7 +202,7 @@ const Dashboard: React.FC<PropsFromRedux> = ({
           ))}
         <Grid item sm={6} md={3}>
           <Paper
-            onClick={handleOpenDialog}
+            onClick={handleAddNewBoard}
             elevation={2}
             className={classes.boardAdd}
           >

@@ -54,7 +54,7 @@ const useConfirmDialog = () => {
   ) as ConfirmDialogContextType;
 
   const confirm = ({ ...options }) =>
-    new Promise((res) => {
+    new Promise<boolean>((res) => {
       openConfirmDialog({ actionCallback: res, ...options });
     });
 
