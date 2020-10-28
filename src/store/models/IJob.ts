@@ -5,7 +5,9 @@ export interface IJob {
   id: string;
   title: string;
   description?: string;
-  role: string;
+  postUrl?: string;
+  location?: string;
+  dateApplied?: string;
   board: IBoard;
   boardColumn: IBoardColumn;
   company: ICompany;
@@ -17,8 +19,6 @@ export interface IJob {
 
 export interface IJobInput {
   title: string;
-  description?: string;
-  role?: string;
   board: string;
   boardColumn: string;
   company: string;

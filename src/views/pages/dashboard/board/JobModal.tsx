@@ -172,7 +172,6 @@ const JobModal: React.FC<Props> = ({ open, onClose, job }) => {
                 <Grid item sm={9}>
                   <EditText
                     className={classes.editabletext}
-                    name="company"
                     value={job.company.name}
                     readonly
                   />
@@ -185,7 +184,7 @@ const JobModal: React.FC<Props> = ({ open, onClose, job }) => {
                 <Grid item sm={9}>
                   <EditText
                     className={classes.editabletext}
-                    name="company"
+                    name="title"
                     value={job.title}
                     placeholder="Enter a value"
                   />
@@ -193,15 +192,13 @@ const JobModal: React.FC<Props> = ({ open, onClose, job }) => {
               </Grid>
               <Grid container spacing={1}>
                 <Grid item sm={3}>
-                  <Typography className={classes.label}>City:</Typography>
+                  <Typography className={classes.label}>Location:</Typography>
                 </Grid>
                 <Grid item sm={9}>
                   <EditText
                     className={classes.editabletext}
-                    name="company"
-                    value={
-                      job.company.headquarter && job.company.headquarter.city
-                    }
+                    name="location"
+                    value={job.location}
                     placeholder="Enter a value"
                   />
                 </Grid>
@@ -215,8 +212,21 @@ const JobModal: React.FC<Props> = ({ open, onClose, job }) => {
                 <Grid item sm={9}>
                   <EditText
                     className={classes.editabletext}
-                    name="company"
+                    name="dateApplied"
                     value={job.dateApplied}
+                    placeholder="Enter a value"
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={1}>
+                <Grid item sm={3}>
+                  <Typography className={classes.label}>Post URL:</Typography>
+                </Grid>
+                <Grid item sm={9}>
+                  <EditText
+                    className={classes.editabletext}
+                    name="postUrl"
+                    value={job.postUrl}
                     placeholder="Enter a value"
                   />
                 </Grid>
