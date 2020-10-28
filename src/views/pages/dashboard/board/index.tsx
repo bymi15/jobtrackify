@@ -19,6 +19,9 @@ import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
+import JobModal from './JobModal';
+import Job from './Job';
+import { IJob } from '../../../../store/models';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -37,6 +40,7 @@ const Board: React.FC<PropsFromRedux> = ({
   dispatchGetJobsByBoard,
   dispatchClearErrors,
 }) => {
+  const [jobModal, setJobModal] = React.useState<IJob | null>(null);
   const classes = useStyles();
   React.useEffect(() => {
     if (selectedBoard) {
@@ -79,6 +83,13 @@ const Board: React.FC<PropsFromRedux> = ({
     <React.Fragment>
       <DragDropContext onDragEnd={handleDragEnd}>
         <Container className={classes.root} maxWidth="xl">
+          <JobModal
+            open={Boolean(jobModal)}
+            job={jobModal}
+            onClose={() => {
+              setJobModal(null);
+            }}
+          />
           <Grid container spacing={2}>
             {boardColumns &&
               boardColumns.length > 0 &&
@@ -86,8 +97,26 @@ const Board: React.FC<PropsFromRedux> = ({
                 <Grid key={boardColumn.id} item sm={6} md={3}>
                   <BoardColumn
                     boardColumn={boardColumn}
-                    jobs={jobs[boardColumn.id] || []}
-                  />
+                    jobCount={
+                      jobs && jobs[boardColumn.id]
+                        ? jobs[boardColumn.id].length
+                        : 0
+                    }
+                  >
+                    {jobs &&
+                      jobs[boardColumn.id] &&
+                      jobs[boardColumn.id].map((job: IJob, index: number) => (
+                        <div
+                          id={job.id}
+                          key={job.id}
+                          onClick={() => {
+                            setJobModal(job);
+                          }}
+                        >
+                          <Job job={job} index={index} />
+                        </div>
+                      ))}
+                  </BoardColumn>
                 </Grid>
               ))}
           </Grid>

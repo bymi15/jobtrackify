@@ -3,14 +3,17 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import 'react-perfect-scrollbar/dist/css/styles.css';
-import { ICompany, IJob } from '../../../../store/models';
+import { IJob } from '../../../../store/models';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import Avatar from '@material-ui/core/Avatar';
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
 import Moment from 'react-moment';
-import LetterAvatar from '../../../../components/LetterAvatar';
+import { actions } from '../../../../store/ducks/api/job';
+import { ThunkVoidAction, ThunkVoidDispatch } from '../../../../store/types';
+import { connect, ConnectedProps } from 'react-redux';
+import { useConfirmDialog } from '../../../../utils/ConfirmDialogProvider';
+import CompanyLogo from '../../../../components/CompanyLogo';
 
 const useStyles = makeStyles({
   root: {
@@ -41,16 +44,27 @@ const useStyles = makeStyles({
   },
 });
 
-interface Props {
+interface Props extends PropsFromRedux {
   job: IJob;
   index: number;
 }
 
-const Job: React.FC<Props> = ({ job, index }) => {
+const Job: React.FC<Props> = ({ job, index, dispatchDeleteJob }) => {
   const classes = useStyles();
   const [hovering, setHovering] = React.useState(false);
+  const confirmDialog = useConfirmDialog();
 
-  const deleteJob = (e: React.MouseEvent<{}, MouseEvent>, job: IJob) => {};
+  const deleteJob = async (e: React.MouseEvent<{}, MouseEvent>, job: IJob) => {
+    e.stopPropagation();
+    const shouldDelete = await confirmDialog({
+      variant: 'danger',
+      title: 'Are you sure?',
+      description: 'Do you wish to delete the job?',
+    });
+    if (shouldDelete) {
+      dispatchDeleteJob(job.id);
+    }
+  };
 
   return (
     <Draggable draggableId={job.id} index={index}>
@@ -65,19 +79,7 @@ const Job: React.FC<Props> = ({ job, index }) => {
         >
           <CardContent>
             <CardHeader
-              avatar={
-                (job.company as ICompany).logo ? (
-                  <Avatar
-                    alt="companylogo"
-                    src={(job.company as ICompany).logo}
-                  />
-                ) : (
-                  <LetterAvatar
-                    name={(job.company as ICompany).name}
-                    aria-label="company"
-                  />
-                )
-              }
+              avatar={<CompanyLogo company={job.company} />}
               action={
                 <IconButton
                   className={
@@ -91,11 +93,7 @@ const Job: React.FC<Props> = ({ job, index }) => {
                   <DeleteOutlineIcon />
                 </IconButton>
               }
-              title={
-                <span className={classes.title}>
-                  {(job.company as ICompany).name}
-                </span>
-              }
+              title={<span className={classes.title}>{job.company.name}</span>}
               subheader={<span className={classes.subTitle}>{job.title}</span>}
             />
             <CardContent className={classes.cardContent}>
@@ -110,4 +108,13 @@ const Job: React.FC<Props> = ({ job, index }) => {
   );
 };
 
-export default Job;
+const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
+  dispatchDeleteJob: (id: string): ThunkVoidAction =>
+    dispatch(actions.deleteJob(id)),
+});
+
+const connector = connect(null, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(Job);

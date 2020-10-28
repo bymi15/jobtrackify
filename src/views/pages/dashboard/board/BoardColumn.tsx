@@ -6,10 +6,10 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { IBoardColumn, IJob } from '../../../../store/models';
+import { IBoardColumn } from '../../../../store/models';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
-import Job from './Job';
+import AddJobDialog from './AddJobDialog';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -31,62 +31,59 @@ const useStyles = makeStyles((theme) =>
 
 interface Props {
   boardColumn: IBoardColumn;
-  jobs: IJob[];
+  jobCount: number;
+  children: any;
 }
 
-const BoardColumn: React.FC<Props> = ({ boardColumn, jobs }) => {
+const BoardColumn: React.FC<Props> = ({ boardColumn, jobCount, children }) => {
+  const [openAddJob, setOpenAddJob] = React.useState<boolean>(false);
   const classes = useStyles();
-  const openJobModal = (job: IJob) => {};
-  const openAddJobModal = () => {};
 
   return (
-    <Card>
-      <CardContent>
-        <Typography className={classes.title} color="textPrimary">
-          {boardColumn.title}
-        </Typography>
-        <Typography className={classes.subTitle} color="textSecondary">
-          {jobs && jobs.length} job{jobs.length !== 1 && 's'}
-        </Typography>
-        <Button
-          onClick={openAddJobModal}
-          variant="outlined"
-          color="primary"
-          startIcon={<AddIcon />}
-          fullWidth
-        >
-          ADD JOB
-        </Button>
-        <Droppable droppableId={boardColumn.id}>
-          {(provided: DroppableProvided) => (
-            <div
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              className={classes.marginTop}
-            >
-              <PerfectScrollbar>
-                <div className={classes.column}>
-                  {jobs &&
-                    jobs.length > 0 &&
-                    jobs.map((job, index) => (
-                      <div
-                        id={job.id}
-                        key={job.id}
-                        onClick={() => {
-                          openJobModal(job);
-                        }}
-                      >
-                        <Job job={job} index={index} />
-                      </div>
-                    ))}
-                  {provided.placeholder}
-                </div>
-              </PerfectScrollbar>
-            </div>
-          )}
-        </Droppable>
-      </CardContent>
-    </Card>
+    <React.Fragment>
+      <AddJobDialog
+        open={openAddJob}
+        onClose={() => {
+          setOpenAddJob(false);
+        }}
+        boardColumn={boardColumn}
+      />
+      <Card>
+        <CardContent>
+          <Typography className={classes.title} color="textPrimary">
+            {boardColumn.title}
+          </Typography>
+          <Typography className={classes.subTitle} color="textSecondary">
+            {jobCount} job{jobCount !== 1 && 's'}
+          </Typography>
+          <Button
+            onClick={() => setOpenAddJob(true)}
+            variant="outlined"
+            color="primary"
+            startIcon={<AddIcon />}
+            fullWidth
+          >
+            ADD JOB
+          </Button>
+          <Droppable droppableId={boardColumn.id}>
+            {(provided: DroppableProvided) => (
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                className={classes.marginTop}
+              >
+                <PerfectScrollbar>
+                  <div className={classes.column}>
+                    {children}
+                    {provided.placeholder}
+                  </div>
+                </PerfectScrollbar>
+              </div>
+            )}
+          </Droppable>
+        </CardContent>
+      </Card>
+    </React.Fragment>
   );
 };
 
