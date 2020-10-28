@@ -8,13 +8,15 @@ import * as React from 'react';
 
 export type callbackType = {
   value: string;
-  result: boolean;
+  hasResult: boolean;
 };
 
 export interface InputDialogOptions {
   title?: string;
   inputName?: string;
-  actionCallback?: ({ value, result }: callbackType) => void;
+  defaultValue?: string;
+  okText?: string;
+  actionCallback?: ({ value, hasResult }: callbackType) => void;
 }
 
 interface Props extends InputDialogOptions {
@@ -30,6 +32,8 @@ const InputDialog: React.FC<Props> = ({
   open,
   title,
   inputName,
+  defaultValue,
+  okText,
   onClose,
   onSubmit,
   onInputChange,
@@ -49,6 +53,7 @@ const InputDialog: React.FC<Props> = ({
           margin="dense"
           id={inputName}
           label={inputName}
+          defaultValue={defaultValue}
           type="text"
           onChange={onInputChange}
           fullWidth
@@ -59,7 +64,7 @@ const InputDialog: React.FC<Props> = ({
           Cancel
         </Button>
         <Button onClick={onSubmit} color="primary">
-          Create
+          {okText || 'OK'}
         </Button>
       </DialogActions>
     </Dialog>

@@ -21,6 +21,7 @@ const InputDialogProvider = ({ children }: IProps) => {
 
   const openInputDialog = (options: InputDialogOptions) => {
     setInputState(options);
+    setValue(options.defaultValue || '');
   };
 
   const handleChange = (
@@ -31,14 +32,14 @@ const InputDialogProvider = ({ children }: IProps) => {
 
   const handleClose = () => {
     if (inputState && inputState.actionCallback) {
-      inputState.actionCallback({ value: '', result: false });
+      inputState.actionCallback({ value: '', hasResult: false });
     }
     setInputState(null);
   };
 
   const handleSubmit = () => {
     if (inputState && inputState.actionCallback) {
-      inputState.actionCallback({ value, result: true });
+      inputState.actionCallback({ value, hasResult: true });
     }
     setInputState(null);
   };
