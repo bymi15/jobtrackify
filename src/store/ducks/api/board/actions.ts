@@ -85,6 +85,22 @@ export const deleteBoard = (id: string): ThunkVoidAction => (
   });
 };
 
+export const updateBoard = (id: string, title: string): ThunkVoidAction => (
+  dispatch: Dispatch,
+  getState: () => RootState
+) => {
+  dispatch({
+    type: 'API',
+    name: types.UPDATE_BOARD,
+    url: `${baseUrl}/${id}`,
+    requestData: {
+      method: 'PATCH',
+      headers: authHeader(getState()),
+      data: { title },
+    },
+  });
+};
+
 export const clearErrors = (): ThunkVoidAction => (dispatch: Dispatch) => {
   dispatch({
     type: `${types.GET_BOARD}_CLEARERR`,

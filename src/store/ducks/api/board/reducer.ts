@@ -1,7 +1,7 @@
 import { ApiAction } from '../../../types';
 import { IBoardState } from './index';
 import * as types from './types';
-
+import { clone } from 'lodash';
 const initialState: IBoardState = {
   board: null,
   boards: null,
@@ -45,6 +45,19 @@ const reducer = (
         ...state,
         board,
         boards,
+      };
+    case `${types.UPDATE_BOARD}_SUCCESS`:
+      const updatedId = action.response.id;
+      const updatedIndex =
+        state.boards &&
+        state.boards.findIndex((board) => board.id === updatedId);
+      const updatedBoards = clone(state.boards);
+      if (!!updatedIndex && !!updatedBoards) {
+        updatedBoards[updatedIndex] = action.response;
+      }
+      return {
+        ...state,
+        boards: updatedBoards,
       };
     default:
       return state;
