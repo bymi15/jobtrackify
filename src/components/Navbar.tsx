@@ -9,10 +9,10 @@ import { RootState } from '../store/ducks';
 import { ThunkVoidAction, ThunkVoidDispatch } from '../store/types';
 import { actions } from '../store/ducks/api/auth';
 import { Link as RouterLink } from 'react-router-dom';
-import LetterAvatar from './LetterAvatar';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles((theme) => ({
   nav: {
@@ -87,9 +87,7 @@ const Navbar: React.FC<Props> = ({ solid, auth, dispatchLogout }) => {
         aria-haspopup="true"
         onClick={handleMenu}
       >
-        <LetterAvatar
-          name={auth.user ? auth.user.firstName + ' ' + auth.user.lastName : ''}
-        />
+        <AccountCircle />
       </IconButton>
       <Menu
         id="menu-appbar"
@@ -137,7 +135,7 @@ const Navbar: React.FC<Props> = ({ solid, auth, dispatchLogout }) => {
             color="inherit"
             style={{ textDecoration: 'none' }}
           >
-            JobTrackify
+            JobScratch
           </Typography>
         </div>
         {auth.isAuthenticated ? userMenu : guestMenu}

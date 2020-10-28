@@ -13,6 +13,7 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import EditIcon from '@material-ui/icons/Edit';
 import { useCustomState } from '../../../utils/customHooks';
 import { showToast } from '../../../utils/showToast';
 import Moment from 'react-moment';
@@ -20,6 +21,11 @@ import { useInputDialog } from '../../../utils/InputDialogProvider';
 import { useConfirmDialog } from '../../../utils/ConfirmDialogProvider';
 import { IBoard } from '../../../store/models';
 import { useHistory } from 'react-router-dom';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -74,7 +80,7 @@ const useStyles = makeStyles((theme) =>
     grid: {
       marginTop: theme.spacing(1),
     },
-    deleteIcon: {
+    moreIcon: {
       float: 'right',
       color: '#796a6c',
       opacity: '0.6',
@@ -83,7 +89,7 @@ const useStyles = makeStyles((theme) =>
         opacity: '1',
       },
     },
-    deleteIconHidden: {
+    moreIconHidden: {
       float: 'right',
       opacity: '0',
     },
@@ -94,6 +100,7 @@ const Dashboard: React.FC<PropsFromRedux> = ({
   dispatchGetBoardsByUser,
   dispatchCreateBoard,
   dispatchDeleteBoard,
+  dispatchUpdateBoard,
   dispatchClearErrors,
   dispatchSelectBoard,
   boards,
@@ -101,7 +108,8 @@ const Dashboard: React.FC<PropsFromRedux> = ({
   error,
 }) => {
   const [state, setState] = useCustomState({
-    showTrashIcon: {},
+    showMoreIcon: {},
+    anchorEl: {},
   });
   const confirmDialog = useConfirmDialog();
   const inputDialog = useInputDialog();
@@ -120,13 +128,27 @@ const Dashboard: React.FC<PropsFromRedux> = ({
 
   const handleMouseEnter = (id: string) => {
     setState({
-      showTrashIcon: { [id]: true },
+      showMoreIcon: { [id]: true },
     });
   };
 
   const handleMouseLeave = () => {
     setState({
-      showTrashIcon: {},
+      showMoreIcon: {},
+    });
+  };
+
+  const handleOpenMenu = (e: React.MouseEvent<HTMLElement>, id: string) => {
+    e.stopPropagation();
+    setState({
+      anchorEl: { [id]: e.currentTarget },
+    });
+  };
+
+  const handleCloseMenu = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    e.stopPropagation();
+    setState({
+      anchorEl: {},
     });
   };
 
@@ -136,10 +158,11 @@ const Dashboard: React.FC<PropsFromRedux> = ({
   };
 
   const handleDeleteBoard = async (
-    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
     id: string
   ) => {
     e.stopPropagation();
+    handleCloseMenu(e);
     const shouldDelete = await confirmDialog({
       variant: 'danger',
       title: 'Are you sure?',
@@ -150,12 +173,29 @@ const Dashboard: React.FC<PropsFromRedux> = ({
     }
   };
 
+  const handleEditBoard = async (
+    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    board: IBoard
+  ) => {
+    e.stopPropagation();
+    handleCloseMenu(e);
+    const { value, hasResult } = await inputDialog({
+      title: 'Edit a board',
+      inputName: 'Board Title',
+      defaultValue: board.title,
+    });
+    if (hasResult) {
+      dispatchUpdateBoard(board.id, value);
+    }
+  };
+
   const handleAddNewBoard = async () => {
-    const { value, result } = await inputDialog({
+    const { value, hasResult } = await inputDialog({
       title: 'Add a board',
       inputName: 'Board Title',
+      okText: 'Create',
     });
-    if (result) {
+    if (hasResult) {
       dispatchCreateBoard(value);
     }
   };
@@ -183,16 +223,51 @@ const Dashboard: React.FC<PropsFromRedux> = ({
                   handleClick(board);
                 }}
               >
-                <DeleteOutlineIcon
+                <IconButton
                   className={
-                    state.showTrashIcon[board.id]
-                      ? classes.deleteIcon
-                      : classes.deleteIconHidden
+                    state.showMoreIcon[board.id]
+                      ? classes.moreIcon
+                      : classes.moreIconHidden
                   }
-                  onClick={(e) => {
-                    handleDeleteBoard(e, board.id);
+                  aria-label="user account"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={(e) => handleOpenMenu(e, board.id)}
+                >
+                  <MoreVertIcon />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={state.anchorEl[board.id]}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
                   }}
-                />
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(state.anchorEl[board.id])}
+                  onClose={handleCloseMenu}
+                >
+                  <MenuItem
+                    onClick={(e) => {
+                      handleEditBoard(e, board);
+                    }}
+                  >
+                    <EditIcon />
+                    <Box ml={1}>Edit</Box>
+                  </MenuItem>
+                  <MenuItem
+                    onClick={(e) => {
+                      handleDeleteBoard(e, board.id);
+                    }}
+                  >
+                    <DeleteOutlineIcon />
+                    <Box ml={1}>Delete</Box>
+                  </MenuItem>
+                </Menu>
                 <p className="title">{board.title}</p>
                 <p className="dateCreated">
                   <Moment format="DD/MM/YYYY">{board.createdAt}</Moment>
@@ -238,6 +313,8 @@ const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
     dispatch(actions.createBoard(title)),
   dispatchDeleteBoard: (id: string): ThunkVoidAction =>
     dispatch(actions.deleteBoard(id)),
+  dispatchUpdateBoard: (id: string, title: string): ThunkVoidAction =>
+    dispatch(actions.updateBoard(id, title)),
   dispatchClearErrors: (): ThunkVoidAction => dispatch(actions.clearErrors()),
   dispatchSelectBoard: (board: IBoard): ThunkVoidAction =>
     dispatch(dashboardActions.selectBoard(board)),

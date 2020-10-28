@@ -14,6 +14,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import BusinessIcon from '@material-ui/icons/Business';
 import LetterAvatar from './LetterAvatar';
 import Avatar from '@material-ui/core/Avatar';
+import CompanyLogo from './CompanyLogo';
 
 interface Props extends PropsFromRedux {
   className?: string;
@@ -65,17 +66,7 @@ const CompanySelect: React.FC<Props> = ({
             startAdornment: (
               <InputAdornment position="start">
                 {!!selectedCompany ? (
-                  !!selectedCompany.logo ? (
-                    <Avatar
-                      src={selectedCompany.logo}
-                      aria-label="company-avatar"
-                    />
-                  ) : (
-                    <LetterAvatar
-                      name={selectedCompany.name}
-                      aria-label="company-avatar"
-                    />
-                  )
+                  <CompanyLogo company={selectedCompany} />
                 ) : (
                   <BusinessIcon />
                 )}

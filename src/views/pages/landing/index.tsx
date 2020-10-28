@@ -41,7 +41,7 @@ const Landing: React.FC = () => {
     <div className={classes.root}>
       <div className={classes.mainTextWrapper}>
         <h1 className={classes.mainText}>
-          Welcome to <span>JobTrackify</span>
+          Welcome to <span>Job Scratch</span>
         </h1>
         <div>
           <Button
