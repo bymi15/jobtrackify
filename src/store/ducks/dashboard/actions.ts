@@ -8,7 +8,7 @@ export const selectBoard = (board: IBoard): ThunkVoidAction => (
 ) => {
   dispatch({
     type: types.SELECT_BOARD,
-    payload: board,
+    response: board,
   });
 };
 

@@ -1,4 +1,4 @@
-import { PayloadAction } from '../../types';
+import { ApiAction } from '../../types';
 import { IDashboardState } from './index';
 import * as types from './types';
 
@@ -8,13 +8,13 @@ const initialState: IDashboardState = {
 
 const reducer = (
   state: IDashboardState = initialState,
-  action: PayloadAction
+  action: ApiAction
 ): IDashboardState => {
   switch (action.type) {
     case types.SELECT_BOARD:
       return {
         ...state,
-        board: action.payload,
+        board: action.response,
       };
 
     case types.CLEAR_BOARD:
