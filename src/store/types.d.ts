@@ -12,10 +12,6 @@ interface ApiAction extends Action<string> {
   extraData?: any;
 }
 
-interface PayloadAction extends Action<string> {
-  payload?: any;
-}
-
 interface RouteComponent {
   path: string;
   component: React.FC<any>;
