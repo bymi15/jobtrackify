@@ -1,3 +1,5 @@
+import { clone, toPairs } from 'lodash';
+import { IJob } from '../../../models';
 import { ApiAction } from '../../../types';
 import { IJobState } from './index';
 import * as types from './types';
@@ -13,7 +15,7 @@ const reducer = (
   state: IJobState = initialState,
   action: ApiAction
 ): IJobState => {
-  let jobs;
+  let jobs, groupedJobs;
   switch (action.type) {
     case `${types.CREATE_JOB}_SUCCESS`:
       jobs = !!state.jobs
@@ -49,11 +51,27 @@ const reducer = (
       if (job && job.id === deletedId) {
         job = null;
       }
-      const groupedJobs = jobs && groupJobsByColumn(jobs);
+      groupedJobs = jobs && groupJobsByColumn(jobs);
       return {
         ...state,
         job,
         jobs,
+        groupedJobs,
+      };
+    case `${types.UPDATE_JOB}_SUCCESS`:
+    case `${types.MOVE_JOB}_SUCCESS`:
+      const updatedJob: IJob = action.response;
+      console.log(updatedJob);
+      let updatedIndex =
+        state.jobs && state.jobs.findIndex((job) => job.id === updatedJob.id);
+      const updatedJobs = clone(state.jobs);
+      if (!!updatedIndex && !!updatedJobs) {
+        updatedJobs[updatedIndex] = updatedJob;
+      }
+      groupedJobs = updatedJobs && groupJobsByColumn(updatedJobs);
+      return {
+        ...state,
+        jobs: updatedJobs,
         groupedJobs,
       };
     default:

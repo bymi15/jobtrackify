@@ -23,3 +23,11 @@ export interface IJobInput {
   boardColumn: string;
   company: string;
 }
+
+export interface IJobUpdate {
+  title?: string;
+  description?: string;
+  postUrl?: string;
+  location?: string;
+  dateApplied?: string;
+}

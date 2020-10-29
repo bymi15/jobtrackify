@@ -4,6 +4,7 @@ import authHeader from '../../../utils/authHeader';
 import { ThunkVoidAction } from '../../../types';
 import * as types from './types';
 import { IJobInput } from '../../../models';
+import { IJobUpdate } from '../../../models/IJob';
 
 const baseUrl = '/api/jobs';
 
@@ -97,6 +98,39 @@ export const deleteJob = (id: string): ThunkVoidAction => (
     },
     extraData: {
       id,
+    },
+  });
+};
+
+export const updateJob = (id: string, job: IJobUpdate): ThunkVoidAction => (
+  dispatch: Dispatch,
+  getState: () => RootState
+) => {
+  dispatch({
+    type: 'API',
+    name: types.UPDATE_JOB,
+    url: `${baseUrl}/${id}`,
+    requestData: {
+      method: 'PATCH',
+      headers: authHeader(getState()),
+      data: job,
+    },
+  });
+};
+
+export const moveJob = (
+  id: string,
+  boardColumn: string,
+  prevJobId: string
+): ThunkVoidAction => (dispatch: Dispatch, getState: () => RootState) => {
+  dispatch({
+    type: 'API',
+    name: types.MOVE_JOB,
+    url: `${baseUrl}/${id}/move`,
+    requestData: {
+      method: 'PATCH',
+      headers: authHeader(getState()),
+      data: { boardColumn, prevJobId },
     },
   });
 };
