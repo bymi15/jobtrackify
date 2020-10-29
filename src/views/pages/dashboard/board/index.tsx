@@ -22,6 +22,7 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import JobModal from './JobModal';
 import Job from './Job';
 import { IJob } from '../../../../store/models';
+import { isEqual } from 'lodash';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -38,6 +39,7 @@ const Board: React.FC<PropsFromRedux> = ({
   error,
   dispatchGetBoardColumns,
   dispatchGetJobsByBoard,
+  dispatchMoveJob,
   dispatchClearErrors,
 }) => {
   const [jobModal, setJobModal] = React.useState<IJob | null>(null);
@@ -51,25 +53,13 @@ const Board: React.FC<PropsFromRedux> = ({
 
   const handleDragEnd = (res: DropResult) => {
     const { destination, source, draggableId } = res;
-    if (destination) {
-      //valid drop
-      const data = {
-        order_index: destination.index,
-        board_list: { id: destination.droppableId },
-      };
-
-      // const board_list = this.props.boardlists.find(
-      //   (boardlist) => boardlist.id === parseInt(destination.droppableId)
-      // );
-      // const data_ui = {
-      //   droppableIdStart: source.droppableId,
-      //   droppableIdEnd: destination.droppableId,
-      //   droppableIndexStart: source.index,
-      //   droppableIndexEnd: destination.index,
-      //   board_list: board_list,
-      // };
-      // this.props.updateApplicationUI(data_ui); //front end update
-      // this.props.updateApplication(draggableId, data); //back end (database) update
+    if (destination && !isEqual(source, destination)) {
+      const boardColumn = destination.droppableId;
+      const prevJobId =
+        destination.index > 0
+          ? jobs[boardColumn][destination.index].id
+          : undefined;
+      dispatchMoveJob(draggableId, boardColumn, prevJobId);
     }
   };
 
@@ -155,6 +145,12 @@ const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
     dispatch(jobActions.getJobsByBoard(boardId)),
   dispatchGetBoardColumns: (): ThunkVoidAction =>
     dispatch(boardColumnActions.getBoardColumns()),
+  dispatchMoveJob: (
+    id: string,
+    boardColumn: string,
+    prevJobId?: string
+  ): ThunkVoidAction =>
+    dispatch(jobActions.moveJob(id, boardColumn, prevJobId)),
   dispatchClearErrors: (): ThunkVoidAction =>
     dispatch(boardColumnActions.clearErrors()),
 });
