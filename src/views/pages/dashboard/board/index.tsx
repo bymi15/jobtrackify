@@ -73,6 +73,19 @@ const Board: React.FC<PropsFromRedux> = ({
     }
   };
 
+  const memoJobModal = React.useMemo(
+    () => (
+      <JobModal
+        open={Boolean(jobModal)}
+        job={jobModal}
+        onClose={() => {
+          setJobModal(null);
+        }}
+      />
+    ),
+    [jobModal]
+  );
+
   if (isLoading) {
     return <Loader />;
   } else if (selectedBoard === null) {
@@ -83,13 +96,7 @@ const Board: React.FC<PropsFromRedux> = ({
     <React.Fragment>
       <DragDropContext onDragEnd={handleDragEnd}>
         <Container className={classes.root} maxWidth="xl">
-          <JobModal
-            open={Boolean(jobModal)}
-            job={jobModal}
-            onClose={() => {
-              setJobModal(null);
-            }}
-          />
+          <React.Fragment>{memoJobModal}</React.Fragment>
           <Grid container spacing={2}>
             {boardColumns &&
               boardColumns.length > 0 &&
