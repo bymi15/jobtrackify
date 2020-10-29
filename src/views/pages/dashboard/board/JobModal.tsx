@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IJob } from '../../../../store/models';
+import { IJob, IJobInput } from '../../../../store/models';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -18,8 +18,12 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import EditText from 'react-edit-text';
+import EditText, { onSaveProps } from 'react-edit-text';
 import TextField from '@material-ui/core/TextField';
+import { ThunkVoidAction, ThunkVoidDispatch } from '../../../../store/types';
+import { actions } from '../../../../store/ducks/api/job';
+import { connect, ConnectedProps } from 'react-redux';
+import { IJobUpdate } from '../../../../store/models/IJob';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -112,18 +116,32 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-interface Props {
+interface Props extends PropsFromRedux {
   open: boolean;
   job: IJob | null;
   onClose: () => void;
 }
 
-const JobModal: React.FC<Props> = ({ open, onClose, job }) => {
+const JobModal: React.FC<Props> = ({
+  open,
+  onClose,
+  job,
+  dispatchUpdateJob,
+}) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+
   const handleChange = (_event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
+
+  const handleSave = (data: onSaveProps) => {
+    const { name, value } = data;
+    if (job) {
+      dispatchUpdateJob(job.id, { [name]: value });
+    }
+  };
+
   return (
     job && (
       <Dialog open={open} onClose={onClose} aria-labelledby="job-modal">
@@ -187,6 +205,7 @@ const JobModal: React.FC<Props> = ({ open, onClose, job }) => {
                     name="title"
                     value={job.title}
                     placeholder="Enter a value"
+                    onSave={handleSave}
                   />
                 </Grid>
               </Grid>
@@ -200,6 +219,7 @@ const JobModal: React.FC<Props> = ({ open, onClose, job }) => {
                     name="location"
                     value={job.location}
                     placeholder="Enter a value"
+                    onSave={handleSave}
                   />
                 </Grid>
               </Grid>
@@ -215,6 +235,7 @@ const JobModal: React.FC<Props> = ({ open, onClose, job }) => {
                     name="dateApplied"
                     value={job.dateApplied}
                     placeholder="Enter a value"
+                    onSave={handleSave}
                   />
                 </Grid>
               </Grid>
@@ -228,6 +249,7 @@ const JobModal: React.FC<Props> = ({ open, onClose, job }) => {
                     name="postUrl"
                     value={job.postUrl}
                     placeholder="Enter a value"
+                    onSave={handleSave}
                   />
                 </Grid>
               </Grid>
@@ -253,16 +275,28 @@ const JobModal: React.FC<Props> = ({ open, onClose, job }) => {
             </Grid>
           </TabPanel>
           <TabPanel value={value} index={1}>
-            Item Two
+            <DialogContentText>
+              Notes section under development
+            </DialogContentText>
           </TabPanel>
           <TabPanel value={value} index={2}>
-            Item Three
+            <DialogContentText>
+              Interviews section under development
+            </DialogContentText>
           </TabPanel>
-          <DialogContentText></DialogContentText>
         </DialogContent>
       </Dialog>
     )
   );
 };
 
-export default JobModal;
+const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
+  dispatchUpdateJob: (id: string, job: IJobUpdate): ThunkVoidAction =>
+    dispatch(actions.updateJob(id, job)),
+});
+
+const connector = connect(null, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(JobModal);
