@@ -6,7 +6,7 @@ import { IJob } from '../../../models';
 export interface IJobState {
   job: IJob | null;
   jobs: IJob[] | null;
-  groupedJobs: any | null;
+  groupedJobs: any;
 }
 
 export { actions };

@@ -1,9 +1,16 @@
-import { clone } from 'lodash';
+import { cloneDeep } from 'lodash';
 import { IJob } from '../../../models';
 import { ApiAction } from '../../../types';
 import { IJobState } from './index';
 import * as types from './types';
-import { groupJobsByColumn } from './utils';
+import {
+  insertGroupedJob,
+  removeGroupedJob,
+  findAndDeleteJobById,
+  groupJobsByColumn,
+  moveGroupedJobs,
+  updateGroupedJob,
+} from './utils';
 
 const initialState: IJobState = {
   job: null,
@@ -18,13 +25,12 @@ const reducer = (
   let jobs, groupedJobs;
   switch (action.type) {
     case `${types.CREATE_JOB}_SUCCESS`:
-      jobs = !!state.jobs
-        ? [...state.jobs, action.response]
-        : [action.response];
+      const insertJob: IJob = action.response;
+      jobs = !!state.jobs ? [...state.jobs, insertJob] : [insertJob];
       return {
         ...state,
         jobs,
-        groupedJobs: groupJobsByColumn(jobs),
+        groupedJobs: insertGroupedJob(insertJob, state.groupedJobs),
       };
     case `${types.GET_JOB}_SUCCESS`:
       return {
@@ -39,39 +45,51 @@ const reducer = (
       };
     case `${types.GET_JOBS_BOARD}_SUCCESS`:
       const res = action.response;
+      console.log(groupJobsByColumn(res));
       return {
         ...state,
         jobs: res,
         groupedJobs: groupJobsByColumn(res),
       };
     case `${types.DELETE_JOB}_SUCCESS`:
-      const deletedId = action.extraData.id;
-      jobs = state.jobs && state.jobs.filter((job) => job.id !== deletedId);
-      let job = state.job;
-      if (job && job.id === deletedId) {
-        job = null;
-      }
-      groupedJobs = jobs && groupJobsByColumn(jobs);
+      const { deletedJob, newJobs } = findAndDeleteJobById(
+        action.extraData.id,
+        state.jobs || []
+      );
+      if (!deletedJob) return state;
       return {
         ...state,
-        job,
-        jobs,
-        groupedJobs,
+        job:
+          state.job && state.job.id === action.extraData.id ? null : state.job,
+        jobs: newJobs,
+        groupedJobs: removeGroupedJob(deletedJob, state.groupedJobs),
       };
     case `${types.UPDATE_JOB}_SUCCESS`:
-    case `${types.MOVE_JOB}_SUCCESS`:
       const updatedJob: IJob = action.response;
-      console.log(updatedJob);
-      let updatedIndex =
-        state.jobs && state.jobs.findIndex((job) => job.id === updatedJob.id);
-      const updatedJobs = clone(state.jobs);
-      if (!!updatedIndex && !!updatedJobs) {
-        updatedJobs[updatedIndex] = updatedJob;
-      }
-      groupedJobs = updatedJobs && groupJobsByColumn(updatedJobs);
+      if (!state.jobs) return state;
+      let updatedIndex = state.jobs.findIndex(
+        (job) => job.id === updatedJob.id
+      );
+      const updatedJobs = cloneDeep(state.jobs);
+      updatedJobs[updatedIndex] = updatedJob;
+      groupedJobs = updateGroupedJob(updatedJob, state.groupedJobs);
+      console.log(groupedJobs);
       return {
         ...state,
         jobs: updatedJobs,
+        groupedJobs,
+      };
+    case `${types.MOVE_JOB_UI}_SUCCESS`:
+      const { oldColumn, newColumn, oldIndex, newIndex } = action.response;
+      groupedJobs = moveGroupedJobs(
+        state.groupedJobs,
+        oldColumn,
+        newColumn,
+        oldIndex,
+        newIndex
+      );
+      return {
+        ...state,
         groupedJobs,
       };
     default:

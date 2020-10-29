@@ -6,3 +6,4 @@ export const CREATE_JOB = 'job/CREATE_JOB';
 export const DELETE_JOB = 'job/DELETE_JOB';
 export const UPDATE_JOB = 'job/UPDATE_JOB';
 export const MOVE_JOB = 'job/MOVE_JOB';
+export const MOVE_JOB_UI = 'job/MOVE_JOB_UI';

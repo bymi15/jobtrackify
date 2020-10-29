@@ -121,7 +121,7 @@ export const updateJob = (id: string, job: IJobUpdate): ThunkVoidAction => (
 export const moveJob = (
   id: string,
   boardColumn: string,
-  prevJobId: string
+  prevJobId?: string
 ): ThunkVoidAction => (dispatch: Dispatch, getState: () => RootState) => {
   dispatch({
     type: 'API',
@@ -132,6 +132,18 @@ export const moveJob = (
       headers: authHeader(getState()),
       data: { boardColumn, prevJobId },
     },
+  });
+};
+
+export const moveJobUI = (
+  oldColumn: string,
+  newColumn: string,
+  oldIndex: number,
+  newIndex: number
+): ThunkVoidAction => (dispatch: Dispatch) => {
+  dispatch({
+    type: `${types.MOVE_JOB_UI}_SUCCESS`,
+    response: { oldColumn, newColumn, oldIndex, newIndex },
   });
 };
 
