@@ -2,6 +2,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import * as React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import config from '../../../config';
 
 const bg = 'bg1.jpg';
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +42,7 @@ const Landing: React.FC = () => {
     <div className={classes.root}>
       <div className={classes.mainTextWrapper}>
         <h1 className={classes.mainText}>
-          Welcome to <span>Job Scratch</span>
+          Welcome to <span>{config.APP_NAME}</span>
         </h1>
         <div>
           <Button

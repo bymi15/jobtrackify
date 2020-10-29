@@ -9,6 +9,7 @@ const dev = {
 const shared = {
   ENV: process.env.NODE_ENV,
   HOME_URL: 'https://jobtrackify.herokuapp.com',
+  APP_NAME: 'Job Scratch',
 };
 
 const config =

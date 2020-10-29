@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Logo from '../assets/images/logo.png';
 import Avatar from '@material-ui/core/Avatar';
+import config from '../config';
 
 const useStyles = makeStyles((theme) => ({
   nav: {
@@ -140,7 +141,7 @@ const Navbar: React.FC<Props> = ({ solid, auth, dispatchLogout }) => {
             color="inherit"
             style={{ textDecoration: 'none' }}
           >
-            Job Scratch
+            {config.APP_NAME}
           </Typography>
         </div>
         {auth.isAuthenticated ? userMenu : guestMenu}

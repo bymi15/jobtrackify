@@ -28,7 +28,7 @@ const Copyright = () => (
   <Typography variant="body2" color="textPrimary" align="center">
     {'Copyright © '}
     <Link component={RouterLink} color="inherit" to={config.HOME_URL}>
-      JobScratch
+      {config.APP_NAME}
     </Link>{' '}
     {new Date().getFullYear()}
     {'.'}
