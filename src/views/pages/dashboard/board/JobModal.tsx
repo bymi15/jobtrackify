@@ -97,21 +97,24 @@ const useStyles = makeStyles((theme) =>
     root: {
       marginBottom: theme.spacing(2),
     },
+    modalContent: {
+      paddingBottom: theme.spacing(4),
+    },
     label: {
       paddingTop: '6px',
       fontSize: '16px',
-      fontWeight: 500,
+      fontWeight: 600,
     },
     editabletext: {
       fontSize: '16px',
-      fontWeight: 300,
+      fontWeight: 400,
     },
     textareaWrapper: {
       paddingTop: '10px !important',
     },
     textarea: {
       padding: theme.spacing(1),
-      fontWeight: 300,
+      fontWeight: 400,
     },
   })
 );
@@ -148,7 +151,7 @@ const JobModal: React.FC<Props> = ({
         <DialogTitle id="job-modal" onClose={onClose}>
           {job.company.name}
         </DialogTitle>
-        <DialogContent dividers>
+        <DialogContent className={classes.modalContent} dividers>
           <Grid
             className={classes.root}
             container

@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) =>
     board: {
       height: '140px',
       padding: theme.spacing(2),
-      color: theme.palette.primary.main,
+      color: theme.palette.text.primary,
       transition: '0.3s',
       cursor: 'pointer',
       '&:hover': {
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) =>
       },
       '& .title': {
         marginTop: theme.spacing(2),
-        fontWeight: 'bold',
+        fontWeight: '500',
         fontSize: '16px',
         display: '-webkit-box',
         '-webkit-line-clamp': 2,
