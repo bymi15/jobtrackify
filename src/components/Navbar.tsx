@@ -13,6 +13,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Logo from '../assets/images/logo.png';
+import Avatar from '@material-ui/core/Avatar';
 
 const useStyles = makeStyles((theme) => ({
   nav: {
@@ -21,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
   },
   navSolid: {
+    background: '#20232a',
     flexGrow: 1,
   },
   whiteText: {
@@ -40,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '2rem',
   },
   navTitle: {
+    marginLeft: theme.spacing(1),
     flexGrow: 1,
   },
 }));
@@ -127,6 +131,7 @@ const Navbar: React.FC<Props> = ({ solid, auth, dispatchLogout }) => {
             <MenuIcon className={classes.icon} />
           </IconButton>
         )}
+        <Avatar alt="logo" src={Logo} component={RouterLink} to="/" />
         <div className={classes.navTitle}>
           <Typography
             variant="h6"
@@ -135,7 +140,7 @@ const Navbar: React.FC<Props> = ({ solid, auth, dispatchLogout }) => {
             color="inherit"
             style={{ textDecoration: 'none' }}
           >
-            JobScratch
+            Job Scratch
           </Typography>
         </div>
         {auth.isAuthenticated ? userMenu : guestMenu}
