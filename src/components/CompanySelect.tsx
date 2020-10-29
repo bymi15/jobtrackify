@@ -12,8 +12,6 @@ import { showToast } from '../utils/showToast';
 import { ICompany } from '../store/models';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import BusinessIcon from '@material-ui/icons/Business';
-import LetterAvatar from './LetterAvatar';
-import Avatar from '@material-ui/core/Avatar';
 import CompanyLogo from './CompanyLogo';
 
 interface Props extends PropsFromRedux {
