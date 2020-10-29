@@ -40,6 +40,7 @@ const Board: React.FC<PropsFromRedux> = ({
   dispatchGetBoardColumns,
   dispatchGetJobsByBoard,
   dispatchMoveJob,
+  dispatchMoveJobUI,
   dispatchClearErrors,
 }) => {
   const [jobModal, setJobModal] = React.useState<IJob | null>(null);
@@ -51,14 +52,23 @@ const Board: React.FC<PropsFromRedux> = ({
     }
   }, [dispatchGetBoardColumns, dispatchGetJobsByBoard, selectedBoard]);
 
+  // TODO: need to add front-end cache for faster loading
+  // read article: https://codeburst.io/real-time-kanban-board-on-vue-js-431cfb8a8325
   const handleDragEnd = (res: DropResult) => {
     const { destination, source, draggableId } = res;
     if (destination && !isEqual(source, destination)) {
       const boardColumn = destination.droppableId;
+      const offset = destination.droppableId === source.droppableId ? 0 : -1;
       const prevJobId =
         destination.index > 0
-          ? jobs[boardColumn][destination.index].id
+          ? jobs[boardColumn][destination.index + offset].id
           : undefined;
+      dispatchMoveJobUI(
+        source.droppableId,
+        destination.droppableId,
+        source.index,
+        destination.index
+      );
       dispatchMoveJob(draggableId, boardColumn, prevJobId);
     }
   };
@@ -151,6 +161,13 @@ const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
     prevJobId?: string
   ): ThunkVoidAction =>
     dispatch(jobActions.moveJob(id, boardColumn, prevJobId)),
+  dispatchMoveJobUI: (
+    oldColumn: string,
+    newColumn: string,
+    oldIndex: number,
+    newIndex: number
+  ): ThunkVoidAction =>
+    dispatch(jobActions.moveJobUI(oldColumn, newColumn, oldIndex, newIndex)),
   dispatchClearErrors: (): ThunkVoidAction =>
     dispatch(boardColumnActions.clearErrors()),
 });

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IJob, IJobInput } from '../../../../store/models';
+import { IJob } from '../../../../store/models';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
