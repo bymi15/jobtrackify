@@ -38,6 +38,9 @@ const InputDialog: React.FC<Props> = ({
   onSubmit,
   onInputChange,
 }) => {
+  const handleKeyDown = (e: React.KeyboardEvent<any>) =>
+    e.key === 'Enter' && onSubmit();
+
   return (
     <Dialog
       fullWidth
@@ -55,6 +58,7 @@ const InputDialog: React.FC<Props> = ({
           label={inputName}
           defaultValue={defaultValue}
           type="text"
+          onKeyDown={handleKeyDown}
           onChange={onInputChange}
           fullWidth
         />
