@@ -1,4 +1,4 @@
-import { clone, toPairs } from 'lodash';
+import { clone } from 'lodash';
 import { IJob } from '../../../models';
 import { ApiAction } from '../../../types';
 import { IJobState } from './index';
