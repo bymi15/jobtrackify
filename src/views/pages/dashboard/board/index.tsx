@@ -52,8 +52,6 @@ const Board: React.FC<PropsFromRedux> = ({
     }
   }, [dispatchGetBoardColumns, dispatchGetJobsByBoard, selectedBoard]);
 
-  // TODO: need to add front-end cache for faster loading
-  // read article: https://codeburst.io/real-time-kanban-board-on-vue-js-431cfb8a8325
   const handleDragEnd = (res: DropResult) => {
     const { destination, source, draggableId } = res;
     if (destination && !isEqual(source, destination)) {
