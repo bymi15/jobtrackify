@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
   icons: {
-    color: '#9d9d9d',
+    color: '#bdbdbd',
   },
   right: {
     flex: 1,
@@ -92,12 +92,18 @@ const Topbar: React.FC<Props> = ({
     }
   };
 
+  const handleNavigate = (newPath: string) => {
+    if (newPath !== pathname) {
+      history.push(newPath);
+    }
+  };
+
   return (
     <Grid className={classes.topbar}>
       <div className={classes.dropdown}>
         <InputLabel id="board-select">Board:</InputLabel>
         <Select
-          style={{ width: 220 }}
+          style={{ width: 200 }}
           labelId="board-select"
           defaultValue={selectedBoard && selectedBoard.id}
           onChange={handleSelectBoard}
@@ -105,7 +111,9 @@ const Topbar: React.FC<Props> = ({
           <ListSubheader>My Boards:</ListSubheader>
           {boards &&
             boards.map((board: IBoard) => (
-              <MenuItem value={board.id}>{board.title}</MenuItem>
+              <MenuItem key={board.id} value={board.id}>
+                {board.title}
+              </MenuItem>
             ))}
           <Divider />
           <MenuItem
@@ -121,7 +129,12 @@ const Topbar: React.FC<Props> = ({
       </div>
       <div className={classes.icons}>
         <Tooltip title="Board" placement="bottom">
-          <IconButton aria-label="board" size="small">
+          <IconButton
+            aria-label="board"
+            size="small"
+            onClick={() => handleNavigate('/dashboard/board')}
+            style={{ marginRight: '10px' }}
+          >
             <AppsOutlinedIcon
               className={classNames(
                 classes.icon,
@@ -131,7 +144,12 @@ const Topbar: React.FC<Props> = ({
           </IconButton>
         </Tooltip>
         <Tooltip title="Map" placement="bottom">
-          <IconButton aria-label="map" size="small">
+          <IconButton
+            aria-label="map"
+            size="small"
+            onClick={() => handleNavigate('/dashboard/map')}
+            style={{ marginRight: '10px' }}
+          >
             <RoomOutlinedIcon
               className={classNames(
                 classes.icon,
@@ -141,7 +159,11 @@ const Topbar: React.FC<Props> = ({
           </IconButton>
         </Tooltip>
         <Tooltip title="Statistics" placement="bottom">
-          <IconButton aria-label="statistics" size="small">
+          <IconButton
+            aria-label="statistics"
+            size="small"
+            onClick={() => handleNavigate('/dashboard/statistics')}
+          >
             <PieChartOutlinedIcon
               className={classNames(
                 classes.icon,
