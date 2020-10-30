@@ -46,6 +46,7 @@ const Board: React.FC<PropsFromRedux> = ({
   const [jobModal, setJobModal] = React.useState<IJob | null>(null);
   const classes = useStyles();
   React.useEffect(() => {
+    //TODO: cache jobs by board
     if (selectedBoard) {
       dispatchGetBoardColumns();
       dispatchGetJobsByBoard(selectedBoard.id);
