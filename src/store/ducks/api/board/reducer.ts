@@ -2,6 +2,8 @@ import { ApiAction } from '../../../types';
 import { IBoardState } from './index';
 import * as types from './types';
 import { clone } from 'lodash';
+
+//TODO: cache jobs by board
 const initialState: IBoardState = {
   board: null,
   boards: null,
