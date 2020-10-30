@@ -45,7 +45,6 @@ const reducer = (
       };
     case `${types.GET_JOBS_BOARD}_SUCCESS`:
       const res = action.response;
-      console.log(groupJobsByColumn(res));
       return {
         ...state,
         jobs: res,
