@@ -2,6 +2,7 @@
   "name": "jobtrackify",
   "version": "0.2.0",
   "private": true,
+  "homepage": "https://www.jobtrackify.com",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
