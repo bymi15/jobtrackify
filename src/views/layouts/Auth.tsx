@@ -23,7 +23,7 @@ const Auth: React.FC<Props> = ({
     }
   }, [dispatchClearErrors, error]);
   if (auth.isAuthenticated) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to="/" />;
   } else {
     return <React.Fragment>{children}</React.Fragment>;
   }
