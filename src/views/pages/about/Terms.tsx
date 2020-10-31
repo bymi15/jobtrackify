@@ -5143,7 +5143,6 @@ const Terms: React.FC<Props> = () => {
                                             </span>
                                           </em>
                                         </span>{' '}
-                                        <a href="http://ec.europa.eu/odr" />
                                         <em>
                                           <span
                                             style={{

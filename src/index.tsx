@@ -12,6 +12,8 @@ import rootReducer from './store/ducks';
 import { ConfirmDialogProvider } from './utils/ConfirmDialogProvider';
 import { InputDialogProvider } from './utils/InputDialogProvider';
 import composeProviders from './utils/composeProviders';
+import ReactGA from 'react-ga';
+ReactGA.initialize('G-TPD5N3Z4B2');
 
 const composeEnhancers: any =
   config.ENV === 'production' ? compose : composeWithDevTools;
