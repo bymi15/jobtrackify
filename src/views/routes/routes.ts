@@ -1,8 +1,11 @@
 import async from '../../utils/AsyncImport';
-import Landing from '../pages/landing';
+import Landing from '../pages';
 import Login from '../pages/auth/Login';
 import { RouteComponent } from '../../store/types';
 import Register from '../pages/auth/Register';
+import About from '../pages/about/About';
+import Privacy from '../pages/about/Privacy';
+import Terms from '../pages/about/Terms';
 import DashboardMap from '../pages/dashboard/map';
 import DashboardStatistics from '../pages/dashboard/statistics';
 const Dashboard = async(() => import('../pages/dashboard'));
@@ -43,6 +46,21 @@ const registerRoute = {
   component: Register,
 };
 
+const aboutRoute = {
+  path: '/about',
+  component: About,
+};
+
+const privacyRoute = {
+  path: '/privacy',
+  component: Privacy,
+};
+
+const termsRoute = {
+  path: '/terms',
+  component: Terms,
+};
+
 export const landingRoutes: RouteComponent[] = [landingRoute];
 
 export const authRoutes: RouteComponent[] = [loginRoute, registerRoute];
@@ -52,4 +70,10 @@ export const dashboardRoutes: RouteComponent[] = [
   dashboardBoardRoute,
   dashboardMapRoute,
   dashboardStatisticsRoute,
+];
+
+export const infoRoutes: RouteComponent[] = [
+  aboutRoute,
+  privacyRoute,
+  termsRoute,
 ];

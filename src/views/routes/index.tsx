@@ -7,8 +7,18 @@ import {
 } from 'react-router-dom';
 import { RouteComponent } from '../../store/types';
 import ScrollToTop from '../../utils/ScrollToTop';
-import { landingRoutes, authRoutes, dashboardRoutes } from './routes';
-import { LandingLayout, DashboardLayout, AuthLayout } from '../layouts';
+import {
+  landingRoutes,
+  authRoutes,
+  dashboardRoutes,
+  infoRoutes,
+} from './routes';
+import {
+  LandingLayout,
+  DashboardLayout,
+  AuthLayout,
+  InfoLayout,
+} from '../layouts';
 import { ThunkVoidAction, ThunkVoidDispatch } from '../../store/types';
 import { actions } from '../../store/ducks/api/auth';
 import { RootState } from '../../store/ducks';
@@ -44,6 +54,7 @@ const Routes: React.FC<PropsFromRedux> = ({ auth, dispatchGetAuthUser }) => {
         {mapRoutes(AuthLayout, authRoutes)}
         {mapRoutes(LandingLayout, landingRoutes)}
         {mapRoutes(DashboardLayout, dashboardRoutes)}
+        {mapRoutes(InfoLayout, infoRoutes)}
         <Redirect to="/" />
       </Switch>
     </Router>

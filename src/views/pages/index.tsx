@@ -2,13 +2,13 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import * as React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import config from '../../../config';
+import config from '../../config';
 
 const bg = 'bg1.jpg';
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: '100vh',
-    backgroundImage: `url(${require('../../../assets/images/' + bg)})`,
+    backgroundImage: `url(${require('../../assets/images/' + bg)})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
   },
