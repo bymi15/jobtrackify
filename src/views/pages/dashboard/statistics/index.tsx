@@ -3,7 +3,11 @@ import * as React from 'react';
 interface Props {}
 
 const Statistics: React.FC<Props> = () => {
-  return null;
+  return (
+    <div>
+      <span>Stats page</span>
+    </div>
+  );
 };
 
 export default Statistics;

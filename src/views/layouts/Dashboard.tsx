@@ -30,14 +30,14 @@ const Dashboard: React.FC<Props & RouteComponentProps> = ({
   }, [auth.isAuthenticated]);
   if (auth.isAuthenticated) {
     return (
-      <React.Fragment>
+      <div style={{ overflow: 'hidden' }}>
         <CssBaseline />
         <Navbar solid />
         {location.pathname !== '/dashboard' && (
           <Topbar pathname={location.pathname} />
         )}
         {children}
-      </React.Fragment>
+      </div>
     );
   } else {
     return <Redirect to="/auth/login" />;

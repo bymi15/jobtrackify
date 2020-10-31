@@ -16,18 +16,29 @@ import Loader from '../../../../components/Loader';
 import { Redirect } from 'react-router-dom';
 import BoardColumn from './BoardColumn';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import JobModal from './JobModal';
 import Job from './Job';
 import { IJob } from '../../../../store/models';
 import { isEqual } from 'lodash';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      marginTop: theme.spacing(3),
+      margin: theme.spacing(2),
+      marginBottom: 0,
+      overflowY: 'hidden',
+    },
+    wrapper: {
+      display: 'flex',
+      flexWrap: 'nowrap',
+      marginBottom: theme.spacing(3),
+    },
+    column: {
+      width: '370px',
+      flex: '0 0 auto',
+      marginRight: theme.spacing(2),
     },
   })
 );
@@ -92,15 +103,15 @@ const Board: React.FC<PropsFromRedux> = ({
   }
 
   return (
-    <React.Fragment>
+    <div className={classes.root}>
       <DragDropContext onDragEnd={handleDragEnd}>
-        <Container className={classes.root} maxWidth="xl">
-          <React.Fragment>{memoJobModal}</React.Fragment>
-          <Grid container spacing={2}>
+        <PerfectScrollbar>
+          <div className={classes.wrapper}>
+            <React.Fragment>{memoJobModal}</React.Fragment>
             {boardColumns &&
               boardColumns.length > 0 &&
               boardColumns.map((boardColumn) => (
-                <Grid key={boardColumn.id} item sm={6} md={3}>
+                <div key={boardColumn.id} className={classes.column}>
                   <BoardColumn
                     boardColumn={boardColumn}
                     jobCount={
@@ -123,12 +134,12 @@ const Board: React.FC<PropsFromRedux> = ({
                         </div>
                       ))}
                   </BoardColumn>
-                </Grid>
+                </div>
               ))}
-          </Grid>
-        </Container>
+          </div>
+        </PerfectScrollbar>
       </DragDropContext>
-    </React.Fragment>
+    </div>
   );
 };
 

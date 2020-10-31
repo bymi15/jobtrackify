@@ -3,12 +3,10 @@ import Landing from '../pages/landing';
 import Login from '../pages/auth/Login';
 import { RouteComponent } from '../../store/types';
 import Register from '../pages/auth/Register';
+import DashboardMap from '../pages/dashboard/map';
+import DashboardStatistics from '../pages/dashboard/statistics';
 const Dashboard = async(() => import('../pages/dashboard'));
 const DashboardBoard = async(() => import('../pages/dashboard/board'));
-const DashboardMap = async(() => import('../pages/dashboard/map'));
-const DashboardStatistics = async(() =>
-  import('../pages/dashboard/statistics')
-);
 
 const landingRoute: RouteComponent = {
   path: '/',
