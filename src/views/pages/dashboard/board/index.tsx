@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) =>
     root: {
       margin: theme.spacing(2),
       marginBottom: 0,
-      overflowY: 'hidden',
     },
     wrapper: {
       display: 'flex',

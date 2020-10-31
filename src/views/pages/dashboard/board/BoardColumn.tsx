@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) =>
       marginTop: theme.spacing(1),
     },
     column: {
-      maxHeight: '65vh',
+      height: '65vh',
     },
   })
 );
