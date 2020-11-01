@@ -15,7 +15,7 @@ const Terms: React.FC<Props> = () => {
         <div style={{ textAlign: 'center' }}>
           <strong>
             <span style={{ fontSize: 26 }}>
-              <span data-custom-class="title">TERMS AND CONDITIONS</span>
+              <span data-custom-class="title">TERMS OF SERVICE</span>
             </span>
           </strong>
         </div>

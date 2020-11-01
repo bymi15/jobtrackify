@@ -17,7 +17,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { ThunkVoidAction, ThunkVoidDispatch } from '../../../store/types';
 import { handleInputChange, useCustomState } from '../../../utils/customHooks';
 import { actions, types } from '../../../store/ducks/api/auth';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { createLoadingSelector } from '../../../store/ducks/loading';
 import { RootState } from '../../../store/ducks';
 import Card from '@material-ui/core/Card';
@@ -27,7 +27,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 const Copyright = () => (
   <Typography variant="body2" color="textPrimary" align="center">
     {'Copyright © '}
-    <Link component={RouterLink} color="inherit" to={config.HOME_URL}>
+    <Link component={RouterLink} color="inherit" to="/">
       {config.APP_NAME}
     </Link>{' '}
     {new Date().getFullYear()}
@@ -157,7 +157,26 @@ const Register: React.FC<PropsFromRedux> = ({
                     control={
                       <Checkbox required value="terms" color="primary" />
                     }
-                    label="I agree to the terms and conditions"
+                    label={
+                      <label>
+                        I agree to the{' '}
+                        <Link
+                          component={RouterLink}
+                          to="/terms"
+                          variant="body2"
+                        >
+                          Terms of Service
+                        </Link>{' '}
+                        and{' '}
+                        <Link
+                          component={RouterLink}
+                          to="/privacy"
+                          variant="body2"
+                        >
+                          Privacy Policy
+                        </Link>
+                      </label>
+                    }
                   />
                 </Grid>
               </Grid>
@@ -173,8 +192,10 @@ const Register: React.FC<PropsFromRedux> = ({
               </Button>
               <Grid container justify="flex-end">
                 <Grid item>
+                  Already have an account?
                   <Link component={RouterLink} to="/auth/login" variant="body2">
-                    Already have an account? Login
+                    {' '}
+                    Login
                   </Link>
                 </Grid>
               </Grid>

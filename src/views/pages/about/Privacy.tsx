@@ -15,7 +15,7 @@ const Privacy: React.FC<Props> = () => {
         <div style={{ textAlign: 'center' }}>
           <strong>
             <span style={{ fontSize: 26 }}>
-              <span data-custom-class="title">PRIVACY NOTICE</span>
+              <span data-custom-class="title">PRIVACY POLICY</span>
             </span>
           </strong>
         </div>

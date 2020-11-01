@@ -27,7 +27,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 const Copyright = () => (
   <Typography variant="body2" color="textSecondary" align="center">
     {'Copyright © '}
-    <Link component={RouterLink} color="inherit" to={config.HOME_URL}>
+    <Link component={RouterLink} color="inherit" to="/">
       {config.APP_NAME}
     </Link>{' '}
     {new Date().getFullYear()}
@@ -87,7 +87,7 @@ const Login: React.FC<PropsFromRedux> = ({ dispatchLogin, isLoading }) => {
               <VpnKey />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Account Login
+              Login to your account
             </Typography>
             <form className={classes.form} onSubmit={handleFormSubmit}>
               <TextField
@@ -120,10 +120,6 @@ const Login: React.FC<PropsFromRedux> = ({ dispatchLogin, isLoading }) => {
                   handleInputChange(e, setState);
                 }}
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
               <Button
                 type="submit"
                 fullWidth
@@ -145,12 +141,14 @@ const Login: React.FC<PropsFromRedux> = ({ dispatchLogin, isLoading }) => {
                   </Link>
                 </Grid>
                 <Grid item>
+                  Don't have an account?
                   <Link
                     component={RouterLink}
                     to="/auth/register"
                     variant="body2"
                   >
-                    {"Don't have an account? Register"}
+                    {' '}
+                    Register
                   </Link>
                 </Grid>
               </Grid>
