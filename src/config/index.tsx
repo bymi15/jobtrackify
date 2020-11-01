@@ -1,5 +1,5 @@
 const prod = {
-  API_URL: 'https://jobtrackify.herokuapp.com',
+  API_URL: 'https://api.jobtrackify.com',
 };
 
 const dev = {
@@ -8,7 +8,7 @@ const dev = {
 
 const shared = {
   ENV: process.env.NODE_ENV,
-  HOME_URL: 'https://jobtrackify.herokuapp.com',
+  HOME_URL: 'https://www.jobtrackify.com',
   APP_NAME: 'Job Trackify',
 };
 
