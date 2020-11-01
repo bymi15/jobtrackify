@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.2](https://github.com/bymi15/JobTrackify/compare/v0.2.1...v0.2.2) (2020-11-01)
+
+
+### Bug Fixes
+
+* **config:** update prod backend api url ([9c357fc](https://github.com/bymi15/JobTrackify/commit/9c357fcc06cfc7758d8fa21e0cab12a0d78be4c1))
+
 ### [0.2.1](https://github.com/bymi15/JobTrackify/compare/v0.2.0...v0.2.1) (2020-11-01)
 
 
