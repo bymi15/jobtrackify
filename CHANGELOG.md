@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/bymi15/JobTrackify/compare/v0.2.0...v0.2.1) (2020-11-01)
+
+
+### Features
+
+* **assets:** add logo ([299aaf7](https://github.com/bymi15/JobTrackify/commit/299aaf742a652e522f92200aced0068535b2360d))
+* **board:** add handle drag and drop jobs event ([f7952db](https://github.com/bymi15/JobTrackify/commit/f7952dbba9a7b54aa336df58b6ef41b6a1960da0))
+* **board:** add move job functionality ([e53a3cd](https://github.com/bymi15/JobTrackify/commit/e53a3cd0259e8e5c0e9dad795daaaad63bb5151e))
+* **Board:** add horizontal scrolling to board ([22ed9e9](https://github.com/bymi15/JobTrackify/commit/22ed9e93fc4f74b5a8f4524e630a99281a435387))
+* **BoardColumnSelect:** add board column select component ([3f3d59e](https://github.com/bymi15/JobTrackify/commit/3f3d59e9171feb07b07e5a8f5d3270e2dd75f3c4))
+* **boardDucks:** add update board ducks ([cb56fd0](https://github.com/bymi15/JobTrackify/commit/cb56fd0411bbf9e334e3b8abc10800ce84a02c48))
+* **CompanySelect:** add company select with logo component ([83184e8](https://github.com/bymi15/JobTrackify/commit/83184e82e8fce0a04fefdc2ec07a57e95ed51b4d))
+* **dashboard:** add map and statistic pages ([cf48715](https://github.com/bymi15/JobTrackify/commit/cf487157169eeb93cda5975822dc88c71b33acc1))
+* **Info:** add Info layout ([fa238dd](https://github.com/bymi15/JobTrackify/commit/fa238dd0a853f8dbf47c827a333be8415dfe6abc))
+* **InputDialog:** add reusable input dialog component with async hook ([6606a65](https://github.com/bymi15/JobTrackify/commit/6606a652826d8fdbed347cf123fc0149382a13e0))
+* **jobDucks:** add moveJob functionality and util helpers ([3322382](https://github.com/bymi15/JobTrackify/commit/3322382143b7edb03ed30e3b37ce520783383b3f))
+* **jobDucks:** add updateJob and moveJob functionalities ([caa207e](https://github.com/bymi15/JobTrackify/commit/caa207e84b1a61e74a49a332915e294b17e00bb0))
+* **JobModal:** add save job functionality ([8d11a87](https://github.com/bymi15/JobTrackify/commit/8d11a876788bb28e2219faa792ae41b450c4bb0a))
+* **jobReducer:** add groupedJobs for create and delete actions ([8b35e1e](https://github.com/bymi15/JobTrackify/commit/8b35e1eefeb3692c997f78d8f54b69b8730c63eb))
+* **pages:** add Privacy and Terms and Conditions page ([2b63731](https://github.com/bymi15/JobTrackify/commit/2b637319a5c295b135b5d29237429013d99c51b3))
+* **Topbar:** add navigation functionality ([ad8bba2](https://github.com/bymi15/JobTrackify/commit/ad8bba2b022189dece9af36a750dd6cb3f2c0499))
+* **Topbar:** add topbar with select board dropdown ([8b7f0b8](https://github.com/bymi15/JobTrackify/commit/8b7f0b8c919ff4f974c15a16b6350992133c737a))
+
+
+### Bug Fixes
+
+* **groupJobsByColumn:** sort the jobs by ascending order of sortOrder after grouping ([ab98239](https://github.com/bymi15/JobTrackify/commit/ab98239e23fe09179c3ed3d62ff6646c9ad3c87a))
+
 ## [0.2.0](https://github.com/bymi15/JobTrackify/compare/v0.1.2...v0.2.0) (2020-10-26)
 
 
