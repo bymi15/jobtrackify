@@ -4,7 +4,7 @@ interface Props {}
 
 const Terms: React.FC<Props> = () => {
   return (
-    <div>
+    <div style={{ marginTop: '25px', marginBottom: '10px' }}>
       <style
         dangerouslySetInnerHTML={{
           __html:

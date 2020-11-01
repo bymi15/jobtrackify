@@ -4,7 +4,7 @@ interface Props {}
 
 const Privacy: React.FC<Props> = () => {
   return (
-    <div style={{ marginTop: '5px' }}>
+    <div style={{ marginTop: '25px', marginBottom: '10px' }}>
       <style
         dangerouslySetInnerHTML={{
           __html:

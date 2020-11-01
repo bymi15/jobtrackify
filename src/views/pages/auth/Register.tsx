@@ -17,7 +17,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { ThunkVoidAction, ThunkVoidDispatch } from '../../../store/types';
 import { handleInputChange, useCustomState } from '../../../utils/customHooks';
 import { actions, types } from '../../../store/ducks/api/auth';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { createLoadingSelector } from '../../../store/ducks/loading';
 import { RootState } from '../../../store/ducks';
 import Card from '@material-ui/core/Card';

@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     padding: theme.spacing(4),
-    backgroundColor: '#f9f8ff',
+    backgroundColor: '#f2f2f2',
   },
   marginBottom: {
     marginBottom: theme.spacing(2),
