@@ -25,6 +25,11 @@ const useStyles = makeStyles((theme) => ({
     '& span': {
       color: '#f50057',
     },
+    marginBottom: theme.spacing(1),
+  },
+  subText: {
+    color: '#fff',
+    fontSize: '1.2rem',
     marginBottom: theme.spacing(2),
   },
   containedButton: {
@@ -44,6 +49,9 @@ const Landing: React.FC = () => {
         <h1 className={classes.mainText}>
           Welcome to <span>{config.APP_NAME}</span>
         </h1>
+        <div className={classes.subText}>
+          Organise your job applications in a drag and drop dashboard.
+        </div>
         <div>
           <Button
             variant="contained"
