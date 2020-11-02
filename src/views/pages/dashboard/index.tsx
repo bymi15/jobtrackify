@@ -79,6 +79,7 @@ const useStyles = makeStyles((theme) =>
     },
     grid: {
       marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
     },
     moreIcon: {
       float: 'right',
