@@ -71,35 +71,33 @@ const Landing: React.FC = () => {
   return (
     <div className={classes.root}>
       <div className={classes.mainTextWrapper}>
-        <Grid container>
-          <Grid item className={classes.flex} justify="center" xs={12}>
-            <h1 className={classes.mainText}>
-              {useSmallView ? (
-                <React.Fragment>
-                  Welcome to
-                  <br />
-                  <span>{config.APP_NAME}</span>
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  Welcome to <span>{config.APP_NAME}</span>
-                </React.Fragment>
-              )}
-            </h1>
-          </Grid>
-          <Grid item className={responsiveClassname} justify="center" xs={12}>
-            <div className={classes.subText}>
-              Manage your job applications in an all-in-one platform
-            </div>
-          </Grid>
+        <Grid container className={classes.flex} justify="center">
+          <h1 className={classes.mainText}>
+            {useSmallView ? (
+              <React.Fragment>
+                Welcome to
+                <br />
+                <span>{config.APP_NAME}</span>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                Welcome to <span>{config.APP_NAME}</span>
+              </React.Fragment>
+            )}
+          </h1>
         </Grid>
-        <Grid item className={responsiveClassname} justify="center">
+        <Grid container className={responsiveClassname} justify="center">
+          <div className={classes.subText}>
+            Manage your job applications in an all-in-one platform
+          </div>
+        </Grid>
+        <Grid container className={responsiveClassname} justify="center">
           <Button
             variant="contained"
             className={classes.containedButton}
             component={RouterLink}
             to="/dashboard"
-            size="large"
+            size={useSmallView ? 'small' : 'large'}
             color="secondary"
           >
             View Dashboard
@@ -109,7 +107,7 @@ const Landing: React.FC = () => {
             className={classes.outlineButton}
             component={RouterLink}
             to="/about"
-            size="large"
+            size={useSmallView ? 'small' : 'large'}
           >
             Find out more
           </Button>
