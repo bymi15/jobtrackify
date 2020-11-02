@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) =>
     marginTop: {
       marginTop: theme.spacing(5),
     },
+    paddingBottom: {
+      paddingBottom: theme.spacing(5),
+    },
     mainTextWrapper: {
       display: 'flex',
       flexDirection: 'column',
@@ -52,7 +55,7 @@ interface Props {}
 const About: React.FC<Props> = () => {
   const classes = useStyles();
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" className={classes.paddingBottom}>
       <Grid container alignItems="center">
         <Grid item sm={12} md={6} className={classes.mainTextWrapper}>
           <h1 className={classes.mainText}>

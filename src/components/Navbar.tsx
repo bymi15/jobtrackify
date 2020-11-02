@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Logo from '../assets/images/logo.png';
 import Avatar from '@material-ui/core/Avatar';
+import Hidden from '@material-ui/core/Hidden';
 import config from '../config';
 
 const useStyles = makeStyles((theme) => ({
@@ -74,14 +75,16 @@ const Navbar: React.FC<Props> = ({ solid, auth, dispatchLogout }) => {
   };
 
   const guestMenu = (
-    <div className={classes.whiteText}>
-      <Button component={RouterLink} to="/auth/login">
-        Login
-      </Button>
-      <Button component={RouterLink} to="/auth/register">
-        Register
-      </Button>
-    </div>
+    <Hidden smDown>
+      <div className={classes.whiteText}>
+        <Button component={RouterLink} to="/auth/login">
+          Login
+        </Button>
+        <Button component={RouterLink} to="/auth/register">
+          Register
+        </Button>
+      </div>
+    </Hidden>
   );
 
   const userMenu = (

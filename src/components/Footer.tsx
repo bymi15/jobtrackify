@@ -125,7 +125,7 @@ const Footer: React.FC<Props> = () => {
           </Typography>
         </Grid>
       </Grid>
-      <Grid container justify="center">
+      <Grid container justify="center" className={classes.marginBottom}>
         <Grid item>
           <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
@@ -134,6 +134,14 @@ const Footer: React.FC<Props> = () => {
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container justify="center">
+        <Grid item>
+          <Typography variant="body1" style={{ fontSize: '12px' }}>
+            Company logos provided by{' '}
+            <Link href="https://clearbit.com">Clearbit</Link>
           </Typography>
         </Grid>
       </Grid>
