@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.4](https://github.com/bymi15/JobTrackify/compare/v0.2.3...v0.2.4) (2020-11-02)
+
+
+### Features
+
+* **cache:** add async cache storage for companies ([42e04bd](https://github.com/bymi15/JobTrackify/commit/42e04bd3e4929a71512fb7b36817d47484ee378e))
+
+
+### Bug Fixes
+
+* **companyReducer:** fix bug in set company from cache ([8b87df0](https://github.com/bymi15/JobTrackify/commit/8b87df05d3d53dcac04bb79bae72498f2cbae938))
+* **jobDucks:** fix utils function: insertGroupedJob bug ([0b73413](https://github.com/bymi15/JobTrackify/commit/0b7341358ed5404e6e6211ecc9538588c774a834))
+
 ### [0.2.3](https://github.com/bymi15/JobTrackify/compare/v0.2.2...v0.2.3) (2020-11-02)
 
 

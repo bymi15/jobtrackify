@@ -1,7 +1,7 @@
 {
   "name": "jobtrackify",
   "description": "Job Trackify - Manage your job applications in an all-in-one platform",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "private": true,
   "homepage": "https://www.jobtrackify.com",
   "dependencies": {
@@ -42,13 +42,13 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test:watch": "react-scripts test",
-    "lint": "eslint .",
+    "lint": "tslint .",
     "pretest": "npm run lint",
     "test": "react-scripts test --watchAll=false",
     "prerelease": "npm run build",
     "release": "standard-version",
     "eject": "react-scripts eject",
-    "predeploy": "npm install && npm run test && npm run release",
+    "predeploy": "npm install && npm run test",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
