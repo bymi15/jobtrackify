@@ -1,7 +1,7 @@
 {
   "name": "jobtrackify",
   "description": "Job Trackify - Manage your job applications in an all-in-one platform",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": true,
   "homepage": "https://www.jobtrackify.com",
   "dependencies": {
@@ -42,6 +42,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test:watch": "react-scripts test",
+    "lint": "eslint .",
+    "pretest": "npm run lint",
     "test": "react-scripts test --watchAll=false",
     "prerelease": "npm run build",
     "release": "standard-version",
