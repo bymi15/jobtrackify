@@ -25,12 +25,12 @@ const reducer = (
         ...state,
         companies: action.response,
       };
-    case `${types.SET_COMPANY}_SUCCESS`:
+    case types.SET_COMPANY:
       return {
         ...state,
         company: action.response,
       };
-    case `${types.SET_COMPANIES}_SUCCESS`:
+    case types.SET_COMPANIES:
       return {
         ...state,
         companies: action.response,
