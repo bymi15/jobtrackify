@@ -7,15 +7,15 @@ export const groupJobsByColumn = (jobs: IJob[]): any =>
 
 export const insertGroupedJob = (job: IJob, groupedJobs: any): any => {
   const colId = job.boardColumn.id;
-  let groupedJobsCopy = _.clone(groupedJobs);
-  if (groupedJobsCopy) {
+  if (!!groupedJobs) {
+    const groupedJobsCopy = _.clone(groupedJobs);
     groupedJobsCopy[colId] = !!groupedJobsCopy[colId]
       ? [...groupedJobsCopy[colId], job]
       : [job];
+    return groupedJobsCopy;
   } else {
-    groupedJobsCopy = { colId: [job] };
+    return { colId: [job] };
   }
-  return groupedJobsCopy;
 };
 
 export const removeGroupedJob = (job: IJob, groupedJobs: any): any => {
