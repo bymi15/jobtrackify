@@ -1,7 +1,7 @@
 {
   "name": "jobtrackify",
   "description": "Job Trackify - Manage your job applications in an all-in-one platform",
-  "version": "0.2.3",
+  "version": "0.2.2",
   "private": true,
   "homepage": "https://www.jobtrackify.com",
   "dependencies": {
@@ -32,6 +32,7 @@
     "react-redux-toastr": "^7.6.5",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.4",
+    "react-window": "^1.8.6",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "typescript": "~3.7.2"
@@ -44,7 +45,7 @@
     "prerelease": "npm run build",
     "release": "standard-version",
     "eject": "react-scripts eject",
-    "predeploy": "npm install && npm run test && npm run build",
+    "predeploy": "npm install && npm run test && npm run release",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
