@@ -1,5 +1,6 @@
 {
   "name": "jobtrackify",
+  "description": "Job Trackify - Manage your job applications in an all-in-one platform",
   "version": "0.2.2",
   "private": true,
   "homepage": "https://www.jobtrackify.com",

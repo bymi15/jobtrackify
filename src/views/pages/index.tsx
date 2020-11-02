@@ -1,8 +1,11 @@
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import * as React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import config from '../../config';
+import classNames from 'classnames';
 
 const bg = 'bg1.jpg';
 const useStyles = makeStyles((theme) => ({
@@ -11,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: `url(${require('../../assets/images/' + bg)})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
+  },
+  flex: {
+    display: 'flex',
   },
   mainTextWrapper: {
     display: 'flex',
@@ -25,11 +31,19 @@ const useStyles = makeStyles((theme) => ({
     '& span': {
       color: '#f50057',
     },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '2.7rem',
+    },
+    textAlign: 'center',
     marginBottom: theme.spacing(1),
   },
   subText: {
     color: '#fff',
     fontSize: '1.2rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.9rem',
+    },
+    textAlign: 'center',
     marginBottom: theme.spacing(2),
   },
   containedButton: {
@@ -39,20 +53,47 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     borderColor: '#fff',
   },
+  extraPadding: {
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+  },
 }));
 
 const Landing: React.FC = () => {
   const classes = useStyles();
+  const theme = useTheme();
+  const useSmallView = useMediaQuery(theme.breakpoints.down('xs'));
+  const responsiveClassname = classNames({
+    [classes.flex]: true,
+    [classes.extraPadding]: Boolean(useSmallView),
+  });
+
   return (
     <div className={classes.root}>
       <div className={classes.mainTextWrapper}>
-        <h1 className={classes.mainText}>
-          Welcome to <span>{config.APP_NAME}</span>
-        </h1>
-        <div className={classes.subText}>
-          Organise your job applications in a drag and drop dashboard.
-        </div>
-        <div>
+        <Grid container>
+          <Grid item className={classes.flex} justify="center" xs={12}>
+            <h1 className={classes.mainText}>
+              {useSmallView ? (
+                <React.Fragment>
+                  Welcome to
+                  <br />
+                  <span>{config.APP_NAME}</span>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  Welcome to <span>{config.APP_NAME}</span>
+                </React.Fragment>
+              )}
+            </h1>
+          </Grid>
+          <Grid item className={responsiveClassname} justify="center" xs={12}>
+            <div className={classes.subText}>
+              Manage your job applications in an all-in-one platform
+            </div>
+          </Grid>
+        </Grid>
+        <Grid item className={responsiveClassname} justify="center">
           <Button
             variant="contained"
             className={classes.containedButton}
@@ -72,7 +113,7 @@ const Landing: React.FC = () => {
           >
             Find out more
           </Button>
-        </div>
+        </Grid>
       </div>
     </div>
   );

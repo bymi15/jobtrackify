@@ -212,7 +212,7 @@ const Dashboard: React.FC<PropsFromRedux> = ({
         {boards &&
           boards.length > 0 &&
           boards.map((board) => (
-            <Grid key={board.id} item sm={6} md={3}>
+            <Grid key={board.id} item xs={12} sm={6} md={3}>
               <Paper
                 elevation={2}
                 className={classes.board}
@@ -276,7 +276,7 @@ const Dashboard: React.FC<PropsFromRedux> = ({
               </Paper>
             </Grid>
           ))}
-        <Grid item sm={6} md={3}>
+        <Grid item xs={12} sm={6} md={3}>
           <Paper
             onClick={handleAddNewBoard}
             elevation={2}

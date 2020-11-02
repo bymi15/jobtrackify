@@ -16,6 +16,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Logo from '../assets/images/logo.png';
 import Avatar from '@material-ui/core/Avatar';
 import Hidden from '@material-ui/core/Hidden';
+import Divider from '@material-ui/core/Divider';
 import config from '../config';
 
 const useStyles = makeStyles((theme) => ({
@@ -35,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
   },
   navWrapper: {
     width: '80%',
+    margin: '0 auto',
+  },
+  smallNavWrapper: {
+    width: '97%',
     margin: '0 auto',
   },
   iconButton: {
@@ -59,15 +64,22 @@ const Navbar: React.FC<Props> = ({ solid, auth, dispatchLogout }) => {
   const theme = useTheme();
   const useSmallView = useMediaQuery(theme.breakpoints.down('sm'));
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+  const [
+    anchorElMobile,
+    setAnchorElMobile,
+  ] = React.useState<null | HTMLElement>(null);
 
   const handleMenu = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(e.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleMenuMobile = (e: React.MouseEvent<HTMLElement>) => {
+    setAnchorElMobile(e.currentTarget);
   };
+
+  const handleClose = () => setAnchorEl(null);
+
+  const handleCloseMobile = () => setAnchorElMobile(null);
 
   const handleLogout = () => {
     setAnchorEl(null);
@@ -109,7 +121,7 @@ const Navbar: React.FC<Props> = ({ solid, auth, dispatchLogout }) => {
           vertical: 'top',
           horizontal: 'right',
         }}
-        open={open}
+        open={Boolean(anchorEl)}
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
@@ -125,15 +137,57 @@ const Navbar: React.FC<Props> = ({ solid, auth, dispatchLogout }) => {
       className={solid ? classes.navSolid : classes.nav}
       elevation={0}
     >
-      <Toolbar className={classes.navWrapper}>
+      <Toolbar
+        className={useSmallView ? classes.smallNavWrapper : classes.navWrapper}
+      >
         {useSmallView && (
-          <IconButton
-            className={classes.iconButton}
-            edge="start"
-            aria-label="menu"
-          >
-            <MenuIcon className={classes.icon} />
-          </IconButton>
+          <React.Fragment>
+            <IconButton
+              className={classes.iconButton}
+              edge="start"
+              aria-label="menu-mobile"
+              aria-controls="menu-mobile"
+              aria-haspopup="true"
+              onClick={handleMenuMobile}
+            >
+              <MenuIcon className={classes.icon} />
+            </IconButton>
+            <Menu
+              id="menu-mobile"
+              anchorEl={anchorElMobile}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElMobile)}
+              onClose={handleCloseMobile}
+            >
+              <MenuItem component={RouterLink} to="/">
+                Home
+              </MenuItem>
+              <Divider />
+              <MenuItem component={RouterLink} to="/about">
+                About
+              </MenuItem>
+              <Divider />
+              <MenuItem component={RouterLink} to="/dashboard">
+                Dashboard
+              </MenuItem>
+              <Divider />
+              <MenuItem component={RouterLink} to="/auth/login">
+                Login
+              </MenuItem>
+              <Divider />
+              <MenuItem component={RouterLink} to="/auth/register">
+                Register
+              </MenuItem>
+            </Menu>
+          </React.Fragment>
         )}
         <Avatar alt="logo" src={Logo} component={RouterLink} to="/" />
         <div className={classes.navTitle}>
