@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.3](https://github.com/bymi15/JobTrackify/compare/v0.2.2...v0.2.3) (2020-11-02)
+
+
+### Features
+
+* **About:** add about page content ([9ee3b47](https://github.com/bymi15/JobTrackify/commit/9ee3b476d273c4879853fd17d7f0c72d1bf15668))
+* **App:** improve responsiveness for small screen devices ([e3bba84](https://github.com/bymi15/JobTrackify/commit/e3bba8463cb3f1468b9226c16da97fbd702e6229))
+* **Footer:** add footer ([fcd88ad](https://github.com/bymi15/JobTrackify/commit/fcd88ad73cc5ab7bee737a1b990a11062fc5fe4f))
+
+
+### Bug Fixes
+
+* **cname:** fix CNAME ([fc14d2d](https://github.com/bymi15/JobTrackify/commit/fc14d2df8a5a3e2f3d94f5acc261186f3b4e472b))
+
 ### [0.2.2](https://github.com/bymi15/JobTrackify/compare/v0.2.1...v0.2.2) (2020-11-01)
 
 
