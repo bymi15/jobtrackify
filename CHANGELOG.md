@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.5](https://github.com/bymi15/JobTrackify/compare/v0.2.4...v0.2.5) (2020-11-03)
+
+
+### Features
+
+* add github pages SPA support for frontend routing ([ebc8c37](https://github.com/bymi15/JobTrackify/commit/ebc8c373257a0fd9e3749e5f0494615ffc3e9fc2))
+* **sitemap:** add sitemap ([4c88fbe](https://github.com/bymi15/JobTrackify/commit/4c88fbed54e533bfa13b672729ba0a31d28658a2))
+
 ### [0.2.4](https://github.com/bymi15/JobTrackify/compare/v0.2.3...v0.2.4) (2020-11-02)
 
 
