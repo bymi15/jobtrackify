@@ -42,8 +42,6 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test:watch": "react-scripts test",
-    "lint": "tslint .",
-    "pretest": "npm run lint",
     "test": "react-scripts test --watchAll=false",
     "prerelease": "npm run build",
     "release": "standard-version",
