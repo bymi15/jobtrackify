@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Redirect, withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Topbar from '../../components/Topbar';
 import Navbar from '../../components/Navbar';
@@ -19,29 +19,28 @@ const Dashboard: React.FC<Props & RouteComponentProps> = ({
   auth,
   location,
 }) => {
+  const history = useHistory();
+
   React.useEffect(() => {
-    if (!auth.isAuthenticated) {
-      showToast(
-        '',
-        'Please login or register to access the dashboard',
-        'warning'
-      );
+    if (!auth.isAuthenticated && !auth.token) {
+      showToast('', 'Please login to proceed', 'warning');
+      history.push('/auth/login');
     }
-  }, [auth.isAuthenticated]);
-  if (auth.isAuthenticated) {
-    return (
-      <div style={{ overflow: 'hidden' }}>
-        <CssBaseline />
-        <Navbar solid />
-        {location.pathname !== '/dashboard' && (
-          <Topbar pathname={location.pathname} />
-        )}
-        {children}
-      </div>
-    );
-  } else {
-    return <Redirect to="/auth/login" />;
-  }
+  }, [auth.isAuthenticated, auth.token, history]);
+
+  const showTopBar = (): boolean =>
+    location.pathname === '/dashboard/board' ||
+    location.pathname === '/dashboard/map' ||
+    location.pathname === '/dashboard/statistics';
+
+  return !!auth.isAuthenticated && !!auth.token ? (
+    <div style={{ overflow: 'hidden' }}>
+      <CssBaseline />
+      <Navbar solid />
+      {showTopBar() && <Topbar pathname={location.pathname} />}
+      {children}
+    </div>
+  ) : null;
 };
 
 const mapStateToProps = (state: RootState) => ({
