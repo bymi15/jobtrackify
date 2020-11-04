@@ -105,7 +105,7 @@ const Topbar: React.FC<Props> = ({
         <Select
           style={{ width: 200 }}
           labelId="board-select"
-          defaultValue={selectedBoard && selectedBoard.id}
+          defaultValue={selectedBoard ? selectedBoard.id : ''}
           onChange={handleSelectBoard}
         >
           <ListSubheader>My Boards:</ListSubheader>

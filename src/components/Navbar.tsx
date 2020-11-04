@@ -21,13 +21,15 @@ import config from '../config';
 
 const useStyles = makeStyles((theme) => ({
   nav: {
+    position: 'fixed',
     flexGrow: 1,
     background: 'none',
     color: '#fff',
   },
   navSolid: {
+    position: 'relative',
     background: '#20232a',
-    flexGrow: 1,
+    zIndex: theme.zIndex.drawer + 1,
   },
   whiteText: {
     '& * ': {
@@ -124,19 +126,19 @@ const Navbar: React.FC<Props> = ({ solid, auth, dispatchLogout }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>Settings</MenuItem>
+        <MenuItem component={RouterLink} to="/user/profile">
+          Profile
+        </MenuItem>
+        <MenuItem component={RouterLink} to="/user/settings">
+          Settings
+        </MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
   );
 
   return (
-    <AppBar
-      position={solid ? 'static' : 'fixed'}
-      className={solid ? classes.navSolid : classes.nav}
-      elevation={0}
-    >
+    <AppBar className={solid ? classes.navSolid : classes.nav} elevation={0}>
       <Toolbar
         className={useSmallView ? classes.smallNavWrapper : classes.navWrapper}
       >
