@@ -11,11 +11,13 @@ import {
   landingRoutes,
   authRoutes,
   dashboardRoutes,
+  userRoutes,
   infoRoutes,
 } from './routes';
 import {
   LandingLayout,
   DashboardLayout,
+  UserLayout,
   AuthLayout,
   InfoLayout,
 } from '../layouts';
@@ -54,6 +56,7 @@ const Routes: React.FC<PropsFromRedux> = ({ auth, dispatchGetAuthUser }) => {
         {mapRoutes(AuthLayout, authRoutes)}
         {mapRoutes(LandingLayout, landingRoutes)}
         {mapRoutes(DashboardLayout, dashboardRoutes)}
+        {mapRoutes(UserLayout, userRoutes)}
         {mapRoutes(InfoLayout, infoRoutes)}
         <Redirect to="/" />
       </Switch>

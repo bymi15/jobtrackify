@@ -8,6 +8,9 @@ import Privacy from '../pages/about/Privacy';
 import Terms from '../pages/about/Terms';
 import DashboardMap from '../pages/dashboard/map';
 import DashboardStatistics from '../pages/dashboard/statistics';
+import UserProfile from '../pages/user/Profile';
+import UserSettings from '../pages/user/Settings';
+import UserEmailPreferences from '../pages/user/EmailPreferences';
 const Dashboard = async(() => import('../pages/dashboard'));
 const DashboardBoard = async(() => import('../pages/dashboard/board'));
 
@@ -34,6 +37,21 @@ const dashboardMapRoute = {
 const dashboardStatisticsRoute = {
   path: '/dashboard/statistics',
   component: DashboardStatistics,
+};
+
+const userSettingsRoute = {
+  path: '/user/settings',
+  component: UserSettings,
+};
+
+const userProfileRoute = {
+  path: '/user/profile',
+  component: UserProfile,
+};
+
+const userEmailPreferencesRoute = {
+  path: '/user/email-preferences',
+  component: UserEmailPreferences,
 };
 
 const loginRoute = {
@@ -70,6 +88,12 @@ export const dashboardRoutes: RouteComponent[] = [
   dashboardBoardRoute,
   dashboardMapRoute,
   dashboardStatisticsRoute,
+];
+
+export const userRoutes: RouteComponent[] = [
+  userProfileRoute,
+  userSettingsRoute,
+  userEmailPreferencesRoute,
 ];
 
 export const infoRoutes: RouteComponent[] = [
