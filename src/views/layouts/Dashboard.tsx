@@ -1,32 +1,35 @@
 import * as React from 'react';
 import { withRouter, RouteComponentProps, useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import Topbar from '../../components/Topbar';
 import Navbar from '../../components/Navbar';
-import { IAuthState } from '../../store/ducks/api/auth';
+import { types } from '../../store/ducks/api/auth';
 import { RootState } from '../../store/ducks';
 import { CssBaseline } from '@material-ui/core';
 import { showToast } from '../../utils/showToast';
+import { createErrorSelector } from '../../store/ducks/error';
 
-interface Props {
+interface Props extends PropsFromRedux {
   children: React.ReactNode;
-  auth: IAuthState;
-  location: Location;
 }
 
 const Dashboard: React.FC<Props & RouteComponentProps> = ({
   children,
   auth,
   location,
+  error,
 }) => {
   const history = useHistory();
 
   React.useEffect(() => {
-    if (!auth.isAuthenticated && !auth.token) {
+    if (
+      (!auth.isAuthenticated && !auth.token) ||
+      (!auth.isAuthenticated && !!error)
+    ) {
       showToast('', 'Please login to proceed', 'warning');
       history.push('/auth/login');
     }
-  }, [auth.isAuthenticated, auth.token, history]);
+  }, [auth.isAuthenticated, auth.token, error, history]);
 
   const showTopBar = (): boolean =>
     location.pathname === '/dashboard/board' ||
@@ -43,8 +46,15 @@ const Dashboard: React.FC<Props & RouteComponentProps> = ({
   ) : null;
 };
 
+const errorSelector = createErrorSelector([types.GET_AUTH_USER]);
+
 const mapStateToProps = (state: RootState) => ({
   auth: state.auth,
+  error: errorSelector(state),
 });
 
-export default withRouter(connect(mapStateToProps)(Dashboard));
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default withRouter(connector(Dashboard));
