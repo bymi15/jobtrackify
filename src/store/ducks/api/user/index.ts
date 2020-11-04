@@ -3,13 +3,9 @@ import * as actions from './actions';
 import * as types from './types';
 import { IUser } from '../../../models';
 
-export interface IAuthState {
-  token: string | null;
-  isAuthenticated: boolean;
+export interface IUserState {
   user: IUser | null;
-  updatedProfile: boolean;
-  deletedAccount: boolean;
-  changedPassword: boolean;
+  users: IUser[] | null;
 }
 
 export { actions };

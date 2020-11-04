@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { reducer as toastr } from 'react-redux-toastr';
 import auth from './api/auth';
+import user from './api/user';
 import board from './api/board';
 import boardColumn from './api/boardColumn';
 import company from './api/company';
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   error,
   toastr,
   auth,
+  user,
   board,
   boardColumn,
   company,
