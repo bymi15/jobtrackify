@@ -21,9 +21,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { showToast } from '../../../utils/showToast';
 
 const Copyright = () => (
-  <Typography variant="body2" color="textSecondary" align="center">
+  <Typography variant="body2" color="textPrimary" align="center">
     {'Copyright © '}
     <Link component={RouterLink} color="inherit" to="/">
       {config.APP_NAME}
@@ -64,9 +65,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login: React.FC<PropsFromRedux> = ({ dispatchLogin, isLoading }) => {
+const Login: React.FC<PropsFromRedux> = ({
+  dispatchLogin,
+  isLoading,
+  dispatchResetFlags,
+  auth,
+}) => {
   const [state, setState] = useCustomState({ email: '', password: '' });
   const classes = useStyles();
+
+  React.useEffect(() => {
+    if (auth.deletedAccount) {
+      showToast(
+        '',
+        'Your account has been permanently deleted.',
+        'info',
+        dispatchResetFlags
+      );
+    }
+  }, [auth.deletedAccount, dispatchResetFlags]);
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -164,11 +181,13 @@ const Login: React.FC<PropsFromRedux> = ({ dispatchLogin, isLoading }) => {
 const loadingSelector = createLoadingSelector([types.LOGIN]);
 
 const mapStateToProps = (state: RootState) => ({
+  auth: state.auth,
   isLoading: loadingSelector(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
   dispatchLogin: (data: any): ThunkVoidAction => dispatch(actions.login(data)),
+  dispatchResetFlags: (): ThunkVoidAction => dispatch(actions.resetFlags()),
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
