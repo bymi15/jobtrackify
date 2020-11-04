@@ -24,6 +24,6 @@ export const showToast = (
       : type === 'danger'
       ? toastr.error
       : toastr.success;
-  if (callbackClear) options.onHideComplete = callbackClear;
+  if (callbackClear) options.onShowComplete = callbackClear;
   toastrInstance(title, msg, options);
 };
