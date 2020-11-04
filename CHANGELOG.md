@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/bymi15/JobTrackify/compare/v0.2.5...v0.3.0) (2020-11-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* add user profile and settings
+
+### Features
+
+* add user page ([c2c28f8](https://github.com/bymi15/JobTrackify/commit/c2c28f81fa23648c579ed293dc5707fdf9218124))
+* **authDucks:** add updateProfile, changePassword, functionality ([92f0736](https://github.com/bymi15/JobTrackify/commit/92f0736b44cb700021e1a35c8b7deafcb509fd0a))
+* **Sidebar:** add sidebar component ([456a671](https://github.com/bymi15/JobTrackify/commit/456a6713e80296486108d2171b271fd6a117f07c))
+* **UserLayout:** add User layout ([40f143e](https://github.com/bymi15/JobTrackify/commit/40f143eb50b72633487e6899049a0f8a6253fccd))
+* **UserRoutes:** update routes ([abd7949](https://github.com/bymi15/JobTrackify/commit/abd79497019fd29b0f4eddbdb8205c541cdd4df3))
+
+
+### Bug Fixes
+
+* **apiMiddleware:** remove ignoreErrors parameter causing bugs ([f902c14](https://github.com/bymi15/JobTrackify/commit/f902c141f512bb4c020908ec7f6825387851e76f))
+* **Dashboard:** update Dashboard layout ([b1aa223](https://github.com/bymi15/JobTrackify/commit/b1aa223a0a0777c9a573a80fb05b7789c99bffe4))
+* **showToast:** change callback to trigger immediately with onShowComplete ([903505c](https://github.com/bymi15/JobTrackify/commit/903505c36a84ffd86f73ea415c3549d057ea27e8))
+
 ### [0.2.5](https://github.com/bymi15/JobTrackify/compare/v0.2.4...v0.2.5) (2020-11-03)
 
 
