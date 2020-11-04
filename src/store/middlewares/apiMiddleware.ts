@@ -17,7 +17,7 @@ const apiMiddleware: Middleware<{}, RootState> = ({ dispatch }) => (next) => (
 
   if (action.type !== 'API') return;
 
-  const { name, url, requestData, ignoreErrors, extraData } = action;
+  const { name, url, requestData, extraData } = action;
   axios.defaults.baseURL = config.API_URL;
   axios.defaults.headers.common['Content-Type'] = 'application/json';
 
@@ -39,12 +39,10 @@ const apiMiddleware: Middleware<{}, RootState> = ({ dispatch }) => (next) => (
       dispatch({ type: `${name}_SUCCESS`, response: data, extraData });
     })
     .catch((err) => {
-      if (!ignoreErrors) {
-        const errorMessage = err.response
-          ? err.response.data.error
-          : 'An unknown error has occurred';
-        dispatch({ type: `${name}_FAILURE`, error: errorMessage });
-      }
+      const errorMessage = err.response
+        ? err.response.data.error
+        : 'An unknown error has occurred';
+      dispatch({ type: `${name}_FAILURE`, error: errorMessage });
     });
 };
 
