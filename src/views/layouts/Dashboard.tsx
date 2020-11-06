@@ -34,7 +34,8 @@ const Dashboard: React.FC<Props & RouteComponentProps> = ({
   const showTopBar = (): boolean =>
     location.pathname === '/dashboard/board' ||
     location.pathname === '/dashboard/map' ||
-    location.pathname === '/dashboard/statistics';
+    location.pathname === '/dashboard/notes' ||
+    location.pathname === '/dashboard/interviews';
 
   return !!auth.isAuthenticated && !!auth.token ? (
     <div style={{ overflow: 'hidden' }}>

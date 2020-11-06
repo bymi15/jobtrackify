@@ -5,7 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import AppsOutlinedIcon from '@material-ui/icons/AppsOutlined';
 import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
-import PieChartOutlinedIcon from '@material-ui/icons/PieChartOutlined';
+import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
+import NotesIcon from '@material-ui/icons/Notes';
 import { connect, ConnectedProps } from 'react-redux';
 import { ThunkVoidAction, ThunkVoidDispatch } from '../store/types';
 import { actions } from '../store/ducks/dashboard';
@@ -21,6 +22,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { useHistory } from 'react-router-dom';
+import Hidden from '@material-ui/core/Hidden';
 
 const useStyles = makeStyles((theme) => ({
   topbar: {
@@ -101,31 +103,33 @@ const Topbar: React.FC<Props> = ({
   return (
     <Grid className={classes.topbar}>
       <div className={classes.dropdown}>
-        <InputLabel id="board-select">Board:</InputLabel>
-        <Select
-          style={{ width: 200 }}
-          labelId="board-select"
-          defaultValue={selectedBoard ? selectedBoard.id : ''}
-          onChange={handleSelectBoard}
-        >
-          <ListSubheader>My Boards:</ListSubheader>
-          {boards &&
-            boards.map((board: IBoard) => (
-              <MenuItem key={board.id} value={board.id}>
-                {board.title}
-              </MenuItem>
-            ))}
-          <Divider />
-          <MenuItem
-            onClick={handleReturnToBoards}
-            style={{
-              marginTop: '8px',
-              paddingTop: '5px',
-            }}
+        <Hidden smDown>
+          <InputLabel id="board-select">Board:</InputLabel>
+          <Select
+            style={{ width: 200 }}
+            labelId="board-select"
+            defaultValue={selectedBoard ? selectedBoard.id : ''}
+            onChange={handleSelectBoard}
           >
-            <ArrowBackIosIcon style={{ fontSize: '14px' }} /> Return to boards
-          </MenuItem>
-        </Select>
+            <ListSubheader>My Boards:</ListSubheader>
+            {boards &&
+              boards.map((board: IBoard) => (
+                <MenuItem key={board.id} value={board.id}>
+                  {board.title}
+                </MenuItem>
+              ))}
+            <Divider />
+            <MenuItem
+              onClick={handleReturnToBoards}
+              style={{
+                marginTop: '8px',
+                paddingTop: '5px',
+              }}
+            >
+              <ArrowBackIosIcon style={{ fontSize: '14px' }} /> Return to boards
+            </MenuItem>
+          </Select>
+        </Hidden>
       </div>
       <div className={classes.icons}>
         <Tooltip title="Board" placement="bottom">
@@ -143,31 +147,46 @@ const Topbar: React.FC<Props> = ({
             />
           </IconButton>
         </Tooltip>
+        <Tooltip title="Interviews" placement="bottom">
+          <IconButton
+            aria-label="interviews"
+            size="small"
+            onClick={() => handleNavigate('/dashboard/interviews')}
+            style={{ marginRight: '10px' }}
+          >
+            <PeopleOutlineIcon
+              className={classNames(
+                classes.icon,
+                pathname === '/dashboard/interviews' && classes.iconActive
+              )}
+            />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Notes" placement="bottom">
+          <IconButton
+            aria-label="notes"
+            size="small"
+            onClick={() => handleNavigate('/dashboard/notes')}
+            style={{ marginRight: '10px' }}
+          >
+            <NotesIcon
+              className={classNames(
+                classes.icon,
+                pathname === '/dashboard/notes' && classes.iconActive
+              )}
+            />
+          </IconButton>
+        </Tooltip>
         <Tooltip title="Map" placement="bottom">
           <IconButton
             aria-label="map"
             size="small"
             onClick={() => handleNavigate('/dashboard/map')}
-            style={{ marginRight: '10px' }}
           >
             <RoomOutlinedIcon
               className={classNames(
                 classes.icon,
                 pathname === '/dashboard/map' && classes.iconActive
-              )}
-            />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Statistics" placement="bottom">
-          <IconButton
-            aria-label="statistics"
-            size="small"
-            onClick={() => handleNavigate('/dashboard/statistics')}
-          >
-            <PieChartOutlinedIcon
-              className={classNames(
-                classes.icon,
-                pathname === '/dashboard/statistics' && classes.iconActive
               )}
             />
           </IconButton>

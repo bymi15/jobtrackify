@@ -7,7 +7,8 @@ import About from '../pages/about/About';
 import Privacy from '../pages/about/Privacy';
 import Terms from '../pages/about/Terms';
 import DashboardMap from '../pages/dashboard/map';
-import DashboardStatistics from '../pages/dashboard/statistics';
+import DashboardInterviews from '../pages/dashboard/interviews';
+import DashboardNotes from '../pages/dashboard/notes';
 import UserProfile from '../pages/user/Profile';
 import UserSettings from '../pages/user/Settings';
 import UserEmailPreferences from '../pages/user/EmailPreferences';
@@ -34,9 +35,14 @@ const dashboardMapRoute = {
   component: DashboardMap,
 };
 
-const dashboardStatisticsRoute = {
-  path: '/dashboard/statistics',
-  component: DashboardStatistics,
+const dashboardInterviewsRoute = {
+  path: '/dashboard/interviews',
+  component: DashboardInterviews,
+};
+
+const dashboardNotesRoute = {
+  path: '/dashboard/notes',
+  component: DashboardNotes,
 };
 
 const userSettingsRoute = {
@@ -87,7 +93,8 @@ export const dashboardRoutes: RouteComponent[] = [
   dashboardRoute,
   dashboardBoardRoute,
   dashboardMapRoute,
-  dashboardStatisticsRoute,
+  dashboardInterviewsRoute,
+  dashboardNotesRoute,
 ];
 
 export const userRoutes: RouteComponent[] = [
