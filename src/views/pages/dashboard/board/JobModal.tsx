@@ -24,6 +24,7 @@ import { ThunkVoidAction, ThunkVoidDispatch } from '../../../../store/types';
 import { actions } from '../../../../store/ducks/api/job';
 import { connect, ConnectedProps } from 'react-redux';
 import { IJobUpdate } from '../../../../store/models/IJob';
+import { Button } from '@material-ui/core';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -116,6 +117,13 @@ const useStyles = makeStyles((theme) =>
       padding: theme.spacing(1),
       fontWeight: 400,
     },
+    noteTextarea: {
+      width: '100%',
+      fontFamily: 'Roboto',
+      padding: theme.spacing(1),
+      fontSize: '16px',
+      marginBottom: theme.spacing(1),
+    },
   })
 );
 
@@ -180,9 +188,9 @@ const JobModal: React.FC<Props> = ({
             textColor="primary"
             variant="fullWidth"
           >
-            <Tab label="Info" {...a11yProps(0)} />
+            <Tab label="Job Info" {...a11yProps(0)} />
             <Tab label="Notes" {...a11yProps(1)} />
-            <Tab label="Interviews" {...a11yProps(2)} />
+            <Tab label="Company" {...a11yProps(2)} />
           </Tabs>
           <TabPanel value={value} index={0}>
             <Grid container spacing={1}>
@@ -234,6 +242,7 @@ const JobModal: React.FC<Props> = ({
                 </Grid>
                 <Grid item sm={9}>
                   <EditText
+                    type="date"
                     className={classes.editabletext}
                     name="dateApplied"
                     value={job.dateApplied}
@@ -279,7 +288,29 @@ const JobModal: React.FC<Props> = ({
           </TabPanel>
           <TabPanel value={value} index={1}>
             <DialogContentText>
-              Notes section under development
+              <Grid container spacing={1}>
+                <Grid container spacing={1}>
+                  <Grid item sm={12}>
+                    <textarea
+                      className={classes.noteTextarea}
+                      rows={4}
+                      placeholder="Enter a note..."
+                    ></textarea>
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  spacing={1}
+                  direction="column"
+                  alignItems="flex-end"
+                >
+                  <Grid item sm={12}>
+                    <Button variant="contained" color="primary">
+                      Save
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
             </DialogContentText>
           </TabPanel>
           <TabPanel value={value} index={2}>
