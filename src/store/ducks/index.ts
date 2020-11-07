@@ -7,6 +7,7 @@ import boardColumn from './api/boardColumn';
 import company from './api/company';
 import job from './api/job';
 import dashboard from './dashboard';
+import map from './map';
 import loading from './loading';
 import error from './error';
 
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   company,
   job,
   dashboard,
+  map,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
