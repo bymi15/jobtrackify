@@ -33,6 +33,7 @@ const clear = async (): Promise<void> => {
 
 const remove = async (key: string): Promise<void> => {
   await localforage.removeItem(key);
+  await localforage.removeItem(getTimeKey(key));
 };
 
 export default {
