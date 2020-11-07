@@ -10,6 +10,7 @@ const shared = {
   ENV: process.env.NODE_ENV,
   HOME_URL: 'https://www.jobtrackify.com',
   APP_NAME: 'Job Trackify',
+  GOOGLE_API_KEY: process.env.REACT_APP_GOOGLE_API_KEY,
 };
 
 const config =
