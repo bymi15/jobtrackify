@@ -21,6 +21,10 @@ const useStyles = makeStyles((theme) =>
       width: theme.spacing(3),
       height: theme.spacing(3),
     },
+    md: {
+      width: theme.spacing(5),
+      height: theme.spacing(5),
+    },
     lg: {
       width: theme.spacing(7),
       height: theme.spacing(7),
@@ -35,7 +39,7 @@ const useStyles = makeStyles((theme) =>
 interface Props {
   name: string;
   color?: string;
-  size?: 'sm' | 'lg' | 'xl';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
 const LetterAvatar: React.FC<Props> = ({ name, color, size }) => {

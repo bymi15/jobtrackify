@@ -6,7 +6,7 @@ import LetterAvatar from './LetterAvatar';
 
 interface Props {
   company: ICompany;
-  size?: 'sm' | 'lg' | 'xl';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
 const useStyles = makeStyles((theme) =>
@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme) =>
     sm: {
       width: theme.spacing(3),
       height: theme.spacing(3),
+    },
+    md: {
+      width: theme.spacing(5),
+      height: theme.spacing(5),
     },
     lg: {
       width: theme.spacing(7),
