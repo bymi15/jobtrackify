@@ -18,6 +18,7 @@ import CompanyLogo from '../../../../components/CompanyLogo';
 const useStyles = makeStyles({
   root: {
     cursor: 'grab',
+    marginBottom: '5px',
   },
   deleteIcon: {
     opacity: 1,
