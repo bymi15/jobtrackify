@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.1](https://github.com/bymi15/JobTrackify/compare/v0.3.0...v0.3.1) (2020-11-07)
+
+
+### Features
+
+* **Map:** add map page ([21fbd14](https://github.com/bymi15/JobTrackify/commit/21fbd14b7e190e4cd4409341827bdf6f98c23b6d))
+* **mapDucks:** add map ducks ([1964e5f](https://github.com/bymi15/JobTrackify/commit/1964e5f770c3d3438fbd25831128b767418a9b5e))
+
 ## [0.3.0](https://github.com/bymi15/JobTrackify/compare/v0.2.5...v0.3.0) (2020-11-04)
 
 
