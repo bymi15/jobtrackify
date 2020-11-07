@@ -1,3 +1,4 @@
+import cache from '../../cache';
 import { ApiAction } from '../../types';
 import { IDashboardState } from './index';
 import * as types from './types';
@@ -12,15 +13,16 @@ const reducer = (
 ): IDashboardState => {
   switch (action.type) {
     case types.SELECT_BOARD:
+      cache.set('selectedBoard', action.response);
       return {
         ...state,
         board: action.response,
       };
 
-    case types.CLEAR_BOARD:
+    case types.GET_SELECTED_BOARD_CACHE:
       return {
         ...state,
-        board: null,
+        board: action.response,
       };
 
     default:

@@ -47,21 +47,12 @@ const Board: React.FC<PropsFromRedux> = ({
   boardColumns,
   isLoading,
   error,
-  dispatchGetBoardColumns,
-  dispatchGetJobsByBoard,
   dispatchMoveJob,
   dispatchMoveJobUI,
   dispatchClearErrors,
 }) => {
   const [jobModal, setJobModal] = React.useState<IJob | null>(null);
   const classes = useStyles();
-  React.useEffect(() => {
-    //TODO: cache jobs by board
-    if (selectedBoard) {
-      dispatchGetBoardColumns();
-      dispatchGetJobsByBoard(selectedBoard.id);
-    }
-  }, [dispatchGetBoardColumns, dispatchGetJobsByBoard, selectedBoard]);
 
   const handleDragEnd = (res: DropResult) => {
     const { destination, source, draggableId } = res;
@@ -160,10 +151,6 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
-  dispatchGetJobsByBoard: (boardId: string): ThunkVoidAction =>
-    dispatch(jobActions.getJobsByBoard(boardId)),
-  dispatchGetBoardColumns: (): ThunkVoidAction =>
-    dispatch(boardColumnActions.getBoardColumns()),
   dispatchMoveJob: (
     id: string,
     boardColumn: string,

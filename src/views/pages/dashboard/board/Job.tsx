@@ -63,7 +63,7 @@ const Job: React.FC<Props> = ({ job, index, dispatchDeleteJob }) => {
       description: 'Do you wish to delete the job?',
     });
     if (shouldDelete) {
-      dispatchDeleteJob(job.id);
+      dispatchDeleteJob(job);
     }
   };
 
@@ -110,8 +110,8 @@ const Job: React.FC<Props> = ({ job, index, dispatchDeleteJob }) => {
 };
 
 const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
-  dispatchDeleteJob: (id: string): ThunkVoidAction =>
-    dispatch(actions.deleteJob(id)),
+  dispatchDeleteJob: (job: IJob): ThunkVoidAction =>
+    dispatch(actions.deleteJob(job)),
 });
 
 const connector = connect(null, mapDispatchToProps);

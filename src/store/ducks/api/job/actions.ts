@@ -4,7 +4,8 @@ import authHeader from '../../../utils/authHeader';
 import { ThunkVoidAction } from '../../../types';
 import * as types from './types';
 import { IJobInput } from '../../../models';
-import { IJobUpdate } from '../../../models/IJob';
+import { IJob, IJobUpdate } from '../../../models/IJob';
+import cache from '../../../cache';
 
 const baseUrl = '/api/jobs';
 
@@ -73,31 +74,37 @@ export const getJobsByBoard = (boardId: string): ThunkVoidAction => (
   dispatch: Dispatch,
   getState: () => RootState
 ) => {
-  dispatch({
-    type: 'API',
-    name: types.GET_JOBS_BOARD,
-    url: `${baseUrl}/board/${boardId}`,
-    requestData: {
-      method: 'GET',
-      headers: authHeader(getState()),
-    },
-  });
+  cache.get(
+    'jobsByBoard',
+    () =>
+      dispatch({
+        type: 'API',
+        name: types.GET_JOBS_BOARD,
+        url: `${baseUrl}/board/${boardId}`,
+        requestData: {
+          method: 'GET',
+          headers: authHeader(getState()),
+        },
+      }),
+    (item: unknown) =>
+      dispatch({ type: types.SET_JOBS_BOARD_CACHE, response: item })
+  );
 };
 
-export const deleteJob = (id: string): ThunkVoidAction => (
+export const deleteJob = (job: IJob): ThunkVoidAction => (
   dispatch: Dispatch,
   getState: () => RootState
 ) => {
   dispatch({
     type: 'API',
     name: types.DELETE_JOB,
-    url: `${baseUrl}/${id}`,
+    url: `${baseUrl}/${job.id}`,
     requestData: {
       method: 'DELETE',
       headers: authHeader(getState()),
     },
     extraData: {
-      id,
+      id: job.id,
     },
   });
 };
