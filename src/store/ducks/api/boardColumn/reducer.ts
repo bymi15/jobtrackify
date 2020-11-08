@@ -16,11 +16,8 @@ const reducer = (
         ...state,
         boardColumns: action.response,
       };
-    case types.SET_BOARD_COLUMNS_CACHE:
-      return {
-        ...state,
-        boardColumns: action.response,
-      };
+    case types.CLEAR_BOARD_COLUMNS:
+      return initialState;
     default:
       return state;
   }

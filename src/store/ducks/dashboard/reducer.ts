@@ -1,3 +1,4 @@
+import { PURGE } from 'redux-persist';
 import { ApiAction } from '../../types';
 import { IDashboardState } from './index';
 import * as types from './types';
@@ -11,6 +12,8 @@ const reducer = (
   action: ApiAction
 ): IDashboardState => {
   switch (action.type) {
+    case PURGE:
+      return initialState;
     case types.SELECT_BOARD:
       return {
         ...state,

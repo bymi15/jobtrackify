@@ -22,16 +22,8 @@ const reducer = (
         ...state,
         companies: action.response,
       };
-    case types.SET_COMPANY:
-      return {
-        ...state,
-        company: action.response,
-      };
-    case types.SET_COMPANIES:
-      return {
-        ...state,
-        companies: action.response,
-      };
+    case types.CLEAR_COMPANIES:
+      return initialState;
     default:
       return state;
   }

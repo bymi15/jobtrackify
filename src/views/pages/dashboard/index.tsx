@@ -118,8 +118,10 @@ const Dashboard: React.FC<PropsFromRedux> = ({
   const classes = useStyles();
 
   React.useEffect(() => {
-    dispatchGetBoardsByUser();
-  }, [dispatchGetBoardsByUser]);
+    if (!boards) {
+      dispatchGetBoardsByUser();
+    }
+  }, [boards, dispatchGetBoardsByUser]);
 
   React.useEffect(() => {
     if (error) {

@@ -34,7 +34,7 @@ export const login = (data: any): ThunkVoidAction => (dispatch: Dispatch) => {
   });
 };
 
-export const logout = (): ThunkVoidAction => (
+export const logout = (): ThunkVoidAction => async (
   dispatch: Dispatch,
   getState: () => RootState
 ) => {

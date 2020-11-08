@@ -2,6 +2,7 @@ import { ApiAction } from '../../../types';
 import { IUserState } from './index';
 import * as types from './types';
 import { clone } from 'lodash';
+import { PURGE } from 'redux-persist';
 
 const initialState: IUserState = {
   user: null,
@@ -13,6 +14,8 @@ const reducer = (
   action: ApiAction
 ): IUserState => {
   switch (action.type) {
+    case PURGE:
+      return initialState;
     case `${types.GET_USER}_SUCCESS`:
       return {
         ...state,

@@ -6,12 +6,14 @@ import Grid from '@material-ui/core/Grid';
 import { connect, ConnectedProps } from 'react-redux';
 import { ThunkVoidAction, ThunkVoidDispatch } from '../../../store/types';
 import { actions, types } from '../../../store/ducks/api/auth';
+import { actions as boardColumnActions } from '../../../store/ducks/api/boardColumn';
+import { actions as companyActions } from '../../../store/ducks/api/company';
 import { createErrorSelector } from '../../../store/ducks/error';
 import { RootState } from '../../../store/ducks';
 import { showToast } from '../../../utils/showToast';
 import { useConfirmDialog } from '../../../utils/ConfirmDialogProvider';
 import Divider from '@material-ui/core/Divider';
-import cache from '../../../store/cache';
+import { persistor } from '../../../store';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -30,6 +32,8 @@ const useStyles = makeStyles((theme) =>
 
 const Settings: React.FC<PropsFromRedux> = ({
   dispatchClearErrors,
+  dispatchClearCompanies,
+  dispatchClearBoardColumns,
   dispatchDeleteAccount,
   error,
 }) => {
@@ -45,11 +49,13 @@ const Settings: React.FC<PropsFromRedux> = ({
   const handleClearCache = async () => {
     const shouldClear = await confirmDialog({
       variant: 'danger',
-      title: 'Are you sure?',
+      title: 'Warning: you will need to re-login',
       description: 'Do you wish to clear the cache?',
     });
     if (shouldClear) {
-      await cache.clear();
+      dispatchClearCompanies();
+      dispatchClearBoardColumns();
+      await persistor.purge();
       showToast('', 'The cache has been cleared', 'success');
     }
   };
@@ -62,6 +68,7 @@ const Settings: React.FC<PropsFromRedux> = ({
     });
     if (shouldDelete) {
       dispatchDeleteAccount();
+      await persistor.purge();
     }
   };
 
@@ -70,6 +77,8 @@ const Settings: React.FC<PropsFromRedux> = ({
       <h2 className={classes.heading}>Clear Cache:</h2>
       <Typography variant="body2" component="p">
         The cache stores various information on your browser.
+        <br />
+        Clearing the cache will require you to login again.
       </Typography>
       <Grid container className={classes.marginTop} justify="flex-start">
         <Button
@@ -109,6 +118,10 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
   dispatchDeleteAccount: (): ThunkVoidAction =>
     dispatch(actions.deleteAccount()),
+  dispatchClearBoardColumns: (): ThunkVoidAction =>
+    dispatch(boardColumnActions.clearBoardColumns()),
+  dispatchClearCompanies: (): ThunkVoidAction =>
+    dispatch(companyActions.clearCompanies()),
   dispatchClearErrors: (): ThunkVoidAction => dispatch(actions.clearErrors()),
 });
 

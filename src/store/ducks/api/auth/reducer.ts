@@ -1,3 +1,4 @@
+import { PURGE } from 'redux-persist';
 import { ApiAction } from '../../../types';
 import { IAuthState } from './index';
 import * as types from './types';
@@ -16,12 +17,17 @@ const reducer = (
   action: ApiAction
 ): IAuthState => {
   switch (action.type) {
+    case PURGE:
+      localStorage.removeItem('token');
+      return { ...initialState, token: null };
+
     case `${types.GET_AUTH_USER}_SUCCESS`:
       return {
         ...state,
         isAuthenticated: true,
         user: action.response,
       };
+
     case `${types.REGISTER}_SUCCESS`:
     case `${types.LOGIN}_SUCCESS`:
       localStorage.setItem('token', action.response.token);
@@ -30,15 +36,6 @@ const reducer = (
         user: action.response.user,
         token: action.response.token,
         isAuthenticated: true,
-      };
-
-    case `${types.LOGOUT}_SUCCESS`:
-      localStorage.removeItem('token');
-      return {
-        ...state,
-        token: null,
-        isAuthenticated: false,
-        user: null,
       };
 
     case `${types.GET_AUTH_USER}_FAILURE`:

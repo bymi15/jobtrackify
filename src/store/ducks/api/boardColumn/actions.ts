@@ -21,6 +21,14 @@ export const getBoardColumns = (): ThunkVoidAction => (
   });
 };
 
+export const clearBoardColumns = (): ThunkVoidAction => (
+  dispatch: Dispatch
+) => {
+  dispatch({
+    type: types.CLEAR_BOARD_COLUMNS,
+  });
+};
+
 export const clearErrors = (): ThunkVoidAction => (dispatch: Dispatch) => {
   dispatch({
     type: `${types.GET_BOARD_COLUMNS}_CLEARERR`,

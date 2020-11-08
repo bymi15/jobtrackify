@@ -11,6 +11,7 @@ import { createErrorSelector } from '../../store/ducks/error';
 import { ThunkVoidAction, ThunkVoidDispatch } from '../../store/types';
 import { actions as jobActions } from '../../store/ducks/api/job';
 import { actions as boardColumnActions } from '../../store/ducks/api/boardColumn';
+import { createLoadingSelector } from '../../store/ducks/loading';
 
 interface Props extends PropsFromRedux {
   children: React.ReactNode;
@@ -21,6 +22,7 @@ const Dashboard: React.FC<Props & RouteComponentProps> = ({
   auth,
   location,
   error,
+  loading,
   selectedBoard,
   boardColumns,
   jobs,
@@ -41,18 +43,24 @@ const Dashboard: React.FC<Props & RouteComponentProps> = ({
   }, [auth.isAuthenticated, auth.token, error, history]);
 
   React.useEffect(() => {
-    if (selectedBoard) {
+    if (selectedBoard && !loading) {
       if (!jobs || currentJobsBoardId !== selectedBoard.id) {
         dispatchGetJobsByBoard(selectedBoard.id);
       }
     }
-  }, [currentJobsBoardId, dispatchGetJobsByBoard, jobs, selectedBoard]);
+  }, [
+    currentJobsBoardId,
+    dispatchGetJobsByBoard,
+    jobs,
+    loading,
+    selectedBoard,
+  ]);
 
   React.useEffect(() => {
-    if (!boardColumns) {
+    if (!loading && !boardColumns) {
       dispatchGetBoardColumns();
     }
-  }, [boardColumns, dispatchGetBoardColumns]);
+  }, [boardColumns, dispatchGetBoardColumns, loading]);
 
   const showTopBar = (): boolean =>
     location.pathname === '/dashboard/board' ||
@@ -70,6 +78,7 @@ const Dashboard: React.FC<Props & RouteComponentProps> = ({
   ) : null;
 };
 
+const loadingSelector = createLoadingSelector([types.GET_AUTH_USER]);
 const errorSelector = createErrorSelector([types.GET_AUTH_USER]);
 
 const mapStateToProps = (state: RootState) => ({
@@ -79,6 +88,7 @@ const mapStateToProps = (state: RootState) => ({
   currentJobsBoardId: state.job.currentJobsBoardId,
   auth: state.auth,
   error: errorSelector(state),
+  loading: loadingSelector(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({

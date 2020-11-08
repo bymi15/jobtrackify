@@ -18,6 +18,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Hidden from '@material-ui/core/Hidden';
 import Divider from '@material-ui/core/Divider';
 import config from '../config';
+import { persistor } from '../store';
 
 const useStyles = makeStyles((theme) => ({
   nav: {
@@ -83,9 +84,10 @@ const Navbar: React.FC<Props> = ({ solid, auth, dispatchLogout }) => {
 
   const handleCloseMobile = () => setAnchorElMobile(null);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setAnchorEl(null);
     dispatchLogout();
+    await persistor.purge();
   };
 
   const guestMenu = (

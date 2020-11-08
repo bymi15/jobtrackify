@@ -1,4 +1,5 @@
 import { cloneDeep } from 'lodash';
+import { PURGE } from 'redux-persist';
 import { IJob } from '../../../models';
 import { ApiAction } from '../../../types';
 import { IJobState } from './index';
@@ -25,6 +26,8 @@ const reducer = (
 ): IJobState => {
   let jobs, groupedJobs;
   switch (action.type) {
+    case PURGE:
+      return initialState;
     case `${types.CREATE_JOB}_SUCCESS`:
       const insertJob: IJob = action.response;
       jobs = !!state.jobs ? [...state.jobs, insertJob] : [insertJob];

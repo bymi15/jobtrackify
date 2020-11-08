@@ -11,6 +11,7 @@ const persistConfig = {
   key: 'root',
   storage: localforage,
 };
+
 const pReducer = persistReducer(persistConfig, rootReducer);
 
 const composeEnhancers: any =

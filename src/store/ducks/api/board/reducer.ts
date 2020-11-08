@@ -2,6 +2,7 @@ import { ApiAction } from '../../../types';
 import { IBoardState } from './index';
 import * as types from './types';
 import { clone } from 'lodash';
+import { PURGE } from 'redux-persist';
 
 const initialState: IBoardState = {
   board: null,
@@ -13,6 +14,8 @@ const reducer = (
   action: ApiAction
 ): IBoardState => {
   switch (action.type) {
+    case PURGE:
+      return initialState;
     case `${types.CREATE_BOARD}_SUCCESS`:
       return state.boards
         ? {

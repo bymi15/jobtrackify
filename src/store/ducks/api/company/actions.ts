@@ -36,6 +36,12 @@ export const getCompanies = (): ThunkVoidAction => async (
   });
 };
 
+export const clearCompanies = (): ThunkVoidAction => (dispatch: Dispatch) => {
+  dispatch({
+    type: types.CLEAR_COMPANIES,
+  });
+};
+
 export const clearErrors = (): ThunkVoidAction => (dispatch: Dispatch) => {
   dispatch({
     type: `${types.GET_COMPANY}_CLEARERR`,
