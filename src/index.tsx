@@ -7,7 +7,7 @@ import { ConfirmDialogProvider } from './utils/ConfirmDialogProvider';
 import { InputDialogProvider } from './utils/InputDialogProvider';
 import composeProviders from './utils/composeProviders';
 import { PersistGate } from 'redux-persist/integration/react';
-import { store, persistor } from './store/store';
+import { store, persistor } from './store';
 import Loader from './components/Loader';
 import ReactGA from 'react-ga';
 ReactGA.initialize('G-TPD5N3Z4B2');
