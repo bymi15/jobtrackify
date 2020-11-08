@@ -7,6 +7,7 @@ export interface IJobState {
   job: IJob | null;
   jobs: IJob[] | null;
   groupedJobs: any;
+  currentJobsBoardId: string;
 }
 
 export { actions };

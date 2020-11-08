@@ -6,7 +6,6 @@ import Register from '../pages/auth/Register';
 import About from '../pages/about/About';
 import Privacy from '../pages/about/Privacy';
 import Terms from '../pages/about/Terms';
-import DashboardMap from '../pages/dashboard/map';
 import DashboardInterviews from '../pages/dashboard/interviews';
 import DashboardNotes from '../pages/dashboard/notes';
 import UserProfile from '../pages/user/Profile';
@@ -14,6 +13,7 @@ import UserSettings from '../pages/user/Settings';
 import UserEmailPreferences from '../pages/user/EmailPreferences';
 const Dashboard = async(() => import('../pages/dashboard'));
 const DashboardBoard = async(() => import('../pages/dashboard/board'));
+const DashboardMap = async(() => import('../pages/dashboard/map'));
 
 const landingRoute: RouteComponent = {
   path: '/',

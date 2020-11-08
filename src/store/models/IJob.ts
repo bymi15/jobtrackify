@@ -6,7 +6,11 @@ export interface IJob {
   title: string;
   description?: string;
   postUrl?: string;
-  location?: string;
+  location?: {
+    address: string;
+    lat: number;
+    lng: number;
+  };
   dateApplied?: string;
   board: IBoard;
   boardColumn: IBoardColumn;
@@ -28,6 +32,8 @@ export interface IJobUpdate {
   title?: string;
   description?: string;
   postUrl?: string;
-  location?: string;
+  location?: {
+    address: string;
+  };
   dateApplied?: string;
 }

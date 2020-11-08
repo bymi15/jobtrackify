@@ -153,6 +153,13 @@ const JobModal: React.FC<Props> = ({
     }
   };
 
+  const handleSaveAddress = (data: onSaveProps) => {
+    const { value } = data;
+    if (job) {
+      dispatchUpdateJob(job.id, { location: { address: value } });
+    }
+  };
+
   return (
     job && (
       <Dialog open={open} onClose={onClose} aria-labelledby="job-modal">
@@ -222,15 +229,15 @@ const JobModal: React.FC<Props> = ({
               </Grid>
               <Grid container spacing={1}>
                 <Grid item sm={3}>
-                  <Typography className={classes.label}>Location:</Typography>
+                  <Typography className={classes.label}>Address:</Typography>
                 </Grid>
                 <Grid item sm={9}>
                   <EditText
                     className={classes.editabletext}
-                    name="location"
-                    value={job.location}
+                    name="address"
+                    value={job.location && job.location.address}
                     placeholder="Enter a value"
-                    onSave={handleSave}
+                    onSave={handleSaveAddress}
                   />
                 </Grid>
               </Grid>

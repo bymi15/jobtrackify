@@ -9,7 +9,6 @@ import { CssBaseline } from '@material-ui/core';
 import { showToast } from '../../utils/showToast';
 import { createErrorSelector } from '../../store/ducks/error';
 import { ThunkVoidAction, ThunkVoidDispatch } from '../../store/types';
-import { actions } from '../../store/ducks/dashboard';
 import { actions as jobActions } from '../../store/ducks/api/job';
 import { actions as boardColumnActions } from '../../store/ducks/api/boardColumn';
 
@@ -25,7 +24,7 @@ const Dashboard: React.FC<Props & RouteComponentProps> = ({
   selectedBoard,
   boardColumns,
   jobs,
-  dispatchGetSelectedBoardCache,
+  currentJobsBoardId,
   dispatchGetBoardColumns,
   dispatchGetJobsByBoard,
 }) => {
@@ -43,23 +42,17 @@ const Dashboard: React.FC<Props & RouteComponentProps> = ({
 
   React.useEffect(() => {
     if (selectedBoard) {
-      if (!boardColumns) {
-        dispatchGetBoardColumns();
-      }
-      if (!jobs) {
+      if (!jobs || currentJobsBoardId !== selectedBoard.id) {
         dispatchGetJobsByBoard(selectedBoard.id);
       }
-    } else {
-      dispatchGetSelectedBoardCache();
     }
-  }, [
-    boardColumns,
-    dispatchGetBoardColumns,
-    dispatchGetJobsByBoard,
-    dispatchGetSelectedBoardCache,
-    jobs,
-    selectedBoard,
-  ]);
+  }, [currentJobsBoardId, dispatchGetJobsByBoard, jobs, selectedBoard]);
+
+  React.useEffect(() => {
+    if (!boardColumns) {
+      dispatchGetBoardColumns();
+    }
+  }, [boardColumns, dispatchGetBoardColumns]);
 
   const showTopBar = (): boolean =>
     location.pathname === '/dashboard/board' ||
@@ -83,13 +76,12 @@ const mapStateToProps = (state: RootState) => ({
   selectedBoard: state.dashboard.board,
   boardColumns: state.boardColumn.boardColumns,
   jobs: state.job.jobs,
+  currentJobsBoardId: state.job.currentJobsBoardId,
   auth: state.auth,
   error: errorSelector(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
-  dispatchGetSelectedBoardCache: (): ThunkVoidAction =>
-    dispatch(actions.getSelectedBoardCache()),
   dispatchGetJobsByBoard: (boardId: string): ThunkVoidAction =>
     dispatch(jobActions.getJobsByBoard(boardId)),
   dispatchGetBoardColumns: (): ThunkVoidAction =>

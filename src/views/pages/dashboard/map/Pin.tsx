@@ -4,7 +4,7 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import CompanyLogo from '../../../../components/CompanyLogo';
-import { IGeocodePin } from '../../../../store/models';
+import { IJob } from '../../../../store/models';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -18,9 +18,13 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-interface Props extends IGeocodePin {}
+interface Props {
+  job: IJob;
+  lat: number;
+  lng: number;
+}
 
-const Pin: React.FC<Props> = ({ job, address }) => {
+const Pin: React.FC<Props> = ({ job, lat, lng }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null

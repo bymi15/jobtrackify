@@ -8,10 +8,13 @@ const get = async (
   dispatchSetCache: (item: unknown) => void
 ): Promise<void> => {
   const time: number | null = await localforage.getItem(getTimeKey(key));
+  console.log(key);
+  console.log(time);
   if (!time || time < new Date().getTime()) {
     dispatchApi();
   } else {
     const item = await localforage.getItem(key);
+    console.log(item);
     dispatchSetCache(item);
   }
 };

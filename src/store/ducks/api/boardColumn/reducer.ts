@@ -1,4 +1,3 @@
-import cache from '../../../cache';
 import { ApiAction } from '../../../types';
 import { IBoardColumnState } from './index';
 import * as types from './types';
@@ -13,7 +12,6 @@ const reducer = (
 ): IBoardColumnState => {
   switch (action.type) {
     case `${types.GET_BOARD_COLUMNS}_SUCCESS`:
-      cache.set('boardColumns', action.response);
       return {
         ...state,
         boardColumns: action.response,

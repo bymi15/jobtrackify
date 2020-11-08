@@ -1,5 +1,4 @@
 import { cloneDeep } from 'lodash';
-import cache from '../../../cache';
 import { IJob } from '../../../models';
 import { ApiAction } from '../../../types';
 import { IJobState } from './index';
@@ -17,6 +16,7 @@ const initialState: IJobState = {
   job: null,
   jobs: null,
   groupedJobs: null,
+  currentJobsBoardId: '',
 };
 
 const reducer = (
@@ -26,7 +26,6 @@ const reducer = (
   let jobs, groupedJobs;
   switch (action.type) {
     case `${types.CREATE_JOB}_SUCCESS`:
-      cache.remove('jobsByBoard');
       const insertJob: IJob = action.response;
       jobs = !!state.jobs ? [...state.jobs, insertJob] : [insertJob];
       return {
@@ -46,11 +45,11 @@ const reducer = (
         jobs: action.response,
       };
     case `${types.GET_JOBS_BOARD}_SUCCESS`:
-      cache.set('jobsByBoard', action.response);
       return {
         ...state,
         jobs: action.response,
         groupedJobs: groupJobsByColumn(action.response),
+        currentJobsBoardId: action.extraData.boardId,
       };
     case types.SET_JOBS_BOARD_CACHE:
       return {
@@ -59,7 +58,6 @@ const reducer = (
         groupedJobs: groupJobsByColumn(action.response),
       };
     case `${types.DELETE_JOB}_SUCCESS`:
-      cache.remove('jobsByBoard');
       const { deletedJob, newJobs } = findAndDeleteJobById(
         action.extraData.id,
         state.jobs || []
@@ -73,7 +71,6 @@ const reducer = (
         groupedJobs: removeGroupedJob(deletedJob, state.groupedJobs),
       };
     case `${types.UPDATE_JOB}_SUCCESS`:
-      cache.remove('jobsByBoard');
       const updatedJob: IJob = action.response;
       if (!state.jobs) return state;
       let updatedIndex = state.jobs.findIndex(

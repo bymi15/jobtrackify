@@ -5,7 +5,6 @@ import { ThunkVoidAction } from '../../../types';
 import * as types from './types';
 import { IJobInput } from '../../../models';
 import { IJob, IJobUpdate } from '../../../models/IJob';
-import cache from '../../../cache';
 
 const baseUrl = '/api/jobs';
 
@@ -74,21 +73,18 @@ export const getJobsByBoard = (boardId: string): ThunkVoidAction => (
   dispatch: Dispatch,
   getState: () => RootState
 ) => {
-  cache.get(
-    'jobsByBoard',
-    () =>
-      dispatch({
-        type: 'API',
-        name: types.GET_JOBS_BOARD,
-        url: `${baseUrl}/board/${boardId}`,
-        requestData: {
-          method: 'GET',
-          headers: authHeader(getState()),
-        },
-      }),
-    (item: unknown) =>
-      dispatch({ type: types.SET_JOBS_BOARD_CACHE, response: item })
-  );
+  dispatch({
+    type: 'API',
+    name: types.GET_JOBS_BOARD,
+    url: `${baseUrl}/board/${boardId}`,
+    requestData: {
+      method: 'GET',
+      headers: authHeader(getState()),
+    },
+    extraData: {
+      boardId,
+    },
+  });
 };
 
 export const deleteJob = (job: IJob): ThunkVoidAction => (

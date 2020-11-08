@@ -1,71 +1,87 @@
 import * as React from 'react';
+import GoogleMapReact from 'google-map-react';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+import config from '../../../../config';
 import { RootState } from '../../../../store/ducks';
 import { connect, ConnectedProps } from 'react-redux';
-import { ThunkVoidAction, ThunkVoidDispatch } from '../../../../store/types';
-import { actions } from '../../../../store/ducks/map';
-import GoogleMap from './GoogleMap';
-import { createErrorSelector } from '../../../../store/ducks/error';
-import { createLoadingSelector } from '../../../../store/ducks/loading';
-import { types } from '../../../../store/ducks/map';
-import Loader from '../../../../components/Loader';
-import { showToast } from '../../../../utils/showToast';
-import { IJobLocation } from '../../../../store/models';
+import Pin from './Pin';
+import { IJob } from '../../../../store/models';
+import filterJobsForMap from '../../../../utils/filterJobsForMap';
 
-const Map: React.FC<PropsFromRedux> = ({
-  dispatchGetGeocodePins,
-  loading,
-  error,
-  geocodePins,
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      height: '100vh',
+      width: '100%',
+    },
+  })
+);
+
+interface Props extends PropsFromRedux {
+  center?: {
+    lat: number;
+    lng: number;
+  };
+  zoom?: number;
+}
+
+const Map: React.FC<Props> = ({
+  center = { lat: 51.5, lng: -0.1277 },
+  zoom = 10,
   jobs,
 }) => {
+  const [filteredJobs, setFilteredJobs] = React.useState<IJob[]>([]);
   React.useEffect(() => {
-    if (!error && !!jobs && jobs.length > 0) {
-      const jobsWithLocations = [];
-      for (let i = 0; i < jobs.length; i++) {
-        if (!!jobs[i].location) {
-          jobsWithLocations.push({
-            jobId: jobs[i].id,
-            location: jobs[i].location || '',
-          });
-        }
-      }
-      if (
-        jobsWithLocations.length > 0 &&
-        (!geocodePins || geocodePins.length === 0)
-      ) {
-        dispatchGetGeocodePins(jobsWithLocations);
-      }
+    if (!!jobs) {
+      setFilteredJobs(filterJobsForMap(jobs));
     }
-  }, [dispatchGetGeocodePins, error, geocodePins, jobs]);
-  if (loading) {
-    return <Loader />;
-  } else if (error) {
-    showToast('Error!', error, 'danger');
-  }
+  }, [jobs]);
+  const classes = useStyles();
+
+  const getMapOptions = (maps: GoogleMapReact.Maps) => {
+    return {
+      fullscreenControl: true,
+      mapTypeControl: true,
+      mapTypeId: maps.MapTypeId.ROADMAP,
+      scaleControl: true,
+      scrollwheel: true,
+      streetViewControl: true,
+    };
+  };
+
   return (
-    <div>
-      <GoogleMap />
+    <div className={classes.root}>
+      <GoogleMapReact
+        options={getMapOptions}
+        bootstrapURLKeys={{
+          key: config.GOOGLE_API_KEY || '',
+        }}
+        defaultCenter={center}
+        defaultZoom={zoom}
+      >
+        {filteredJobs
+          ? filteredJobs.map(
+              (job: IJob) =>
+                job.location && (
+                  <Pin
+                    key={job.id}
+                    job={job}
+                    lat={job.location.lat}
+                    lng={job.location.lng}
+                  />
+                )
+            )
+          : null}
+      </GoogleMapReact>
     </div>
   );
 };
 
-const loadingSelector = createLoadingSelector([types.GET_GEOCODE_PINS]);
-const errorSelector = createErrorSelector([types.GET_GEOCODE_PINS]);
-
 const mapStateToProps = (state: RootState) => ({
-  loading: loadingSelector(state),
-  error: errorSelector(state),
-  geocodePins: state.map.geocodePins,
   jobs: state.job.jobs,
 });
 
-const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
-  dispatchGetGeocodePins: (jobLocations: IJobLocation[]): ThunkVoidAction =>
-    dispatch(actions.getGeocodePins(jobLocations)),
-  dispatchClearErrors: (): ThunkVoidAction => dispatch(actions.clearErrors()),
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
