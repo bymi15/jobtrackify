@@ -22,6 +22,7 @@ const Auth: React.FC<Props> = ({
       showToast('Error', error, 'danger', dispatchClearErrors);
     }
   }, [dispatchClearErrors, error]);
+
   if (auth.isAuthenticated) {
     return <Redirect to="/dashboard" />;
   } else {

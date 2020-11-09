@@ -23,6 +23,8 @@ import { RootState } from '../../../store/ducks';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { showToast } from '../../../utils/showToast';
+import { createErrorSelector } from '../../../store/ducks/error';
 
 const Copyright = () => (
   <Typography variant="body2" color="textPrimary" align="center">
@@ -68,19 +70,46 @@ const useStyles = makeStyles((theme) => ({
 
 const Register: React.FC<PropsFromRedux> = ({
   dispatchRegister,
-  isLoading,
+  loading,
+  error,
 }) => {
   const [state, setState] = useCustomState({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
+    confirmPassword: '',
+    agreeTerms: false,
   });
   const classes = useStyles();
 
+  React.useEffect(() => {
+    if (error) {
+      setState({ password: '', confirmPassword: '' });
+    }
+  }, [error, setState]);
+
+  const handleCheckTerms = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState({ agreeTerms: e.target.checked });
+  };
+
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatchRegister(state);
+    const data = state;
+    if (data.password !== data.confirmPassword) {
+      showToast('Please try again.', 'The passwords do not match.', 'danger');
+      setState({ password: '', confirmPassword: '' });
+    } else if (!state.agreeTerms) {
+      showToast(
+        '',
+        'You must agree to our terms of service and privacy policy in order to proceed',
+        'danger'
+      );
+    } else {
+      Reflect.deleteProperty(data, 'agreeTerms');
+      Reflect.deleteProperty(data, 'confirmPassword');
+      dispatchRegister(data);
+    }
   };
 
   return (
@@ -107,6 +136,7 @@ const Register: React.FC<PropsFromRedux> = ({
                     id="firstName"
                     label="First Name"
                     autoFocus
+                    value={state.firstName}
                     onChange={(e) => {
                       handleInputChange(e, setState);
                     }}
@@ -120,6 +150,7 @@ const Register: React.FC<PropsFromRedux> = ({
                     id="lastName"
                     label="Last Name"
                     name="lastName"
+                    value={state.lastName}
                     onChange={(e) => {
                       handleInputChange(e, setState);
                     }}
@@ -133,6 +164,7 @@ const Register: React.FC<PropsFromRedux> = ({
                     id="email"
                     label="Email Address"
                     name="email"
+                    value={state.email}
                     onChange={(e) => {
                       handleInputChange(e, setState);
                     }}
@@ -147,6 +179,22 @@ const Register: React.FC<PropsFromRedux> = ({
                     label="Password"
                     type="password"
                     id="password"
+                    value={state.password}
+                    onChange={(e) => {
+                      handleInputChange(e, setState);
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="confirmPassword"
+                    label="Confirm Password"
+                    type="password"
+                    id="confirmPassword"
+                    value={state.confirmPassword}
                     onChange={(e) => {
                       handleInputChange(e, setState);
                     }}
@@ -155,7 +203,13 @@ const Register: React.FC<PropsFromRedux> = ({
                 <Grid item xs={12}>
                   <FormControlLabel
                     control={
-                      <Checkbox required value="terms" color="primary" />
+                      <Checkbox
+                        required
+                        checked={state.agreeTerms}
+                        onChange={handleCheckTerms}
+                        name="agreeTerms"
+                        color="primary"
+                      />
                     }
                     label={
                       <label>
@@ -186,9 +240,9 @@ const Register: React.FC<PropsFromRedux> = ({
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                disabled={isLoading}
+                disabled={loading}
               >
-                {isLoading ? <CircularProgress size={25} /> : 'Register'}
+                {loading ? <CircularProgress size={25} /> : 'Register'}
               </Button>
               <Grid container justify="flex-end">
                 <Grid item>
@@ -210,10 +264,12 @@ const Register: React.FC<PropsFromRedux> = ({
   );
 };
 
+const errorSelector = createErrorSelector([types.REGISTER]);
 const loadingSelector = createLoadingSelector([types.REGISTER]);
 
 const mapStateToProps = (state: RootState) => ({
-  isLoading: loadingSelector(state),
+  loading: loadingSelector(state),
+  error: errorSelector(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
