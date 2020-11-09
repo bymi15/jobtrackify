@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Login: React.FC<PropsFromRedux> = ({
   dispatchLogin,
-  isLoading,
+  loading,
   dispatchResetFlags,
   auth,
 }) => {
@@ -141,9 +141,9 @@ const Login: React.FC<PropsFromRedux> = ({
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                disabled={isLoading}
+                disabled={loading}
               >
-                {isLoading ? <CircularProgress size={25} /> : 'Login'}
+                {loading ? <CircularProgress size={25} /> : 'Login'}
               </Button>
               <Grid container>
                 <Grid item xs>
@@ -182,7 +182,7 @@ const loadingSelector = createLoadingSelector([types.LOGIN]);
 
 const mapStateToProps = (state: RootState) => ({
   auth: state.auth,
-  isLoading: loadingSelector(state),
+  loading: loadingSelector(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({

@@ -22,7 +22,7 @@ const BoardColumnSelect: React.FC<Props> = ({
   handleSelect,
   defaultValue,
   boardColumns,
-  isLoading,
+  loading,
   error,
   dispatchGetBoardColumns,
   dispatchClearErrors,
@@ -47,7 +47,7 @@ const BoardColumnSelect: React.FC<Props> = ({
       getOptionSelected={(option, value) => option.id === value.id}
       getOptionLabel={(option) => option.title}
       options={boardColumns || []}
-      loading={isLoading}
+      loading={loading}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -58,7 +58,7 @@ const BoardColumnSelect: React.FC<Props> = ({
             ...params.InputProps,
             endAdornment: (
               <React.Fragment>
-                {isLoading ? (
+                {loading ? (
                   <CircularProgress color="inherit" size={20} />
                 ) : null}
                 {params.InputProps.endAdornment}
@@ -77,7 +77,7 @@ const errorSelector = createErrorSelector([types.GET_BOARD_COLUMNS]);
 
 const mapStateToProps = (state: RootState) => ({
   boardColumns: state.boardColumn.boardColumns,
-  isLoading: loadingSelector(state),
+  loading: loadingSelector(state),
   error: errorSelector(state),
 });
 

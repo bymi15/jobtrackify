@@ -114,7 +114,7 @@ const CompanySelect: React.FC<Props> = ({
   className,
   handleSelect,
   companies,
-  isLoading,
+  loading,
   error,
   dispatchGetCompanies,
   dispatchClearErrors,
@@ -142,7 +142,7 @@ const CompanySelect: React.FC<Props> = ({
       getOptionSelected={(option, value) => option.id === value.id}
       getOptionLabel={(option) => option.name}
       options={companies || []}
-      loading={isLoading}
+      loading={loading}
       disableListWrap
       ListboxComponent={
         ListboxComponent as React.ComponentType<
@@ -170,7 +170,7 @@ const CompanySelect: React.FC<Props> = ({
             ),
             endAdornment: (
               <React.Fragment>
-                {isLoading ? (
+                {loading ? (
                   <CircularProgress color="inherit" size={20} />
                 ) : null}
                 {params.InputProps.endAdornment}
@@ -189,7 +189,7 @@ const errorSelector = createErrorSelector([types.GET_COMPANIES]);
 
 const mapStateToProps = (state: RootState) => ({
   companies: state.company.companies,
-  isLoading: loadingSelector(state),
+  loading: loadingSelector(state),
   error: errorSelector(state),
 });
 

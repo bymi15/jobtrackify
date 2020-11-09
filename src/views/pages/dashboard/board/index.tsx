@@ -45,7 +45,7 @@ const Board: React.FC<PropsFromRedux> = ({
   selectedBoard,
   jobs,
   boardColumns,
-  isLoading,
+  loading,
   error,
   dispatchMoveJob,
   dispatchMoveJobUI,
@@ -86,7 +86,7 @@ const Board: React.FC<PropsFromRedux> = ({
     [jobModal]
   );
 
-  if (isLoading) {
+  if (loading) {
     return <Loader />;
   } else if (selectedBoard === null) {
     return <Redirect to="/dashboard" />;
@@ -146,7 +146,7 @@ const mapStateToProps = (state: RootState) => ({
   selectedBoard: state.dashboard.board,
   jobs: state.job.groupedJobs,
   boardColumns: state.boardColumn.boardColumns,
-  isLoading: loadingSelector(state),
+  loading: loadingSelector(state),
   error: errorSelector(state),
 });
 

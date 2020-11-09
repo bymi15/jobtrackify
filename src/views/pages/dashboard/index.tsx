@@ -105,7 +105,7 @@ const Dashboard: React.FC<PropsFromRedux> = ({
   dispatchClearErrors,
   dispatchSelectBoard,
   boards,
-  isLoading,
+  loading,
   error,
 }) => {
   const [state, setState] = useCustomState({
@@ -203,7 +203,7 @@ const Dashboard: React.FC<PropsFromRedux> = ({
     }
   };
 
-  if (isLoading) {
+  if (loading) {
     return <Loader />;
   }
 
@@ -305,7 +305,7 @@ const errorSelector = createErrorSelector([
 const mapStateToProps = (state: RootState) => ({
   selectedBoard: state.dashboard.board,
   boards: state.board.boards,
-  isLoading: loadingSelector(state),
+  loading: loadingSelector(state),
   error: errorSelector(state),
 });
 
