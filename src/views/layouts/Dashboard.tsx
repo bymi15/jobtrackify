@@ -33,14 +33,14 @@ const Dashboard: React.FC<Props & RouteComponentProps> = ({
   const history = useHistory();
 
   React.useEffect(() => {
-    if (
-      (!auth.isAuthenticated && !auth.token) ||
-      (!auth.isAuthenticated && !!error)
-    ) {
+    if (!auth.isAuthenticated) {
       showToast('', 'Please login to proceed', 'warning');
       history.push('/auth/login');
+    } else if (auth.user && !auth.user.emailConfirmed) {
+      showToast('', 'Please verify your email to proceed', 'warning');
+      history.push('/confirmEmail');
     }
-  }, [auth.isAuthenticated, auth.token, error, history]);
+  }, [auth.isAuthenticated, auth.token, auth.user, error, history]);
 
   React.useEffect(() => {
     if (selectedBoard && !loading) {
@@ -68,7 +68,7 @@ const Dashboard: React.FC<Props & RouteComponentProps> = ({
     location.pathname === '/dashboard/notes' ||
     location.pathname === '/dashboard/interviews';
 
-  return !!auth.isAuthenticated && !!auth.token ? (
+  return auth.isAuthenticated ? (
     <div style={{ overflow: 'hidden' }}>
       <CssBaseline />
       <Navbar solid />

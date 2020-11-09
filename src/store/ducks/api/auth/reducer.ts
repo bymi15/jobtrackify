@@ -10,6 +10,7 @@ const initialState: IAuthState = {
   updatedProfile: false,
   deletedAccount: false,
   changedPassword: false,
+  confirmedEmail: false,
 };
 
 const reducer = (
@@ -36,6 +37,12 @@ const reducer = (
         user: action.response.user,
         token: action.response.token,
         isAuthenticated: true,
+      };
+
+    case `${types.CONFIRM_EMAIL}_SUCCESS`:
+      return {
+        ...state,
+        confirmedEmail: true,
       };
 
     case `${types.GET_AUTH_USER}_FAILURE`:
@@ -73,6 +80,7 @@ const reducer = (
         updatedProfile: false,
         changedPassword: false,
         deletedAccount: false,
+        confirmedEmail: false,
       };
     default:
       return state;

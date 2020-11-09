@@ -18,6 +18,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Link as RouterLink } from 'react-router-dom';
 import { IUser } from '../../store/models';
+import { createErrorSelector } from '../../store/ducks/error';
+import { types } from '../../store/ducks/api/auth';
 
 const useStylesSidebar = makeStyles((theme) =>
   createStyles({
@@ -128,18 +130,19 @@ const User: React.FC<Props & RouteComponentProps> = ({
   children,
   auth,
   location,
+  error,
 }) => {
   const classes = useStyles();
   const history = useHistory();
 
   React.useEffect(() => {
-    if (!auth.isAuthenticated && !auth.token) {
+    if (!auth.isAuthenticated) {
       showToast('', 'Please login to proceed', 'warning');
       history.push('/auth/login');
     }
-  }, [auth.isAuthenticated, auth.token, history]);
+  }, [auth.isAuthenticated, history]);
 
-  return !!auth.isAuthenticated && !!auth.token ? (
+  return auth.isAuthenticated ? (
     <div style={{ overflow: 'hidden' }}>
       <CssBaseline />
       <Navbar solid />
@@ -160,8 +163,11 @@ const User: React.FC<Props & RouteComponentProps> = ({
   ) : null;
 };
 
+const errorSelector = createErrorSelector([types.GET_AUTH_USER]);
+
 const mapStateToProps = (state: RootState) => ({
   auth: state.auth,
+  error: errorSelector(state),
 });
 
 const connector = connect(mapStateToProps);

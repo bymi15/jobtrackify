@@ -46,7 +46,6 @@ export const logout = (): ThunkVoidAction => async (
       method: 'GET',
       headers: authHeader(getState()),
     },
-    ignoreErrors: true,
   });
 };
 
@@ -114,6 +113,34 @@ export const deleteAccount = (): ThunkVoidAction => (
   });
 };
 
+export const confirmEmail = (token: string): ThunkVoidAction => (
+  dispatch: Dispatch
+) => {
+  dispatch({
+    type: 'API',
+    name: types.CONFIRM_EMAIL,
+    url: `${baseUrl}/confirmEmail/${token}`,
+    requestData: {
+      method: 'GET',
+    },
+  });
+};
+
+export const resendConfirmEmail = (): ThunkVoidAction => (
+  dispatch: Dispatch,
+  getState: () => RootState
+) => {
+  dispatch({
+    type: 'API',
+    name: types.RESEND_CONFIRM_EMAIL,
+    url: `${baseUrl}/resendEmail`,
+    requestData: {
+      method: 'GET',
+      headers: authHeader(getState()),
+    },
+  });
+};
+
 export const clearErrors = (): ThunkVoidAction => (dispatch: Dispatch) => {
   dispatch({
     type: `${types.LOGIN}_CLEARERR`,
@@ -129,6 +156,9 @@ export const clearErrors = (): ThunkVoidAction => (dispatch: Dispatch) => {
   });
   dispatch({
     type: `${types.DELETE_ACCOUNT}_CLEARERR`,
+  });
+  dispatch({
+    type: `${types.CONFIRM_EMAIL}_CLEARERR`,
   });
 };
 

@@ -10,6 +10,7 @@ export interface IAuthState {
   updatedProfile: boolean;
   deletedAccount: boolean;
   changedPassword: boolean;
+  confirmedEmail: boolean;
 }
 
 export { actions };

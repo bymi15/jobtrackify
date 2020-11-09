@@ -17,6 +17,7 @@ const App: React.FC = () => {
         transitionOut="fadeOut"
         progressBar
         closeOnToastrClick
+        preventDuplicates
       />
     </React.Fragment>
   );

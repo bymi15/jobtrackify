@@ -11,6 +11,9 @@ import DashboardNotes from '../pages/dashboard/notes';
 import UserProfile from '../pages/user/Profile';
 import UserSettings from '../pages/user/Settings';
 import UserEmailPreferences from '../pages/user/EmailPreferences';
+import ConfirmEmailTokenRedirect from '../pages/email/ConfirmEmailTokenRedirect';
+import ConfirmEmail from '../pages/email/ConfirmEmail';
+
 const Dashboard = async(() => import('../pages/dashboard'));
 const DashboardBoard = async(() => import('../pages/dashboard/board'));
 const DashboardMap = async(() => import('../pages/dashboard/map'));
@@ -85,6 +88,16 @@ const termsRoute = {
   component: Terms,
 };
 
+const confirmEmailRoute = {
+  path: '/confirmEmail',
+  component: ConfirmEmail,
+};
+
+const confirmEmailTokenRedirectRoute = {
+  path: '/confirmEmail/:token',
+  component: ConfirmEmailTokenRedirect,
+};
+
 export const landingRoutes: RouteComponent[] = [landingRoute];
 
 export const authRoutes: RouteComponent[] = [loginRoute, registerRoute];
@@ -107,4 +120,6 @@ export const infoRoutes: RouteComponent[] = [
   aboutRoute,
   privacyRoute,
   termsRoute,
+  confirmEmailRoute,
+  confirmEmailTokenRedirectRoute,
 ];
