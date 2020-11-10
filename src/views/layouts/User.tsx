@@ -152,6 +152,7 @@ const User: React.FC<Props & RouteComponentProps> = ({
           <SidebarContent pathname={location.pathname} user={auth.user} />
         </Sidebar>
         <main className={classes.content}>
+          <div className={classes.toolbar} />
           <Card>
             <CardContent className={classes.cardContent}>
               {children}

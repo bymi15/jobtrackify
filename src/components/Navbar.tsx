@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
   },
   navSolid: {
-    position: 'relative',
     background: '#20232a',
     zIndex: theme.zIndex.drawer + 1,
   },

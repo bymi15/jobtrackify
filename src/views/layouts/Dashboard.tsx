@@ -12,6 +12,13 @@ import { ThunkVoidAction, ThunkVoidDispatch } from '../../store/types';
 import { actions as jobActions } from '../../store/ducks/api/job';
 import { actions as boardColumnActions } from '../../store/ducks/api/boardColumn';
 import { createLoadingSelector } from '../../store/ducks/loading';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    toolbar: theme.mixins.toolbar,
+  })
+);
 
 interface Props extends PropsFromRedux {
   children: React.ReactNode;
@@ -30,6 +37,7 @@ const Dashboard: React.FC<Props & RouteComponentProps> = ({
   dispatchGetBoardColumns,
   dispatchGetJobsByBoard,
 }) => {
+  const classes = useStyles();
   const history = useHistory();
 
   React.useEffect(() => {
@@ -72,6 +80,7 @@ const Dashboard: React.FC<Props & RouteComponentProps> = ({
     <div style={{ overflow: 'hidden' }}>
       <CssBaseline />
       <Navbar solid />
+      <div className={classes.toolbar} />
       {showTopBar() && <Topbar pathname={location.pathname} />}
       {children}
     </div>

@@ -11,7 +11,7 @@ import filterJobsForMap from '../../../../utils/filterJobsForMap';
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      height: '100vh',
+      height: 'calc(100vh - 64px - 83px)',
       width: '100%',
     },
   })
