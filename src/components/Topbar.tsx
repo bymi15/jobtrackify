@@ -52,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '4px',
     color: '#555',
   },
+  marginRight: {
+    marginRight: '10px',
+  },
 }));
 
 interface Props extends PropsFromRedux {
@@ -100,6 +103,9 @@ const Topbar: React.FC<Props> = ({
     }
   };
 
+  const styleRemoveHoverEffect = (path: string) =>
+    pathname === path ? { backgroundColor: 'transparent' } : undefined;
+
   return (
     <Grid className={classes.topbar}>
       <div className={classes.dropdown}>
@@ -134,10 +140,12 @@ const Topbar: React.FC<Props> = ({
       <div className={classes.icons}>
         <Tooltip title="Board" placement="bottom">
           <IconButton
+            className={classes.marginRight}
             aria-label="board"
             size="small"
             onClick={() => handleNavigate('/dashboard/board')}
-            style={{ marginRight: '10px' }}
+            style={styleRemoveHoverEffect('/dashboard/board')}
+            disableRipple
           >
             <AppsOutlinedIcon
               className={classNames(
@@ -149,10 +157,12 @@ const Topbar: React.FC<Props> = ({
         </Tooltip>
         <Tooltip title="Interviews" placement="bottom">
           <IconButton
+            className={classes.marginRight}
             aria-label="interviews"
             size="small"
             onClick={() => handleNavigate('/dashboard/interviews')}
-            style={{ marginRight: '10px' }}
+            style={styleRemoveHoverEffect('/dashboard/interviews')}
+            disableRipple
           >
             <PeopleOutlineIcon
               className={classNames(
@@ -164,10 +174,12 @@ const Topbar: React.FC<Props> = ({
         </Tooltip>
         <Tooltip title="Notes" placement="bottom">
           <IconButton
+            className={classes.marginRight}
             aria-label="notes"
             size="small"
             onClick={() => handleNavigate('/dashboard/notes')}
-            style={{ marginRight: '10px' }}
+            style={styleRemoveHoverEffect('/dashboard/notes')}
+            disableRipple
           >
             <NotesIcon
               className={classNames(
@@ -182,6 +194,8 @@ const Topbar: React.FC<Props> = ({
             aria-label="map"
             size="small"
             onClick={() => handleNavigate('/dashboard/map')}
+            style={styleRemoveHoverEffect('/dashboard/map')}
+            disableRipple
           >
             <RoomOutlinedIcon
               className={classNames(
