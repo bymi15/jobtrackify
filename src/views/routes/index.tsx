@@ -23,10 +23,16 @@ import {
 } from '../layouts';
 import { ThunkVoidAction, ThunkVoidDispatch } from '../../store/types';
 import { actions } from '../../store/ducks/api/auth';
+import { actions as companyActions } from '../../store/ducks/api/company';
 import { RootState } from '../../store/ducks';
 import { connect, ConnectedProps } from 'react-redux';
 
-const Routes: React.FC<PropsFromRedux> = ({ auth, dispatchGetAuthUser }) => {
+const Routes: React.FC<PropsFromRedux> = ({
+  auth,
+  company,
+  dispatchGetAuthUser,
+  dispatchGetCompanies,
+}) => {
   React.useEffect(() => {
     if (!!auth && !!dispatchGetAuthUser) {
       if (!!auth.token && (auth.user === null || !auth.isAuthenticated)) {
@@ -34,6 +40,12 @@ const Routes: React.FC<PropsFromRedux> = ({ auth, dispatchGetAuthUser }) => {
       }
     }
   }, [auth, dispatchGetAuthUser]);
+
+  React.useEffect(() => {
+    if (!!company && !company.companies) {
+      dispatchGetCompanies();
+    }
+  }, [company, dispatchGetCompanies]);
 
   const mapRoutes = (Layout: any, routes: RouteComponent[]) =>
     routes.map(({ path, component: Component }, index) => (
@@ -66,10 +78,13 @@ const Routes: React.FC<PropsFromRedux> = ({ auth, dispatchGetAuthUser }) => {
 
 const mapStateToProps = (state: RootState) => ({
   auth: state.auth,
+  company: state.company,
 });
 
 const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
   dispatchGetAuthUser: (): ThunkVoidAction => dispatch(actions.getAuthUser()),
+  dispatchGetCompanies: (): ThunkVoidAction =>
+    dispatch(companyActions.getCompanies()),
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
