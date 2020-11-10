@@ -4,10 +4,8 @@ export default interface ICompany {
   description?: string;
   logo?: string;
   website?: string;
-  location?: {
-    locality?: string;
-    country?: string;
-  };
+  headquarters?: string;
+  country?: string;
   industry?: string;
   foundedYear?: number;
   linkedInUrl?: string;

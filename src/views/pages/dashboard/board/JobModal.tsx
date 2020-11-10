@@ -443,26 +443,26 @@ const JobModal: React.FC<Props> = ({
                       </Grid>
                     </Grid>
                   )}
-                  {companyData.location && companyData.location.locality && (
+                  {companyData.headquarters && (
                     <Grid container spacing={1}>
                       <Grid item sm={4}>
                         <Typography
                           color="textPrimary"
                           className={classes.label}
                         >
-                          Location:
+                          Headquarters:
                         </Typography>
                       </Grid>
                       <Grid item sm={8}>
                         <EditText
                           className={classes.editabletext}
-                          value={companyData.location.locality}
+                          value={companyData.headquarters}
                           readonly
                         />
                       </Grid>
                     </Grid>
                   )}
-                  {companyData.location && companyData.location.country && (
+                  {companyData.country && (
                     <Grid container spacing={1}>
                       <Grid item sm={4}>
                         <Typography
@@ -475,7 +475,7 @@ const JobModal: React.FC<Props> = ({
                       <Grid item sm={8}>
                         <EditText
                           className={classes.editabletext}
-                          value={companyData.location.country}
+                          value={companyData.country}
                           readonly
                         />
                       </Grid>
