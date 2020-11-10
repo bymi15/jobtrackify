@@ -94,7 +94,13 @@ const Job: React.FC<Props> = ({ job, index, dispatchDeleteJob }) => {
                   <DeleteOutlineIcon />
                 </IconButton>
               }
-              title={<span className={classes.title}>{job.company.name}</span>}
+              title={
+                <span className={classes.title}>
+                  {typeof job.company === 'string'
+                    ? job.company
+                    : job.company.name}
+                </span>
+              }
               subheader={<span className={classes.subTitle}>{job.title}</span>}
             />
             <CardContent className={classes.cardContent}>

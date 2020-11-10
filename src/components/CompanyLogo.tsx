@@ -5,7 +5,7 @@ import { ICompany } from '../store/models';
 import LetterAvatar from './LetterAvatar';
 
 interface Props {
-  company: ICompany;
+  company: ICompany | string;
   size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
@@ -34,11 +34,17 @@ const CompanyLogo: React.FC<Props> = ({ company, size }) => {
   const classes = useStyles();
   const sizeClass = size && classes[size];
 
-  return company && company.logo ? (
-    <Avatar className={sizeClass} alt="companylogo" src={company.logo} />
-  ) : (
-    <LetterAvatar size={size} name={company.name} aria-label="company-logo" />
-  );
+  if (typeof company === 'string') {
+    return (
+      <LetterAvatar size={size} name={company} aria-label="company-logo" />
+    );
+  } else {
+    return company && company.logo ? (
+      <Avatar className={sizeClass} alt="companylogo" src={company.logo} />
+    ) : (
+      <LetterAvatar size={size} name={company.name} aria-label="company-logo" />
+    );
+  }
 };
 
 export default CompanyLogo;

@@ -160,11 +160,17 @@ const JobModal: React.FC<Props> = ({
     }
   };
 
+  const companyName = job
+    ? typeof job.company === 'string'
+      ? job.company
+      : job.company.name
+    : '';
+
   return (
     job && (
       <Dialog open={open} onClose={onClose} aria-labelledby="job-modal">
         <DialogTitle id="job-modal" onClose={onClose}>
-          {job.company.name}
+          {companyName}
         </DialogTitle>
         <DialogContent className={classes.modalContent} dividers>
           <Grid
@@ -180,7 +186,7 @@ const JobModal: React.FC<Props> = ({
             </Grid>
             <Grid item>
               <Typography variant="h4" color="textPrimary">
-                {job.company.name}
+                {companyName}
               </Typography>
               <Typography variant="h6" color="textSecondary">
                 {job.title}
@@ -208,7 +214,7 @@ const JobModal: React.FC<Props> = ({
                 <Grid item sm={9}>
                   <EditText
                     className={classes.editabletext}
-                    value={job.company.name}
+                    value={companyName}
                     readonly
                   />
                 </Grid>

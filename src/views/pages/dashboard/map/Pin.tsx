@@ -71,7 +71,7 @@ const Pin: React.FC<Props> = ({ job, lat, lng }) => {
         disableRestoreFocus
       >
         <Typography className={classes.typography}>
-          {job.company.name}
+          {typeof job.company === 'string' ? job.company : job.company.name}
         </Typography>
       </Popover>
     </div>

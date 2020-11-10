@@ -14,7 +14,7 @@ export interface IJob {
   dateApplied?: string;
   board: IBoard;
   boardColumn: IBoardColumn;
-  company: ICompany;
+  company: ICompany | string;
   owner?: IUser;
   sortOrder: number;
   createdAt?: string;
@@ -25,7 +25,8 @@ export interface IJobInput {
   title: string;
   board: string;
   boardColumn: string;
-  company: string;
+  company?: string;
+  companyCustom?: string;
 }
 
 export interface IJobUpdate {

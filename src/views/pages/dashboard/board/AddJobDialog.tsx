@@ -34,7 +34,6 @@ interface Props extends PropsFromRedux {
 
 const initialState: IJobInput = {
   board: '',
-  company: '',
   title: '',
   boardColumn: '',
 };
@@ -60,10 +59,18 @@ const AddJobDialog: React.FC<Props> = ({
     onClose();
   };
 
-  const handleSelectCompany = (company: ICompany | null) => {
-    setState({
-      company: (company && company.id) || '',
-    });
+  const handleSelectCompany = (val: ICompany | string | null) => {
+    if (typeof val === 'string') {
+      setState({
+        company: undefined,
+        companyCustom: val,
+      });
+    } else {
+      setState({
+        company: (val && val.id) || '',
+        companyCustom: undefined,
+      });
+    }
   };
 
   const handleSelectBoardColumn = (boardColumn: IBoardColumn | null) => {

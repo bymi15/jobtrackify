@@ -48,7 +48,7 @@
     "prerelease": "npm run build",
     "release": "standard-version",
     "eject": "react-scripts eject",
-    "predeploy": "npm install && npm run test",
+    "predeploy": "npm install && npm run test && npm run build",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
