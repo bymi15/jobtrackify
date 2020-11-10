@@ -14,6 +14,7 @@ import { showToast } from '../../../utils/showToast';
 import Grid from '@material-ui/core/Grid';
 import { IUserChangePassword } from '../../../store/models/IUser';
 import { createErrorSelector } from '../../../store/ducks/error';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -46,6 +47,7 @@ const Profile: React.FC<PropsFromRedux> = ({
     currentPassword: '',
     password: '',
     confirmPassword: '',
+    createdAt: '',
   });
 
   React.useEffect(() => {
@@ -54,6 +56,7 @@ const Profile: React.FC<PropsFromRedux> = ({
         firstName: auth.user.firstName,
         lastName: auth.user.lastName,
         email: auth.user.email,
+        createdAt: auth.user.createdAt,
       });
     }
   }, [auth.user, setState]);
@@ -172,6 +175,16 @@ const Profile: React.FC<PropsFromRedux> = ({
           onChange={(e) => {
             handleInputChange(e, setState);
           }}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        <TextField
+          label="Date Registered"
+          fullWidth
+          margin="normal"
+          value={moment(state.createdAt).format('DD/MM/YYYY')}
+          disabled
           InputLabelProps={{
             shrink: true,
           }}
