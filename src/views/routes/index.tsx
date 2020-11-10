@@ -29,7 +29,7 @@ import { connect, ConnectedProps } from 'react-redux';
 
 const Routes: React.FC<PropsFromRedux> = ({
   auth,
-  company,
+  companies,
   dispatchGetAuthUser,
   dispatchGetCompanies,
 }) => {
@@ -38,14 +38,13 @@ const Routes: React.FC<PropsFromRedux> = ({
       if (!!auth.token && (auth.user === null || !auth.isAuthenticated)) {
         dispatchGetAuthUser();
       }
+      if (auth.isAuthenticated) {
+        if (!companies) {
+          dispatchGetCompanies();
+        }
+      }
     }
-  }, [auth, dispatchGetAuthUser]);
-
-  React.useEffect(() => {
-    if (!!company && !company.companies) {
-      dispatchGetCompanies();
-    }
-  }, [company, dispatchGetCompanies]);
+  }, [auth, companies, dispatchGetAuthUser, dispatchGetCompanies]);
 
   const mapRoutes = (Layout: any, routes: RouteComponent[]) =>
     routes.map(({ path, component: Component }, index) => (
@@ -78,7 +77,7 @@ const Routes: React.FC<PropsFromRedux> = ({
 
 const mapStateToProps = (state: RootState) => ({
   auth: state.auth,
-  company: state.company,
+  companies: state.company.companies,
 });
 
 const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
