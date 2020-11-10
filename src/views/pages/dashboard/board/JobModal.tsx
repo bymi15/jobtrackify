@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IJob } from '../../../../store/models';
+import { ICompany, IJob } from '../../../../store/models';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -25,6 +25,8 @@ import { actions } from '../../../../store/ducks/api/job';
 import { connect, ConnectedProps } from 'react-redux';
 import { IJobUpdate } from '../../../../store/models/IJob';
 import { Button } from '@material-ui/core';
+import Link from '@material-ui/core/Link';
+import Box from '@material-ui/core/Box';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -95,6 +97,14 @@ const a11yProps = (index: any) => {
 
 const useStyles = makeStyles((theme) =>
   createStyles({
+    dialogPaper: {
+      minHeight: '75vh',
+      minWidth: '650px',
+      [theme.breakpoints.down('sm')]: {
+        minHeight: '80vh',
+        minWidth: '80vw',
+      },
+    },
     root: {
       marginBottom: theme.spacing(2),
     },
@@ -124,6 +134,11 @@ const useStyles = makeStyles((theme) =>
       fontSize: '16px',
       marginBottom: theme.spacing(1),
     },
+    paddingTop: {
+      paddingTop: '6px',
+      fontSize: '16px',
+      fontWeight: 600,
+    },
   })
 );
 
@@ -140,10 +155,10 @@ const JobModal: React.FC<Props> = ({
   dispatchUpdateJob,
 }) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [tabValue, setTabValue] = React.useState(0);
 
   const handleChange = (_event: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
+    setTabValue(newValue);
   };
 
   const handleSave = (data: onSaveProps) => {
@@ -160,6 +175,16 @@ const JobModal: React.FC<Props> = ({
     }
   };
 
+  const handleClose = () => {
+    setTabValue(0);
+    onClose();
+  };
+
+  const hasCompanyData = !!job ? typeof job.company !== 'string' : false;
+  let companyData: ICompany | null = null;
+  if (hasCompanyData) {
+    companyData = job && (job.company as ICompany);
+  }
   const companyName = job
     ? typeof job.company === 'string'
       ? job.company
@@ -168,9 +193,14 @@ const JobModal: React.FC<Props> = ({
 
   return (
     job && (
-      <Dialog open={open} onClose={onClose} aria-labelledby="job-modal">
-        <DialogTitle id="job-modal" onClose={onClose}>
-          {companyName}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="job-modal"
+        classes={{ paper: classes.dialogPaper }}
+      >
+        <DialogTitle id="job-modal" onClose={handleClose}>
+          {' '}
         </DialogTitle>
         <DialogContent className={classes.modalContent} dividers>
           <Grid
@@ -195,7 +225,7 @@ const JobModal: React.FC<Props> = ({
           </Grid>
           <Tabs
             className={classes.root}
-            value={value}
+            value={tabValue}
             onChange={handleChange}
             indicatorColor="primary"
             textColor="primary"
@@ -203,9 +233,9 @@ const JobModal: React.FC<Props> = ({
           >
             <Tab label="Job Info" {...a11yProps(0)} />
             <Tab label="Notes" {...a11yProps(1)} />
-            <Tab label="Company" {...a11yProps(2)} />
+            {hasCompanyData && <Tab label="Company" {...a11yProps(2)} />}
           </Tabs>
-          <TabPanel value={value} index={0}>
+          <TabPanel value={tabValue} index={0}>
             <Grid container spacing={1}>
               <Grid container spacing={1}>
                 <Grid item sm={3}>
@@ -299,7 +329,7 @@ const JobModal: React.FC<Props> = ({
               </Grid>
             </Grid>
           </TabPanel>
-          <TabPanel value={value} index={1}>
+          <TabPanel value={tabValue} index={1}>
             <DialogContentText>
               <Grid container spacing={1}>
                 <Grid container spacing={1}>
@@ -326,11 +356,228 @@ const JobModal: React.FC<Props> = ({
               </Grid>
             </DialogContentText>
           </TabPanel>
-          <TabPanel value={value} index={2}>
-            <DialogContentText>
-              Interviews section under development
-            </DialogContentText>
-          </TabPanel>
+          {hasCompanyData && !!companyData && (
+            <TabPanel value={tabValue} index={2}>
+              <DialogContentText>
+                <Grid container spacing={1}>
+                  <Grid container spacing={1}>
+                    <Box display="flex" flexDirection="row" mt={2} mb={2}>
+                      <CompanyLogo company={job.company} size="md" />
+                      <Box
+                        display="flex"
+                        flexDirection="column"
+                        justifyContent="center"
+                        pl={2}
+                      >
+                        <Typography color="textPrimary" variant="h5">
+                          {companyName}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Grid>
+                  {companyData.description && (
+                    <Grid container spacing={1}>
+                      <Grid item sm={12}>
+                        <EditText
+                          className={classes.editabletext}
+                          value={companyData.description}
+                          readonly
+                        />
+                      </Grid>
+                    </Grid>
+                  )}
+                  {companyData.website && (
+                    <Grid container spacing={1}>
+                      <Grid item sm={4}>
+                        <Typography
+                          color="textPrimary"
+                          className={classes.label}
+                        >
+                          Website:
+                        </Typography>
+                      </Grid>
+                      <Grid item sm={8}>
+                        <EditText
+                          className={classes.editabletext}
+                          value={companyData.website}
+                          readonly
+                        />
+                      </Grid>
+                    </Grid>
+                  )}
+                  {companyData.industry && (
+                    <Grid container spacing={1}>
+                      <Grid item sm={4}>
+                        <Typography
+                          color="textPrimary"
+                          className={classes.label}
+                        >
+                          Industry:
+                        </Typography>
+                      </Grid>
+                      <Grid item sm={8}>
+                        <EditText
+                          className={classes.editabletext}
+                          value={companyData.industry}
+                          readonly
+                        />
+                      </Grid>
+                    </Grid>
+                  )}
+                  {companyData.foundedYear && (
+                    <Grid container spacing={1}>
+                      <Grid item sm={4}>
+                        <Typography
+                          color="textPrimary"
+                          className={classes.label}
+                        >
+                          Founded:
+                        </Typography>
+                      </Grid>
+                      <Grid item sm={8}>
+                        <EditText
+                          className={classes.editabletext}
+                          value={companyData.foundedYear.toString()}
+                          readonly
+                        />
+                      </Grid>
+                    </Grid>
+                  )}
+                  {companyData.location && companyData.location.locality && (
+                    <Grid container spacing={1}>
+                      <Grid item sm={4}>
+                        <Typography
+                          color="textPrimary"
+                          className={classes.label}
+                        >
+                          Location:
+                        </Typography>
+                      </Grid>
+                      <Grid item sm={8}>
+                        <EditText
+                          className={classes.editabletext}
+                          value={companyData.location.locality}
+                          readonly
+                        />
+                      </Grid>
+                    </Grid>
+                  )}
+                  {companyData.location && companyData.location.country && (
+                    <Grid container spacing={1}>
+                      <Grid item sm={4}>
+                        <Typography
+                          color="textPrimary"
+                          className={classes.label}
+                        >
+                          Country:
+                        </Typography>
+                      </Grid>
+                      <Grid item sm={8}>
+                        <EditText
+                          className={classes.editabletext}
+                          value={companyData.location.country}
+                          readonly
+                        />
+                      </Grid>
+                    </Grid>
+                  )}
+                  {companyData.sizeRange && (
+                    <Grid container spacing={1}>
+                      <Grid item sm={4}>
+                        <Typography
+                          color="textPrimary"
+                          className={classes.label}
+                        >
+                          Company size:
+                        </Typography>
+                      </Grid>
+                      <Grid item sm={8}>
+                        <EditText
+                          className={classes.editabletext}
+                          value={companyData.sizeRange + ' employees'}
+                          readonly
+                        />
+                      </Grid>
+                    </Grid>
+                  )}
+                  {companyData.currentEmployeeEstimate && (
+                    <Grid container spacing={1}>
+                      <Grid item sm={4}>
+                        <Typography
+                          color="textPrimary"
+                          className={classes.label}
+                        >
+                          Current employees:
+                        </Typography>
+                      </Grid>
+                      <Grid item sm={8}>
+                        <EditText
+                          className={classes.editabletext}
+                          value={
+                            companyData.currentEmployeeEstimate +
+                            ' employees est.'
+                          }
+                          readonly
+                        />
+                      </Grid>
+                    </Grid>
+                  )}
+                  {companyData.totalEmployeeEstimate && (
+                    <Grid container spacing={1}>
+                      <Grid item sm={4}>
+                        <Typography
+                          color="textPrimary"
+                          className={classes.label}
+                        >
+                          Total employees:
+                        </Typography>
+                      </Grid>
+                      <Grid item sm={8}>
+                        <EditText
+                          className={classes.editabletext}
+                          value={
+                            companyData.totalEmployeeEstimate +
+                            ' employees est.'
+                          }
+                          readonly
+                        />
+                      </Grid>
+                    </Grid>
+                  )}
+                  {companyData.linkedInUrl && (
+                    <Grid container spacing={1}>
+                      <Grid item sm={4}>
+                        <Typography
+                          color="textPrimary"
+                          className={classes.label}
+                        >
+                          LinkedIn Page:
+                        </Typography>
+                      </Grid>
+                      <Grid item sm={8}>
+                        <Typography
+                          className={classes.label}
+                          style={{
+                            overflow: 'hidden',
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
+                          }}
+                        >
+                          <Link
+                            href={'https://' + companyData.linkedInUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            https://{companyData.linkedInUrl}
+                          </Link>
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  )}
+                </Grid>
+              </DialogContentText>
+            </TabPanel>
+          )}
         </DialogContent>
       </Dialog>
     )
