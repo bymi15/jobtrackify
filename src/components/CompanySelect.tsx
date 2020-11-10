@@ -11,14 +11,10 @@ import filterCompanies from '../utils/filterCompanies';
 
 interface Props extends PropsFromRedux {
   className?: string;
-  handleSelect: (company: ICompany | string | null) => void;
+  onChange: (company: ICompany | string | null) => void;
 }
 
-const CompanySelect: React.FC<Props> = ({
-  className,
-  handleSelect,
-  companies,
-}) => {
+const CompanySelect: React.FC<Props> = ({ className, onChange, companies }) => {
   const [selectedCompany, setSelectedCompany] = React.useState<
     ICompany | string | null
   >(null);
@@ -38,13 +34,13 @@ const CompanySelect: React.FC<Props> = ({
       onChange={(_event: any, newCompany: ICompany | string) => {
         if (typeof newCompany !== 'string') {
           setSelectedCompany(newCompany);
-          handleSelect(newCompany);
+          onChange(newCompany);
         }
       }}
       onInputChange={(_event: any, value: string) => {
         applyFilter(value);
         setSelectedCompany(value);
-        handleSelect(value);
+        onChange(value);
       }}
       getOptionSelected={(option, value) => option.id === value.id}
       getOptionLabel={(option) => option.name}

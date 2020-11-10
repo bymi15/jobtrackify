@@ -102,7 +102,7 @@ const AddJobDialog: React.FC<Props> = ({
         />
         <CompanySelect
           className={classes.marginTop}
-          handleSelect={handleSelectCompany}
+          onChange={handleSelectCompany}
         />
         <BoardColumnSelect
           className={classes.marginTop}
