@@ -1,4 +1,3 @@
-export const GET_BOARD = 'board/GET_BOARD';
 export const GET_BOARDS = 'board/GET_BOARD';
 export const GET_BOARDS_USER = 'board/GET_BOARDS_USER';
 export const CREATE_BOARD = 'board/CREATE_BOARD';

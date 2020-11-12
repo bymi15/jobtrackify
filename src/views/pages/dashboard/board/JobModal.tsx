@@ -1,5 +1,11 @@
 import * as React from 'react';
-import { ICompany, IJob } from '../../../../store/models';
+import {
+  ICompany,
+  IJob,
+  INote,
+  INoteInput,
+  INoteUpdate,
+} from '../../../../store/models';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -22,11 +28,14 @@ import EditText, { onSaveProps } from 'react-edit-text';
 import TextField from '@material-ui/core/TextField';
 import { ThunkVoidAction, ThunkVoidDispatch } from '../../../../store/types';
 import { actions } from '../../../../store/ducks/api/job';
+import { actions as noteActions } from '../../../../store/ducks/api/note';
 import { connect, ConnectedProps } from 'react-redux';
 import { IJobUpdate } from '../../../../store/models/IJob';
 import { Button } from '@material-ui/core';
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
+import { RootState } from '../../../../store/ducks';
+import { showToast } from '../../../../utils/showToast';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -152,10 +161,38 @@ const JobModal: React.FC<Props> = ({
   open,
   onClose,
   job,
+  notes,
   dispatchUpdateJob,
+  dispatchGetNotesByJob,
+  dispatchCreateNote,
 }) => {
   const classes = useStyles();
   const [tabValue, setTabValue] = React.useState(0);
+  const [noteTextarea, setNoteTextarea] = React.useState('');
+
+  React.useEffect(() => {
+    if (job) {
+      dispatchGetNotesByJob(job.id);
+    }
+  }, [dispatchGetNotesByJob, job]);
+
+  const handleChangeNote = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNoteTextarea(e.target.value);
+  };
+
+  const handleSaveNote = () => {
+    if (job && noteTextarea.trim() !== '') {
+      dispatchCreateNote({
+        body: noteTextarea,
+        boardId: job.board.id,
+        jobId: job.id,
+      });
+      setNoteTextarea('');
+      showToast('Success!', 'Note has been added.', 'success');
+    } else {
+      showToast('Please try again', 'Note is empty.', 'warning');
+    }
+  };
 
   const handleChange = (_event: React.ChangeEvent<{}>, newValue: number) => {
     setTabValue(newValue);
@@ -338,6 +375,9 @@ const JobModal: React.FC<Props> = ({
                       className={classes.noteTextarea}
                       rows={4}
                       placeholder="Enter a note..."
+                      onChange={handleChangeNote}
+                      value={noteTextarea}
+                      autoFocus
                     ></textarea>
                   </Grid>
                 </Grid>
@@ -348,10 +388,23 @@ const JobModal: React.FC<Props> = ({
                   alignItems="flex-end"
                 >
                   <Grid item sm={12}>
-                    <Button variant="contained" color="primary">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleSaveNote}
+                    >
                       Save
                     </Button>
                   </Grid>
+                </Grid>
+                <Grid container spacing={1}>
+                  {notes &&
+                    notes.length > 0 &&
+                    notes.map((note: INote) => (
+                      <Grid item sm={12}>
+                        {note.body}
+                      </Grid>
+                    ))}
                 </Grid>
               </Grid>
             </DialogContentText>
@@ -584,12 +637,24 @@ const JobModal: React.FC<Props> = ({
   );
 };
 
+const mapStateToProps = (state: RootState) => ({
+  notes: state.note.notes,
+});
+
 const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
   dispatchUpdateJob: (id: string, job: IJobUpdate): ThunkVoidAction =>
     dispatch(actions.updateJob(id, job)),
+  dispatchGetNotesByJob: (jobId: string): ThunkVoidAction =>
+    dispatch(noteActions.getNotesByJob(jobId)),
+  dispatchCreateNote: (note: INoteInput): ThunkVoidAction =>
+    dispatch(noteActions.createNote(note)),
+  dispatchUpdateNote: (id: string, note: INoteUpdate): ThunkVoidAction =>
+    dispatch(noteActions.updateNote(id, note)),
+  dispatchDeleteNote: (id: string): ThunkVoidAction =>
+    dispatch(noteActions.deleteNote(id)),
 });
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

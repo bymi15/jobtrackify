@@ -5,7 +5,6 @@ import { clone } from 'lodash';
 import { PURGE } from 'redux-persist';
 
 const initialState: IBoardState = {
-  board: null,
   boards: null,
 };
 
@@ -26,11 +25,6 @@ const reducer = (
             ...state,
             boards: [action.response],
           };
-    case `${types.GET_BOARD}_SUCCESS`:
-      return {
-        ...state,
-        board: action.response,
-      };
     case `${types.GET_BOARDS}_SUCCESS`:
     case `${types.GET_BOARDS_USER}_SUCCESS`:
       return {
@@ -41,13 +35,8 @@ const reducer = (
       const deletedId = action.extraData.id;
       const boards =
         state.boards && state.boards.filter((board) => board.id !== deletedId);
-      let board = state.board;
-      if (board && board.id === deletedId) {
-        board = null;
-      }
       return {
         ...state,
-        board,
         boards,
       };
     case `${types.UPDATE_BOARD}_SUCCESS`:

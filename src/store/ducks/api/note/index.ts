@@ -1,10 +1,10 @@
 import reducer from './reducer';
 import * as actions from './actions';
 import * as types from './types';
-import { IBoard } from '../../../models';
+import { INote } from '../../../models';
 
-export interface IBoardState {
-  boards: IBoard[] | null;
+export interface INoteState {
+  notes: INote[] | null;
 }
 
 export { actions };
