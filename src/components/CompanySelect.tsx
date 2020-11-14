@@ -46,6 +46,12 @@ const CompanySelect: React.FC<Props> = ({ className, onChange, companies }) => {
       getOptionLabel={(option) => option.name}
       options={filteredCompanies}
       disableClearable
+      renderOption={(option) => (
+        <React.Fragment>
+          <CompanyLogo company={option} />
+          <span style={{ marginLeft: '5px' }}>{option.name}</span>
+        </React.Fragment>
+      )}
       renderInput={(params) => (
         <TextField
           {...params}

@@ -54,7 +54,23 @@ const LetterAvatar: React.FC<Props> = ({ name, color, size }) => {
   let avatarText: string = name.charAt(0);
   const names = name.split(' ');
   if (names.length > 1) {
-    avatarText = names[0].charAt(0) + names[1].charAt(0);
+    let i = 0,
+      j = 1;
+    while (i < names.length && j < names.length && i < j) {
+      const a = names[i].charAt(0);
+      const b = names[j].charAt(0);
+      if (!/^[a-zA-Z]+$/.test(a)) {
+        i++;
+        j++;
+        continue;
+      }
+      if (!/^[a-zA-Z]+$/.test(b)) {
+        j++;
+        continue;
+      }
+      avatarText = a + b;
+      break;
+    }
   }
   const hex = color || stringToHexColor(name);
   return (
