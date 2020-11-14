@@ -6,13 +6,13 @@ const stringToHexColor = (str: string | null): string => {
   if (!str) {
     return '#1976d2';
   }
-
+  // https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    hash = (hash << 5) - hash + str.charCodeAt(i);
+    hash |= 0; // Convert to 32 bit integer
   }
-  const c = (hash & 0x00ffffff).toString(16).toUpperCase();
-  return '#' + '00000'.substring(0, 6 - c.length) + c;
+  return 'hsl(' + (hash % 360) + ', 85%, 43%)';
 };
 
 const useStyles = makeStyles((theme) =>
@@ -20,18 +20,22 @@ const useStyles = makeStyles((theme) =>
     sm: {
       width: theme.spacing(3),
       height: theme.spacing(3),
+      fontSize: '0.875rem',
     },
     md: {
       width: theme.spacing(5),
       height: theme.spacing(5),
+      fontSize: '1rem',
     },
     lg: {
       width: theme.spacing(7),
       height: theme.spacing(7),
+      fontSize: '1.4rem',
     },
     xl: {
       width: theme.spacing(10),
       height: theme.spacing(10),
+      fontSize: '1.7rem',
     },
   })
 );
@@ -55,7 +59,7 @@ const LetterAvatar: React.FC<Props> = ({ name, color, size }) => {
   const hex = color || stringToHexColor(name);
   return (
     <Avatar className={sizeClass} style={{ backgroundColor: hex }}>
-      {avatarText}
+      {avatarText.toUpperCase()}
     </Avatar>
   );
 };
