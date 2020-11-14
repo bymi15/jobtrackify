@@ -36,6 +36,10 @@ import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import { RootState } from '../../../../store/ducks';
 import { showToast } from '../../../../utils/showToast';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import Paper from '@material-ui/core/Paper';
+import Moment from 'react-moment';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -108,14 +112,24 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     dialogPaper: {
       minHeight: '75vh',
+      maxHeight: '75vh',
       minWidth: '650px',
+      maxWidth: '650px',
       [theme.breakpoints.down('sm')]: {
         minHeight: '80vh',
+        maxHeight: '80vh',
         minWidth: '80vw',
+        maxWidth: '80vw',
       },
     },
-    root: {
-      marginBottom: theme.spacing(2),
+    tabPanel: {
+      maxHeight: '45vh',
+      padding: '5px',
+      paddingLeft: '25px',
+      paddingRight: '25px',
+      [theme.breakpoints.down('sm')]: {
+        maxHeight: '50vh',
+      },
     },
     modalContent: {
       paddingBottom: theme.spacing(4),
@@ -136,17 +150,26 @@ const useStyles = makeStyles((theme) =>
       padding: theme.spacing(1),
       fontWeight: 400,
     },
-    noteTextarea: {
-      width: '100%',
-      fontFamily: 'Roboto',
-      padding: theme.spacing(1),
-      fontSize: '16px',
-      marginBottom: theme.spacing(1),
+    note: {
+      padding: theme.spacing(2),
+      '& div:nth-child(1)': {
+        fontSize: '14px',
+      },
+      '& div:nth-child(2)': {
+        textAlign: 'right',
+        fontSize: '12px',
+        color: '#929292',
+        marginTop: theme.spacing(2),
+      },
     },
     paddingTop: {
-      paddingTop: '6px',
-      fontSize: '16px',
-      fontWeight: 600,
+      paddingTop: theme.spacing(2),
+    },
+    paddingBottom: {
+      paddingBottom: theme.spacing(2),
+    },
+    marginTop: {
+      marginTop: theme.spacing(1),
     },
   })
 );
@@ -241,7 +264,7 @@ const JobModal: React.FC<Props> = ({
         </DialogTitle>
         <DialogContent className={classes.modalContent} dividers>
           <Grid
-            className={classes.root}
+            className={classes.paddingBottom}
             container
             spacing={3}
             direction="row"
@@ -261,7 +284,7 @@ const JobModal: React.FC<Props> = ({
             </Grid>
           </Grid>
           <Tabs
-            className={classes.root}
+            className={classes.paddingBottom}
             value={tabValue}
             onChange={handleChange}
             indicatorColor="primary"
@@ -368,45 +391,56 @@ const JobModal: React.FC<Props> = ({
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
             <DialogContentText>
-              <Grid container spacing={1}>
-                <Grid container spacing={1}>
-                  <Grid item sm={12}>
-                    <textarea
-                      className={classes.noteTextarea}
-                      rows={4}
-                      placeholder="Enter a note..."
-                      onChange={handleChangeNote}
-                      value={noteTextarea}
-                      autoFocus
-                    ></textarea>
+              <PerfectScrollbar
+                options={{ suppressScrollX: true, scrollYMarginOffset: 5 }}
+              >
+                <Grid className={classes.tabPanel} container spacing={1}>
+                  <Grid container spacing={1}>
+                    <Grid item sm={12} className={classes.marginTop}>
+                      <TextField
+                        fullWidth
+                        id="outlined-multiline-static"
+                        label="Enter a note"
+                        multiline
+                        rows={4}
+                        onChange={handleChangeNote}
+                        value={noteTextarea}
+                        variant="outlined"
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    container
+                    spacing={1}
+                    direction="column"
+                    alignItems="flex-end"
+                  >
+                    <Grid item sm={12} className={classes.marginTop}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSaveNote}
+                      >
+                        Save Note
+                      </Button>
+                    </Grid>
+                  </Grid>
+                  <Grid className={classes.paddingTop} container spacing={1}>
+                    {notes &&
+                      notes.length > 0 &&
+                      notes.map((note: INote) => (
+                        <Grid item sm={12}>
+                          <Paper className={classes.note} elevation={2}>
+                            <div>{note.body}</div>
+                            <div>
+                              <Moment fromNow>{note.createdAt}</Moment>
+                            </div>
+                          </Paper>
+                        </Grid>
+                      ))}
                   </Grid>
                 </Grid>
-                <Grid
-                  container
-                  spacing={1}
-                  direction="column"
-                  alignItems="flex-end"
-                >
-                  <Grid item sm={12}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleSaveNote}
-                    >
-                      Save
-                    </Button>
-                  </Grid>
-                </Grid>
-                <Grid container spacing={1}>
-                  {notes &&
-                    notes.length > 0 &&
-                    notes.map((note: INote) => (
-                      <Grid item sm={12}>
-                        {note.body}
-                      </Grid>
-                    ))}
-                </Grid>
-              </Grid>
+              </PerfectScrollbar>
             </DialogContentText>
           </TabPanel>
           {hasCompanyData && !!companyData && (
