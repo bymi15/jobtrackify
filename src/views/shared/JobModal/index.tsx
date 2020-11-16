@@ -3,7 +3,6 @@ import { ICompany, IJob } from '../../../store/models';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import Grid from '@material-ui/core/Grid';
 import CompanyLogo from '../../../components/CompanyLogo';
 import {
@@ -209,19 +208,15 @@ const JobModal: React.FC<Props> = ({
             <JobInfoTab job={job} />
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
-            <DialogContentText>
-              {loading ? (
-                <Loader customHeight="40vh" />
-              ) : (
-                <NotesTab notes={notes} job={job} />
-              )}
-            </DialogContentText>
+            {loading ? (
+              <Loader customHeight="40vh" />
+            ) : (
+              <NotesTab notes={notes} job={job} />
+            )}
           </TabPanel>
           {hasCompanyData && !!company && (
             <TabPanel value={tabValue} index={2}>
-              <DialogContentText>
-                <CompanyTab company={company} />
-              </DialogContentText>
+              <CompanyTab company={company} />
             </TabPanel>
           )}
         </DialogContent>

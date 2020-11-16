@@ -106,7 +106,7 @@ const NotesTab: React.FC<Props> = ({ job, notes, dispatchCreateNote }) => {
           {notes &&
             notes.length > 0 &&
             notes.map((note: INote) => (
-              <Grid item sm={12}>
+              <Grid item sm={12} key={note.id}>
                 <Paper className={classes.note} elevation={2}>
                   <div>{note.body}</div>
                   <div>
