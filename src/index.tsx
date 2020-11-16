@@ -10,11 +10,14 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store';
 import Loader from './components/Loader';
 import ReactGA from 'react-ga';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from './theme';
 ReactGA.initialize('G-TPD5N3Z4B2');
 
 const WrappedApp = composeProviders(
   ConfirmDialogProvider,
-  InputDialogProvider
+  InputDialogProvider,
+  [ThemeProvider, { theme }]
 )(App);
 
 ReactDOM.render(
