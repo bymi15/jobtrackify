@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { StringChain } from 'lodash';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
