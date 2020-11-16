@@ -473,6 +473,25 @@ const JobModal: React.FC<Props> = ({
                       </Grid>
                     </Grid>
                   )}
+                  {companyData.type && (
+                    <Grid container spacing={1}>
+                      <Grid item sm={4}>
+                        <Typography
+                          color="textPrimary"
+                          className={classes.label}
+                        >
+                          Type:
+                        </Typography>
+                      </Grid>
+                      <Grid item sm={8}>
+                        <EditText
+                          className={classes.editabletext}
+                          value={companyData.type}
+                          readonly
+                        />
+                      </Grid>
+                    </Grid>
+                  )}
                   {companyData.website && (
                     <Grid container spacing={1}>
                       <Grid item sm={4}>

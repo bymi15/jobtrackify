@@ -3,6 +3,7 @@ export default interface ICompany {
   name: string;
   description?: string;
   logo?: string;
+  type?: string;
   website?: string;
   headquarters?: string;
   country?: string;
