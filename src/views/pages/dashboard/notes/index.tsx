@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Container from '@material-ui/core/Container';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -22,13 +21,11 @@ interface Props {}
 const Notes: React.FC<Props> = () => {
   const classes = useStyles();
   return (
-    <PerfectScrollbar>
-      <div className={classes.root}>
-        <Container maxWidth="md" className={classes.container}>
-          <h2>The page is currently under development</h2>
-        </Container>
-      </div>
-    </PerfectScrollbar>
+    <div className={classes.root}>
+      <Container maxWidth="md" className={classes.container}>
+        <h2>The page is currently under development</h2>
+      </Container>
+    </div>
   );
 };
 

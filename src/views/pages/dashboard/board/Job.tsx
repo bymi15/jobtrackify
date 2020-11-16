@@ -2,7 +2,6 @@ import * as React from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
-import 'react-perfect-scrollbar/dist/css/styles.css';
 import { IJob } from '../../../../store/models';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';

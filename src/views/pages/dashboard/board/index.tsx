@@ -21,7 +21,6 @@ import JobModal from '../../../shared/JobModal';
 import Job from './Job';
 import { IJob } from '../../../../store/models';
 import { isEqual } from 'lodash';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -32,7 +31,10 @@ const useStyles = makeStyles((theme) =>
     wrapper: {
       display: 'flex',
       flexWrap: 'nowrap',
-      marginBottom: theme.spacing(3),
+      paddingBottom: '10px',
+      ...theme.scrollbar,
+      overFlowY: 'hidden',
+      overflowX: 'auto',
     },
     column: {
       width: '370px',
@@ -95,39 +97,37 @@ const Board: React.FC<PropsFromRedux> = ({
   return (
     <div className={classes.root}>
       <DragDropContext onDragEnd={handleDragEnd}>
-        <PerfectScrollbar>
-          <div className={classes.wrapper}>
-            <React.Fragment>{memoJobModal}</React.Fragment>
-            {boardColumns &&
-              boardColumns.length > 0 &&
-              boardColumns.map((boardColumn) => (
-                <div key={boardColumn.id} className={classes.column}>
-                  <BoardColumn
-                    boardColumn={boardColumn}
-                    jobCount={
-                      jobs && jobs[boardColumn.id]
-                        ? jobs[boardColumn.id].length
-                        : 0
-                    }
-                  >
-                    {jobs &&
-                      jobs[boardColumn.id] &&
-                      jobs[boardColumn.id].map((job: IJob, index: number) => (
-                        <div
-                          id={job.id}
-                          key={job.id}
-                          onClick={() => {
-                            setJobModal(job);
-                          }}
-                        >
-                          <Job job={job} index={index} />
-                        </div>
-                      ))}
-                  </BoardColumn>
-                </div>
-              ))}
-          </div>
-        </PerfectScrollbar>
+        <div className={classes.wrapper}>
+          <React.Fragment>{memoJobModal}</React.Fragment>
+          {boardColumns &&
+            boardColumns.length > 0 &&
+            boardColumns.map((boardColumn) => (
+              <div key={boardColumn.id} className={classes.column}>
+                <BoardColumn
+                  boardColumn={boardColumn}
+                  jobCount={
+                    jobs && jobs[boardColumn.id]
+                      ? jobs[boardColumn.id].length
+                      : 0
+                  }
+                >
+                  {jobs &&
+                    jobs[boardColumn.id] &&
+                    jobs[boardColumn.id].map((job: IJob, index: number) => (
+                      <div
+                        id={job.id}
+                        key={job.id}
+                        onClick={() => {
+                          setJobModal(job);
+                        }}
+                      >
+                        <Job job={job} index={index} />
+                      </div>
+                    ))}
+                </BoardColumn>
+              </div>
+            ))}
+        </div>
       </DragDropContext>
     </div>
   );
