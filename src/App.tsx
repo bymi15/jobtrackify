@@ -2,7 +2,6 @@ import * as React from 'react';
 import Routes from './views/routes';
 import ReduxToastr from 'react-redux-toastr';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
-import 'react-perfect-scrollbar/dist/css/styles.css';
 import 'react-edit-text/dist/index.css';
 
 const App: React.FC = () => {

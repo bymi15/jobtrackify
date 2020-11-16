@@ -2,8 +2,6 @@ import * as React from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Droppable, DroppableProvided } from 'react-beautiful-dnd';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import 'react-perfect-scrollbar/dist/css/styles.css';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { IBoardColumn } from '../../../../store/models';
@@ -25,6 +23,7 @@ const useStyles = makeStyles((theme) =>
     },
     column: {
       height: '65vh',
+      ...theme.scrollbar,
     },
   })
 );
@@ -72,12 +71,10 @@ const BoardColumn: React.FC<Props> = ({ boardColumn, jobCount, children }) => {
                 ref={provided.innerRef}
                 className={classes.marginTop}
               >
-                <PerfectScrollbar>
-                  <div className={classes.column}>
-                    {children}
-                    {provided.placeholder}
-                  </div>
-                </PerfectScrollbar>
+                <div className={classes.column}>
+                  {children}
+                  {provided.placeholder}
+                </div>
               </div>
             )}
           </Droppable>
