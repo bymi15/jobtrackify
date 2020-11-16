@@ -203,11 +203,9 @@ const Dashboard: React.FC<PropsFromRedux> = ({
     }
   };
 
-  if (loading) {
-    return <Loader />;
-  }
-
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Container className={classes.root}>
       <Typography variant="h5">My Boards</Typography>
       <Grid className={classes.grid} container spacing={3}>

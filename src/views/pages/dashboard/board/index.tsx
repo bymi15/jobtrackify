@@ -17,7 +17,7 @@ import { Redirect } from 'react-router-dom';
 import BoardColumn from './BoardColumn';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import JobModal from './JobModal';
+import JobModal from '../../../shared/JobModal';
 import Job from './Job';
 import { IJob } from '../../../../store/models';
 import { isEqual } from 'lodash';
@@ -87,7 +87,7 @@ const Board: React.FC<PropsFromRedux> = ({
   );
 
   if (loading) {
-    return <Loader />;
+    return <Loader hasTopbar />;
   } else if (selectedBoard === null) {
     return <Redirect to="/dashboard" />;
   }
