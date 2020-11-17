@@ -7,7 +7,6 @@ import { ICompany } from '../store/models';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import BusinessIcon from '@material-ui/icons/Business';
 import CompanyLogo from './CompanyLogo';
-import filterCompanies from '../utils/filterCompanies';
 import { actions, types } from '../store/ducks/api/company';
 import { ThunkVoidAction, ThunkVoidDispatch } from '../store/types';
 import { createLoadingSelector } from '../store/ducks/loading';
