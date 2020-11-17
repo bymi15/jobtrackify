@@ -17,7 +17,7 @@ const reducer = (
         ...state,
         company: action.response,
       };
-    case `${types.GET_COMPANIES}_SUCCESS`:
+    case `${types.SEARCH_COMPANIES}_SUCCESS`:
       return {
         ...state,
         companies: action.response,

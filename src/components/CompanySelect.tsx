@@ -8,23 +8,34 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import BusinessIcon from '@material-ui/icons/Business';
 import CompanyLogo from './CompanyLogo';
 import filterCompanies from '../utils/filterCompanies';
+import { actions, types } from '../store/ducks/api/company';
+import { ThunkVoidAction, ThunkVoidDispatch } from '../store/types';
+import { createLoadingSelector } from '../store/ducks/loading';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface Props extends PropsFromRedux {
   className?: string;
   onChange: (company: ICompany | string | null) => void;
 }
 
-const CompanySelect: React.FC<Props> = ({ className, onChange, companies }) => {
+const CompanySelect: React.FC<Props> = ({
+  className,
+  onChange,
+  companies,
+  loading,
+  dispatchSearchCompanies,
+  dispatchClearCompanies,
+}) => {
   const [selectedCompany, setSelectedCompany] = React.useState<
     ICompany | string | null
   >(null);
-  const [filteredCompanies, setFilteredCompanies] = React.useState<ICompany[]>(
-    []
-  );
 
   const applyFilter = (query: string) => {
-    const res = filterCompanies(query, companies || [], 5, 'start');
-    setFilteredCompanies(res);
+    if (query.trim() === '') {
+      dispatchClearCompanies();
+    } else {
+      dispatchSearchCompanies(query);
+    }
   };
 
   return (
@@ -44,7 +55,8 @@ const CompanySelect: React.FC<Props> = ({ className, onChange, companies }) => {
       }}
       getOptionSelected={(option, value) => option.id === value.id}
       getOptionLabel={(option) => option.name}
-      options={filteredCompanies}
+      options={companies || []}
+      loading={loading}
       disableClearable
       renderOption={(option) => (
         <React.Fragment>
@@ -71,6 +83,14 @@ const CompanySelect: React.FC<Props> = ({ className, onChange, companies }) => {
                 )}
               </InputAdornment>
             ),
+            endAdornment: (
+              <React.Fragment>
+                {loading ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null}
+                {params.InputProps.endAdornment}
+              </React.Fragment>
+            ),
           }}
         />
       )}
@@ -79,11 +99,21 @@ const CompanySelect: React.FC<Props> = ({ className, onChange, companies }) => {
   );
 };
 
+const loadingSelector = createLoadingSelector([types.SEARCH_COMPANIES]);
+
 const mapStateToProps = (state: RootState) => ({
   companies: state.company.companies,
+  loading: loadingSelector(state),
 });
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: ThunkVoidDispatch) => ({
+  dispatchSearchCompanies: (query: string): ThunkVoidAction =>
+    dispatch(actions.searchCompanies(query)),
+  dispatchClearCompanies: (): ThunkVoidAction =>
+    dispatch(actions.clearCompanies()),
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

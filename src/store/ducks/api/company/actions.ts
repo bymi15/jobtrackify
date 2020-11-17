@@ -21,14 +21,14 @@ export const getCompany = (id: string): ThunkVoidAction => async (
   });
 };
 
-export const getCompanies = (): ThunkVoidAction => async (
+export const searchCompanies = (query: string): ThunkVoidAction => async (
   dispatch: Dispatch,
   getState: () => RootState
 ) => {
   dispatch({
     type: 'API',
-    name: types.GET_COMPANIES,
-    url: `${baseUrl}/`,
+    name: types.SEARCH_COMPANIES,
+    url: `${baseUrl}/search/${query}`,
     requestData: {
       method: 'GET',
       headers: authHeader(getState()),
@@ -47,6 +47,6 @@ export const clearErrors = (): ThunkVoidAction => (dispatch: Dispatch) => {
     type: `${types.GET_COMPANY}_CLEARERR`,
   });
   dispatch({
-    type: `${types.GET_COMPANIES}_CLEARERR`,
+    type: `${types.SEARCH_COMPANIES}_CLEARERR`,
   });
 };
