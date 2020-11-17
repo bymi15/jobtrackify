@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash';
+import { clone } from 'lodash';
 import { PURGE } from 'redux-persist';
 import { IJob } from '../../../models';
 import { ApiAction } from '../../../types';
@@ -54,12 +54,6 @@ const reducer = (
         groupedJobs: groupJobsByColumn(action.response),
         currentJobsBoardId: action.extraData.boardId,
       };
-    case types.SET_JOBS_BOARD_CACHE:
-      return {
-        ...state,
-        jobs: action.response,
-        groupedJobs: groupJobsByColumn(action.response),
-      };
     case `${types.DELETE_JOB}_SUCCESS`:
       const { deletedJob, newJobs } = findAndDeleteJobById(
         action.extraData.id,
@@ -79,7 +73,7 @@ const reducer = (
       let updatedIndex = state.jobs.findIndex(
         (job) => job.id === updatedJob.id
       );
-      const updatedJobs = cloneDeep(state.jobs);
+      const updatedJobs = clone(state.jobs);
       updatedJobs[updatedIndex] = updatedJob;
       groupedJobs = updateGroupedJob(updatedJob, state.groupedJobs);
       return {

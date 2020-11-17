@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) =>
       },
     },
     editabletext: {
+      fontFamily: 'Roboto',
       fontSize: '16px',
       fontWeight: 400,
     },
@@ -63,6 +64,8 @@ const JobInfoTab: React.FC<Props> = ({ job, dispatchUpdateJob }) => {
       dispatchUpdateJob(job.id, { location: { address: value } });
     }
   };
+
+  console.log(job.description);
 
   return (
     <div className={classes.scrollbar}>
@@ -138,13 +141,20 @@ const JobInfoTab: React.FC<Props> = ({ job, dispatchUpdateJob }) => {
         </Grid>
         <Grid container spacing={1}>
           <Grid item sm={3}>
-            <Typography className={classes.label}>Description:</Typography>
+            <Typography
+              className={classes.label}
+              style={{ paddingTop: '12px' }}
+            >
+              Description:
+            </Typography>
           </Grid>
           <Grid item sm={9} className={classes.textareaWrapper}>
             <EditTextarea
+              name="description"
               className={classes.editabletext}
               value={job.description}
               placeholder="Enter a value"
+              onSave={handleSave}
             />
           </Grid>
         </Grid>
