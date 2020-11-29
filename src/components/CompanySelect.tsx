@@ -61,6 +61,13 @@ const CompanySelect: React.FC<Props> = ({
         <React.Fragment>
           <CompanyLogo company={option} />
           <span style={{ marginLeft: '5px' }}>{option.name}</span>
+          {!!option.industry && (
+            <span
+              style={{ fontSize: '0.9rem', color: '#666', marginLeft: '5px' }}
+            >
+              • {option.industry}
+            </span>
+          )}
         </React.Fragment>
       )}
       renderInput={(params) => (
