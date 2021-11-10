@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f1bdebeaa4986f666cee98558da3d2ea",
+    "revision": "54202ea1065e62e3da6f2009eaeb9d44",
     "url": "/jobtrackify/index.html"
   },
   {
@@ -40,8 +40,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/jobtrackify/static/js/7.d358c15e.chunk.js"
   },
   {
-    "revision": "9ff83de13912b19e3cb2",
-    "url": "/jobtrackify/static/js/main.fd5654a7.chunk.js"
+    "revision": "2b677b53b3f3f71879b3",
+    "url": "/jobtrackify/static/js/main.f0012703.chunk.js"
   },
   {
     "revision": "a26cbb5ccd3415a38f59",
