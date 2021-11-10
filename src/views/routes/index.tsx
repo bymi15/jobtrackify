@@ -1,30 +1,33 @@
 import * as React from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import {
+  HashRouter as Router,
   Redirect,
-  BrowserRouter as Router,
   Route,
   Switch,
 } from 'react-router-dom';
-import { RouteComponent } from '../../store/types';
+import { RootState } from '../../store/ducks';
+import { actions } from '../../store/ducks/api/auth';
+import {
+  RouteComponent,
+  ThunkVoidAction,
+  ThunkVoidDispatch,
+} from '../../store/types';
 import ScrollToTop from '../../utils/ScrollToTop';
 import {
-  landingRoutes,
+  AuthLayout,
+  DashboardLayout,
+  InfoLayout,
+  LandingLayout,
+  UserLayout,
+} from '../layouts';
+import {
   authRoutes,
   dashboardRoutes,
-  userRoutes,
   infoRoutes,
+  landingRoutes,
+  userRoutes,
 } from './routes';
-import {
-  LandingLayout,
-  DashboardLayout,
-  UserLayout,
-  AuthLayout,
-  InfoLayout,
-} from '../layouts';
-import { ThunkVoidAction, ThunkVoidDispatch } from '../../store/types';
-import { actions } from '../../store/ducks/api/auth';
-import { RootState } from '../../store/ducks';
-import { connect, ConnectedProps } from 'react-redux';
 
 const Routes: React.FC<PropsFromRedux> = ({ auth, dispatchGetAuthUser }) => {
   React.useEffect(() => {
@@ -50,7 +53,7 @@ const Routes: React.FC<PropsFromRedux> = ({ auth, dispatchGetAuthUser }) => {
     ));
 
   return (
-    <Router>
+    <Router basename="/jobtrackify">
       <ScrollToTop />
       <Switch>
         {mapRoutes(AuthLayout, authRoutes)}
