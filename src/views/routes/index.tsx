@@ -53,7 +53,7 @@ const Routes: React.FC<PropsFromRedux> = ({ auth, dispatchGetAuthUser }) => {
     ));
 
   return (
-    <Router basename="/jobtrackify">
+    <Router>
       <ScrollToTop />
       <Switch>
         {mapRoutes(AuthLayout, authRoutes)}
