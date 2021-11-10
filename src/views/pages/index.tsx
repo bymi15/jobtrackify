@@ -2,10 +2,10 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import classNames from 'classnames';
 import * as React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import config from '../../config';
-import classNames from 'classnames';
 
 const bg = 'bg1.jpg';
 const useStyles = makeStyles((theme) => ({
