@@ -8,8 +8,9 @@ const dev = {
 
 const shared = {
   ENV: process.env.NODE_ENV,
-  HOME_URL: 'https://www.jobtrackify.com',
+  HOME_URL: 'https://brianmin.com/jobtrackify',
   APP_NAME: 'Job Trackify',
+  EMAIL: 'jobtrackify@gmail.com',
   GOOGLE_API_KEY: process.env.REACT_APP_GOOGLE_API_KEY,
 };
 

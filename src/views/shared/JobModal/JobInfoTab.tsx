@@ -1,12 +1,12 @@
-import * as React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { EditText, EditTextarea, onSaveProps } from 'react-edit-text';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { IJob, IJobUpdate } from '../../../store/models';
-import { ThunkVoidAction, ThunkVoidDispatch } from '../../../store/types';
+import Typography from '@material-ui/core/Typography';
+import * as React from 'react';
+import { EditText, EditTextarea, onSaveProps } from 'react-edit-text';
 import { connect, ConnectedProps } from 'react-redux';
 import { actions } from '../../../store/ducks/api/job';
+import { IJob, IJobUpdate } from '../../../store/models';
+import { ThunkVoidAction, ThunkVoidDispatch } from '../../../store/types';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -64,8 +64,6 @@ const JobInfoTab: React.FC<Props> = ({ job, dispatchUpdateJob }) => {
       dispatchUpdateJob(job.id, { location: { address: value } });
     }
   };
-
-  console.log(job.description);
 
   return (
     <div className={classes.scrollbar}>

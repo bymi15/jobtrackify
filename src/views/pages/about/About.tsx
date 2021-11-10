@@ -1,16 +1,17 @@
-import * as React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Container from '@material-ui/core/Container';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
+import Container from '@material-ui/core/Container';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
+import Link from '@material-ui/core/Link';
+import Paper from '@material-ui/core/Paper';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import * as React from 'react';
+import config from '../../../config';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -137,10 +138,8 @@ const About: React.FC<Props> = () => {
                 </Typography>
                 <Typography variant="body1" color="textSecondary" component="p">
                   Can't find your company? Email us at{' '}
-                  <Link href="mailto:contact@jobtrackify.com">
-                    contact@jobtrackify.com
-                  </Link>{' '}
-                  so we can add it in
+                  <Link href={`mailto:${config.EMAIL}`}>{config.EMAIL}</Link> so
+                  we can add it in
                 </Typography>
               </CardContent>
             </CardActionArea>

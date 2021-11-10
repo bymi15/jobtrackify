@@ -1,7 +1,8 @@
-import * as React from 'react';
-import Divider from '@material-ui/core/Divider';
 import Box from '@material-ui/core/Box';
+import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
+import * as React from 'react';
+import config from '../../../config';
 
 interface Props {}
 
@@ -16,9 +17,8 @@ const Privacy: React.FC<Props> = () => {
       <p style={{ fontSize }}>
         Your privacy is important to us. It is Job Trackify's policy to respect
         your privacy regarding any information we may collect from you across
-        our website,{' '}
-        <a href="http://www.jobtrackify.com">http://www.jobtrackify.com</a>, and
-        other sites we own and operate.
+        our website, <a href={config.HOME_URL}>{config.HOME_URL}</a>, and other
+        sites we own and operate.
       </p>
       <p style={{ fontSize }}>
         We only ask for personal information when we truly need it to provide a

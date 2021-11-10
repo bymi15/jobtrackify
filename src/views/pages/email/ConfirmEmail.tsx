@@ -1,13 +1,14 @@
-import * as React from 'react';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Container from '@material-ui/core/Container';
+import Link from '@material-ui/core/Link';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import * as React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import config from '../../../config';
 import { RootState } from '../../../store/ducks';
 import { actions } from '../../../store/ducks/api/auth';
 import { ThunkVoidAction, ThunkVoidDispatch } from '../../../store/types';
@@ -116,7 +117,7 @@ const ConfirmEmail: React.FC<PropsFromRedux> = ({
             </Button>
             <Typography color="textSecondary" variant="body1">
               Feel free to{' '}
-              <Link href="mailto:contact@jobtrackify.com" variant="body2">
+              <Link href={`mailto:${config.EMAIL}`} variant="body2">
                 contact us
               </Link>{' '}
               if you need assistance

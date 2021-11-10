@@ -1,7 +1,8 @@
-import * as React from 'react';
-import Divider from '@material-ui/core/Divider';
 import Box from '@material-ui/core/Box';
+import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
+import * as React from 'react';
+import config from '../../../config';
 
 interface Props {}
 
@@ -15,13 +16,12 @@ const Terms: React.FC<Props> = () => {
       <h3>1. Terms</h3>
       <p>
         By accessing the website at{' '}
-        <a href="http://www.jobtrackify.com">http://www.jobtrackify.com</a>, you
-        are agreeing to be bound by these terms of service, all applicable laws
-        and regulations, and agree that you are responsible for compliance with
-        any applicable local laws. If you do not agree with any of these terms,
-        you are prohibited from using or accessing this site. The materials
-        contained in this website are protected by applicable copyright and
-        trademark law.
+        <a href={config.HOME_URL}>{config.HOME_URL}</a>, you are agreeing to be
+        bound by these terms of service, all applicable laws and regulations,
+        and agree that you are responsible for compliance with any applicable
+        local laws. If you do not agree with any of these terms, you are
+        prohibited from using or accessing this site. The materials contained in
+        this website are protected by applicable copyright and trademark law.
       </p>
       <h3>2. Use Licence</h3>
       <ol type="a">

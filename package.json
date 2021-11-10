@@ -4,7 +4,7 @@
   "author": "Brian Min <bymi15@yahoo.com> (https://github.com/bymi15)",
   "version": "0.3.1",
   "private": true,
-  "homepage": "https://bymi15.github.io/jobtrackify",
+  "homepage": "https://brianmin.com/jobtrackify",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
