@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/bymi15/JobTrackify/compare/v0.3.1...v0.4.0) (2021-11-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* allow custom companies to be added to a job application
+
+### Features
+
+* **CompanySelect:** display industry in company select ([36941c9](https://github.com/bymi15/JobTrackify/commit/36941c9cad19c2c97f16e1531dd99b995ebf0321))
+* add custom scrollbar and refactor JobModal into components ([db8bf40](https://github.com/bymi15/JobTrackify/commit/db8bf409d7a71d4cb2b31c8c273ae6722a00c6f3))
+* **Company:** add description and type field ([e1e7625](https://github.com/bymi15/JobTrackify/commit/e1e7625f79144e3095721229a11879e52de43687))
+* **filterCompanies:** add filterCompanies utils function ([a9a5157](https://github.com/bymi15/JobTrackify/commit/a9a5157545e15619fe59ab9b0c96620b15a5f134))
+* **JobModal:** add company tab content ([e876780](https://github.com/bymi15/JobTrackify/commit/e87678047933c745b3a89b66f54a67cd9328aeb7))
+* **JobModal:** improve note UI ([7238f3c](https://github.com/bymi15/JobTrackify/commit/7238f3cf75a1aebc474c394752a9d71938130f5d))
+* **Note:** add note functionality to job modal ([1cee80e](https://github.com/bymi15/JobTrackify/commit/1cee80e0c2df2edd0ecb969afebd7fbbcf51e20f))
+* **Profile:** add date registered field ([436d1a2](https://github.com/bymi15/JobTrackify/commit/436d1a26f457a0b2493f4de37830f6e4065a15e2))
+* add custom company autocomplete component ([3aff603](https://github.com/bymi15/JobTrackify/commit/3aff6037dbd0c4514f5798d05c7a79da25c67725))
+* add email confirmation pages ([b60bd61](https://github.com/bymi15/JobTrackify/commit/b60bd611a15b28b6b0b0674210bd00e094572ee5))
+
+
+### Bug Fixes
+
+* fix react warnings ([74b6da3](https://github.com/bymi15/JobTrackify/commit/74b6da36a1bf520dc4fb0a87c2460e2e257f95bd))
+* refactor emails and home urls ([04f0122](https://github.com/bymi15/JobTrackify/commit/04f012242e87bd97dc8915d72792b4744c5d5fb5))
+* remove base url ([22a43b4](https://github.com/bymi15/JobTrackify/commit/22a43b480471eee0b471cfb15f56328fd38d1c0c))
+* use hashrouter and set basename ([92829d0](https://github.com/bymi15/JobTrackify/commit/92829d0658e3c7ea9784bf84d7ae459ae3feb94d))
+* **cache:** fix cache remove bug ([74889b8](https://github.com/bymi15/JobTrackify/commit/74889b84e3b4979dd57fd293e8c615946339e62a))
+* **cache:** fix clear cache issue with company and boardColumn ([017d36b](https://github.com/bymi15/JobTrackify/commit/017d36b71845efbd2f3ab9cc002d5bdf840b2eac))
+* **JobInfoTab:** connect description textarea with dispatch ([32aa52b](https://github.com/bymi15/JobTrackify/commit/32aa52b185b8139c1a0208ca5caa81c1f4dddd63))
+* replace perfect scrollbar with custom scrollbar ([b11cfb4](https://github.com/bymi15/JobTrackify/commit/b11cfb4d71952012febfd6e4134f0025ab1d38bd))
+* **about:** updated terms of condition and privacy policy ([cbdd4aa](https://github.com/bymi15/JobTrackify/commit/cbdd4aaefc83ff4a9153831d3bcaccee86591afc))
+* **Loader:** improve Loader UI vertical alignment ([7df283d](https://github.com/bymi15/JobTrackify/commit/7df283d65156dcee8a512a316b7971651de3cf4a))
+* **routes:** fix dispatchGetCompanies in routes ([f4d296a](https://github.com/bymi15/JobTrackify/commit/f4d296aaa8a3ca11a761e8b5618141cf13b8c7df))
+
 ### [0.3.1](https://github.com/bymi15/JobTrackify/compare/v0.3.0...v0.3.1) (2020-11-07)
 
 

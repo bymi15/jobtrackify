@@ -2,7 +2,7 @@
   "name": "jobtrackify",
   "description": "Job Trackify - Manage your job applications in an all-in-one platform",
   "author": "Brian Min <bymi15@yahoo.com> (https://github.com/bymi15)",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "private": true,
   "homepage": "https://brianmin.com/jobtrackify",
   "dependencies": {
