@@ -1,5 +1,5 @@
 const prod = {
-  API_URL: 'https://api.jobtrackify.com',
+  API_URL: 'https://jobtrackify.herokuapp.com',
 };
 
 const dev = {

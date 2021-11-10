@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-  <loc>https://www.jobtrackify.com/</loc>
+  <loc>https://brianmin.com/jobtrackify</loc>
   </url>
   <url>
-  <loc>https://www.jobtrackify.com/auth/login</loc>
+  <loc>https://brianmin.com/jobtrackify/auth/login</loc>
   </url>
   <url>
-  <loc>https://www.jobtrackify.com/auth/register</loc>
+  <loc>https://brianmin.com/jobtrackify/auth/register</loc>
   </url>
   <url>
-  <loc>https://www.jobtrackify.com/about</loc>
+  <loc>https://brianmin.com/jobtrackify/about</loc>
   </url>
   <url>
-  <loc>https://www.jobtrackify.com/dashboard</loc>
+  <loc>https://brianmin.com/jobtrackify/dashboard</loc>
   </url>
 </urlset>
